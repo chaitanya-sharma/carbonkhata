@@ -16,3 +16,9 @@ Live site: https://carbonkhata-navy.vercel.app
 Demo firms, lots and invoice numbers are sample data. Rules and prices are real: EU Reg. 2023/956; IR 2025/2546, 2025/2547, 2025/2620, 2025/2621 as amended by 2026/1740; Reg. (EU) 2026/1384; €75.28 per certificate (Q2 2026); €1 = ₹108.
 
 Team Carbon Khata, XLRI Delhi-NCR · Quest EY-Parthenon 2026.
+
+## Map data
+`assets/worldmap.js` is generated from Natural Earth 1:10m admin-0 countries, India point-of-view edition (`ne_10m_admin_0_countries_ind`, public domain), which draws India's official boundary. It is simplified with mapshaper and projected with d3-geo (Mercator) at build time, so the site ships plain SVG paths and loads no map library.
+
+## Type and icons
+Headlines: Bricolage Grotesque. Body: Geist, with Noto Sans Gurmukhi for Punjabi text. Icons: Lucide (ISC licence).

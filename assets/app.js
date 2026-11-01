@@ -209,6 +209,8 @@
     const tracedT = lots.filter((l) => l.report).reduce((a, l) => a + l.sales.reduce((b, s) => b + s.t, 0), 0);
     const untr = lots.filter((l) => !l.report).reduce((a, l) => a + l.sales.reduce((b, s) => b + s.t, 0), 0);
     return `<div class="kpis">${kpi("Traced tonnes sold", tracedT + " t", "This quarter")}${kpi("Tracing income", fmt.inr(tracedT * 50), "₹50 per traced tonne", "green")}${kpi("Untraced tonnes", untr + " t", "From mills not yet on Carbon Khata", untr ? "red" : "")}${kpi("Listing", "Carbon-ready", "Shown to exporters choosing a supplier")}</div>
+    <div class="two"><div class="panel"><div class="panel-h"><h3>Tracing income by buyer</h3></div><div class="table-wrap"><table class="data"><thead><tr><th>Buyer</th><th class="r">Traced tonnes</th><th class="r">Income</th></tr></thead><tbody>${(() => { const m = {}; lots.filter((l) => l.report).forEach((l) => l.sales.forEach((x) => (m[x.to] = (m[x.to] || 0) + x.t))); return Object.entries(m).map(([k, v]) => `<tr><td>${k}</td><td class="r">${v} t</td><td class="r">${fmt.inr(v * 50)}</td></tr>`).join(""); })()}</tbody></table></div></div>
+    <div class="panel"><div class="panel-h"><h3>Next payout</h3><span class="badge green">Monthly</span></div><div class="panel-b"><dl class="kv"><dt>Period</dt><dd>October 2026</dd><dt>Amount</dt><dd>${fmt.inr(tracedT * 50)}</dd><dt>Paid to</dt><dd>Current account ending 4471</dd><dt>Paid on</dt><dd>7 November 2026</dd></dl></div></div></div>
     <div class="panel" style="margin-top:16px"><div class="panel-b"><h3>How tracing pays</h3><p class="muted small" style="margin-top:8px;max-width:70ch">Exporters pay ₹50 for each tonne that arrives with its mill report, about 0.08% of a ₹62,000 coil. Ludhiana buyers already pay ₹1,800 to ₹2,300 a tonne more to buy locally, so a traced lot is a reason to choose you. Your buying prices, margins and other customers are never shown.</p></div></div>`;
   };
 
@@ -253,12 +255,17 @@
     </tbody></table></div></div>
     <div class="callout" style="margin-top:16px">Since 1 July 2026, steel above a country's quota pays a 50% duty and must show where it was first melted and poured (Reg. 2026/1384). Mill heat numbers in the ledger provide that evidence.</div>`;
   };
-  VIEWS["importer.suppliers"] = () => `<div class="panel"><div class="table-wrap"><table class="data"><thead><tr><th>Supplier</th><th>Cluster</th><th>Products</th><th class="r">tCO₂/t</th><th>Status</th></tr></thead><tbody>
+  VIEWS["importer.suppliers"] = () => `<div class="kpis" style="margin-bottom:16px">${kpi("Indian suppliers", "4", "Fasteners and tools")}${kpi("Verified for 2026", "2 of 4", "Third visit scheduled", "green")}${kpi("Average verified tCO₂/t", "2.42", "vs 6.29 on India's default")}${kpi("Next declaration", "30 Sep 2027", "Covers 2026 imports")}</div>
+  <div class="two" style="margin-top:0;margin-bottom:16px"><div class="panel"><div class="panel-h"><h3>tCO₂ per tonne by supplier</h3></div><div class="panel-b">${bars([["India default, bolts", "6.29", 100, "#C2410C"], ["Sample Forgings", "2.52", 40.1, "var(--green)"], ["Sample Bolts", "2.44", 38.8, "var(--green)"], ["Sample Fasteners", "2.40", 38.2, "var(--green)"]])}</div></div>
+  <div class="panel"><div class="panel-h"><h3>Ask a supplier to join</h3></div><div class="panel-b"><p class="small" style="color:var(--text-2);margin:0 0 14px">Suppliers without a verified file are billed on India's default. Send them an invite and Carbon Khata's Ludhiana team follows up in person.</p><button class="btn btn-primary btn-sm" id="inv">Invite Sample Hand Tools</button></div></div></div>
+  <div class="panel"><div class="table-wrap"><table class="data"><thead><tr><th>Supplier</th><th>Cluster</th><th>Products</th><th class="r">tCO₂/t</th><th>Status</th></tr></thead><tbody>
     <tr><td>Sample Fasteners</td><td>Ludhiana</td><td>Bolts</td><td class="r">2.40</td><td><span class="badge green">Verified 2026</span></td></tr>
     <tr><td>Sample Bolts</td><td>Ludhiana</td><td>Bolts</td><td class="r">2.44</td><td><span class="badge green">Verified 2026</span></td></tr>
     <tr><td>Sample Forgings</td><td>Ludhiana</td><td>Forgings</td><td class="r">2.52</td><td><span class="badge amber">Visit scheduled</span></td></tr>
     <tr><td>Sample Hand Tools</td><td>Jalandhar</td><td>Hand tools</td><td class="r">–</td><td><span class="badge blue">Onboarding</span></td></tr>
   </tbody></table></div></div>`;
+
+  AFTER["importer.suppliers"] = () => { $("inv").onclick = () => { $("inv").textContent = "Invite sent ✓"; $("inv").disabled = true; toast("Invite sent to Sample Hand Tools, Jalandhar"); }; };
 
   VIEWS["lender.applications"] = () => `<div class="two" style="margin-top:0">
     <div class="panel"><div class="panel-h"><h3>Sample Fasteners · ₹40 L green loan</h3>${loan === "approved" ? '<span class="badge green">Approved</span>' : loan === "info" ? '<span class="badge amber">Information requested</span>' : '<span class="badge blue">In review</span>'}</div><div class="panel-b">
@@ -272,7 +279,13 @@
     <div class="panel"><div class="panel-h"><h3>Emissions after the switch</h3></div><div class="panel-b">
       ${bars([["Today", "2.40", 100, "var(--text-3)"], ["After 30% scrap EAF", "1.79", 74.6, "var(--green)"]])}
       <p class="xs muted" style="margin-top:14px">Estimate: 70% at 2.35, 30% at about 0.3 for scrap EAF steel, plus 0.05 own process. The lender reads the same signed records the EU importer files, so no separate emissions check is needed.</p>
-    </div></div></div>`;
+    </div></div></div>
+    <div class="two"><div class="panel"><div class="panel-h"><h3>Disbursement linked to verified data</h3></div><div class="table-wrap"><table class="data"><tbody>
+      <tr><td>Tranche 1 · on approval</td><td class="r">₹25 L</td></tr><tr><td>Tranche 2 · when the next signed report shows under 2.0 tCO₂/t</td><td class="r">₹15 L</td></tr></tbody></table></div></div>
+    <div class="panel"><div class="panel-h"><h3>Portfolio on verified records</h3></div><div class="table-wrap"><table class="data"><thead><tr><th>Borrower</th><th class="r">Loan</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Sample Fasteners</td><td class="r">₹40 L</td><td>${loan === "approved" ? '<span class="badge green">Approved</span>' : '<span class="badge blue">In review</span>'}</td></tr>
+      <tr><td>Sample Bolts</td><td class="r">₹25 L</td><td><span class="badge green">Tranche 1 paid</span></td></tr>
+      <tr><td>Sample Forgings</td><td class="r">₹15 L</td><td><span class="badge amber">Awaiting site visit</span></td></tr></tbody></table></div></div></div>`;
   AFTER["lender.applications"] = () => { $("ap").onclick = () => { loan = "approved"; render(); toast("Loan approved"); }; $("inf").onclick = () => { loan = "info"; render(); toast("Request sent to Sample Fasteners"); }; };
 
   VIEWS["cluster.pilot"] = () => {
@@ -286,7 +299,13 @@
     <li><div class="d"></div><div><b>Verify · April to September 2027</b><span>Batched campaign; 2026 files signed before 30 September 2027. Gate: audit at or under ₹7 L a site.</span></div></li>
     <li><div class="d"></div><div><b>Scale · 2028</b><span>250 exporters across Ludhiana, Jalandhar, Howrah and Faridabad.</span></div></li>
     <li><div class="d"></div><div><b>Decarbonise · 2029</b><span>600 exporters; matching to lower-carbon steel; 15% lower tCO₂/t for members.</span></div></li>
-  </ul></div></div>`;
+  </ul></div></div>
+  <div class="panel" style="margin-top:16px"><div class="panel-h"><h3>Gates</h3><span class="notice">Below 50% of lots traced by March 2027, the pilot stops</span></div><div class="table-wrap"><table class="data"><thead><tr><th>Phase</th><th>Gate</th><th class="r">Today</th><th>Status</th></tr></thead><tbody>
+    <tr><td>Pilot</td><td>At least 70% of lots traced to a mill report</td><td class="r">74%</td><td><span class="badge green">Met</span></td></tr>
+    <tr><td>Verify</td><td>Audit at or under ₹7 L a site</td><td class="r">₹6.0 L planned</td><td><span class="badge amber">On track</span></td></tr>
+    <tr><td>Scale</td><td>Peak cumulative burn at or under ₹5 cr</td><td class="r">₹5.0 cr base case</td><td><span class="badge amber">On track</span></td></tr>
+    <tr><td>Decarbonise</td><td>15% lower tCO₂/t for members</td><td class="r">–</td><td><span class="badge plain">Not started</span></td></tr>
+  </tbody></table></div></div>`;
 
   /* ---------- drawer ---------- */
   function openDrawer() { $("drawer").dataset.open = "true"; document.body.style.overflow = "hidden"; $("drawer").querySelector(".icon-btn").focus(); }

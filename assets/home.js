@@ -58,6 +58,89 @@
     new IntersectionObserver(([e], o) => { if (e.isIntersecting) { add(); o.disconnect(); } }, { threshold: 0.3 }).observe(body);
   })();
 
+
+  /* ---------- map: build once, used by the pinned journey ---------- */
+  function journey(animated) {
+    const M = window.CK_MAP, svg = $("#map"); if (!M || !svg) return;
+    const NS = "http://www.w3.org/2000/svg", el = (t, a = {}, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+    svg.innerHTML = `<defs><linearGradient id="routeGrad" gradientUnits="userSpaceOnUse" x1="1000" y1="480" x2="80" y2="140"><stop offset="0" stop-color="#FF5B1F"/><stop offset=".55" stop-color="#FFB547"/><stop offset="1" stop-color="#3DDC97"/></linearGradient>
+      <radialGradient id="glowIn" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF5B1F" stop-opacity=".55"/><stop offset="1" stop-color="#FF5B1F" stop-opacity="0"/></radialGradient></defs>`;
+    const gLand = el("g", { class: "lands" });
+    const tip = $("#mapTip"), wrap = $("#mapWrap");
+    const showTip = (e, html) => { const r = wrap.getBoundingClientRect(); tip.innerHTML = html; tip.style.transform = `translate(${e.clientX - r.left + 14}px, ${e.clientY - r.top + 14}px)`; tip.classList.add("on"); };
+    const hideTip = () => tip.classList.remove("on");
+    M.lands.forEach((l) => {
+      const pth = el("path", { d: l.d, class: "land land-" + l.k, "vector-effect": "non-scaling-stroke" }, gLand);
+      if (l.k !== "o") { pth.addEventListener("mousemove", (e) => showTip(e, l.k === "in" ? "<b>India</b>Official boundary" : `<b>${l.n}</b>EU member · CBAM applies to imports`)); pth.addEventListener("mouseleave", hideTip); }
+    });
+    const base = el("path", { d: M.route, class: "base" });
+    const lit = el("path", { d: M.route, class: "lit" });
+    const puckGlow = el("circle", { r: 18, fill: "url(#glowIn)", class: "puck-glow" });
+    const nodeLayer = el("g", { class: "nodes" });
+    const OFF = { mill: [16, 5, "start"], stockist: [16, -10, "start"], workshop: [-16, -12, "end"], verifier: [-16, 22, "end"], port: [-16, 5, "end"], eu: [16, 5, "start"] };
+    const stopsEls = $$(".stop");
+    const nodes = M.nodes.map((n, i) => {
+      const g = el("g", { class: "node n-" + n.id + (n.id === "verifier" ? " twin" : ""), tabindex: 0, role: "button", "aria-label": `${n.label}, ${n.sub}` }, nodeLayer);
+      el("circle", { r: 16, class: "pulse" }, g); el("circle", { r: 9, class: "ring" }, g); el("circle", { r: 3.6, class: "core" }, g);
+      let [dx, dy, anchor] = OFF[n.id];
+      if (n.id === "mill" && svg.clientWidth < 600) { dx = -16; dy = 26; anchor = "end"; }
+      const t = el("text", { x: dx, y: dy, "text-anchor": anchor, class: "lbl" }, g); t.textContent = n.label;
+      const t2 = el("text", { x: dx, y: dy + 16, "text-anchor": anchor, class: "sub" }, g); t2.textContent = n.sub;
+      const blurb = stopsEls[i] ? stopsEls[i].querySelector("h3").textContent : "";
+      g.addEventListener("mousemove", (e) => showTip(e, `<b>${n.label} · ${n.sub}</b>${blurb}`)); g.addEventListener("mouseleave", hideTip);
+      const goTo = () => { if (journey.st) { const st = journey.st; window.scrollTo({ top: st.start + (st.end - st.start) * ((i + 0.55) / 6), behavior: "smooth" }); } };
+      g.addEventListener("click", goTo); g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(); } });
+      return { ...n, g };
+    });
+    const puck = el("circle", { r: 5.5, class: "puck" });
+    const L = lit.getTotalLength();
+    const at = M.nodes.map((n) => { let best = 0, bd = 1e12; for (let l = 0; l <= L; l += 2) { const p = lit.getPointAtLength(l); const d = (p.x - n.xy[0]) ** 2 + (p.y - n.xy[1]) ** 2; if (d < bd) { bd = d; best = l; } } return best / L; });
+    at[0] = 0; at[at.length - 1] = 1;
+    // views normalised to the map's aspect ratio
+    const AR = M.W / M.H, norm = ([x, y, w, h]) => { const cx = x + w / 2, cy = y + h / 2; if (w / h < AR) w = h * AR; else h = w / AR; return [cx - w / 2, cy - h / 2, w, h]; };
+    const V_IN = norm(M.views.india), V_W = M.views.world;
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const lerpV = (a, b, t) => a.map((v, k) => v + (b[k] - v) * t);
+    function camera(v) {
+      svg.setAttribute("viewBox", v.map((n) => n.toFixed(2)).join(" "));
+      const k = v[2] / (svg.clientWidth || 700);
+      svg.classList.toggle("far", v[2] > 520);
+      nodes.forEach((n) => n.g.setAttribute("transform", `translate(${n.xy[0]} ${n.xy[1]}) scale(${k.toFixed(4)})`));
+      puck.setAttribute("r", 5.5 * k); puckGlow.setAttribute("r", 22 * k);
+      lit.style.strokeWidth = 2.6 * k; base.style.strokeWidth = 1.3 * k; base.style.strokeDasharray = `${2 * k} ${5 * k}`;
+    }
+    function draw(frac, idx, v) {
+      const len = Math.min(L, frac * L); lit.style.strokeDashoffset = L - len;
+      const p = lit.getPointAtLength(len); puck.setAttribute("cx", p.x); puck.setAttribute("cy", p.y); puckGlow.setAttribute("cx", p.x); puckGlow.setAttribute("cy", p.y);
+      nodes.forEach((n, i) => { n.g.classList.toggle("on", i <= idx); n.g.classList.toggle("cur", i === idx); });
+      camera(v);
+    }
+    lit.style.strokeDasharray = L;
+    const pinned = animated && hasGsap && !reduce && window.matchMedia("(min-width: 961px)").matches;
+    if (!pinned) { draw(1, 5, V_W); nodes.forEach((n) => n.g.classList.add("on")); window.addEventListener("resize", () => camera(V_W)); return; }
+    let cur = 0;
+    draw(0, 0, V_W);
+    journey.st = ScrollTrigger.create({
+      trigger: "#journey", start: "top top", end: "bottom bottom", scrub: 0.5,
+      onUpdate: (s) => {
+        const p = Math.min(1, s.progress * 1.04);
+        const seg = Math.min(4, Math.floor(p * 5)), local = Math.min(1, p * 5 - seg);
+        const move = local < 0.4 ? 0 : (local - 0.4) / 0.6;
+        const frac = at[seg] + (at[seg + 1] - at[seg]) * ease(move);
+        let idx = 0; at.forEach((a, i) => { if (frac >= a - 0.0005) idx = i; });
+        if (seg === 3 && move === 0) idx = 3;
+        // camera: open on the world, settle on India, pull back for the sea leg
+        let v;
+        if (p < 0.08) v = lerpV(V_W, V_IN, ease(p / 0.08));
+        else if (frac <= at[4]) v = V_IN;
+        else v = lerpV(V_IN, V_W, ease(Math.min(1, (frac - at[4]) / ((at[5] - at[4]) * 0.7))));
+        draw(frac, idx, v);
+        if (idx !== cur) { stopsEls[cur].classList.remove("on"); stopsEls[idx].classList.add("on"); cur = idx; $("#jProg").innerHTML = `<b>0${idx + 1}</b> / 06`; }
+      },
+    });
+    window.addEventListener("resize", () => ScrollTrigger.refresh());
+  }
+
   /* ---------- 3. count-ups ---------- */
   function countUp(el) {
     const to = +el.dataset.to, from = el.dataset.from !== undefined ? +el.dataset.from : 0, dec = +(el.dataset.dec || 0);
@@ -81,7 +164,7 @@
     $$(".statement .w").forEach((w) => (w.style.opacity = 1));
     $$(".cost-row .tr > div").forEach((d, i) => (d.style.width = [100, 71.8, 22.2][i] + "%"));
     $("#bigFig").innerHTML = '₹10.4<small>lakh</small>';
-    $$(".route-svg .node").forEach((n) => n.classList.add("on"));
+    journey(false);
     return;
   }
 
@@ -137,36 +220,8 @@
     ScrollTrigger.create({ trigger: "#reveal", start: "top 70%", once: true, onEnter: () => [0, 1, 2].forEach((i) => setTimeout(() => showStep(i), i * 700)) });
   }
 
-  /* ---------- 7. journey ---------- */
-  const lit = $("#routeLit"), puck = $("#puck");
-  if (lit && window.matchMedia("(min-width: 961px)").matches) {
-    const L = lit.getTotalLength();
-    lit.style.strokeDasharray = L; lit.style.strokeDashoffset = L;
-    const nodes = $$(".route-svg .node"), stops = $$(".stop");
-    const at = nodes.map((n) => { const m = n.getAttribute("transform").match(/([\d.]+)[ ,]+([\d.]+)/); const x = +m[1], y = +m[2]; let best = 0, bd = 1e9; for (let l = 0; l <= L; l += 4) { const p = lit.getPointAtLength(l); const d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = l; } } return best / L; });
-    let cur = 0;
-    ScrollTrigger.create({
-      trigger: "#journey", start: "top top", end: "bottom bottom", scrub: 0.6,
-      onUpdate: (s) => {
-        const p = Math.min(1, s.progress * 1.04);
-        const seg = Math.min(4, Math.floor(p * 5)), local = Math.min(1, p * 5 - seg);
-        const move = local < 0.4 ? 0 : (local - 0.4) / 0.6;
-        const eased = move < 0.5 ? 2 * move * move : 1 - Math.pow(-2 * move + 2, 2) / 2;
-        const frac = at[seg] + (at[seg + 1] - at[seg]) * eased;
-        const len = Math.min(L, frac * L);
-        lit.style.strokeDashoffset = L - len;
-        const pt = lit.getPointAtLength(len); puck.setAttribute("cx", pt.x); puck.setAttribute("cy", pt.y);
-        let idx = 0; at.forEach((a, i) => { if (frac >= a - 0.002) idx = i; });
-        nodes.forEach((n, i) => n.classList.toggle("on", i <= idx));
-        if (idx !== cur) { stops[cur].classList.remove("on"); stops[idx].classList.add("on"); cur = idx; $("#jProg").innerHTML = `<b>0${idx + 1}</b> / 06`; }
-      },
-    });
-    nodes[0].classList.add("on");
-  } else {
-    $$(".route-svg .node").forEach((n) => n.classList.add("on"));
-    if (lit) lit.style.strokeDasharray = "none";
-  }
-
+  /* ---------- 7. journey on a real map ---------- */
+  journey(true);
   /* ---------- 8. section reveals with stagger ---------- */
   $$(".tile .stage").forEach((s) => gsap.from(s, { y: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: s, start: "top 88%" } }));
   gsap.utils.toArray(".vchk").forEach((b, i) => gsap.from(b, { scale: 0.6, opacity: 0, duration: 0.5, delay: i * 0.25, ease: "back.out(2)", scrollTrigger: { trigger: b, start: "top 90%" } }));

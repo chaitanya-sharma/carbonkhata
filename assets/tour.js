@@ -35,8 +35,8 @@
   .sc .pill { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; padding: 3px 9px; border-radius: 99px; background: var(--subtle); color: var(--text-2); }
   .sc .pill.g { background: var(--green-tint); color: var(--green); } .sc .pill.r { background: var(--khata-tint); color: var(--khata); } .sc .pill.a { background: var(--amber-tint); color: var(--amber); }
   .sc .meterx { height: 10px; border-radius: 99px; background: var(--subtle); overflow: hidden; } .sc .meterx > div { height: 100%; width: 0; background: var(--text); border-radius: 99px; }
-  .sc .ring { width: 74px; height: 74px; }
-  .sc .ring circle { fill: none; stroke-width: 7; } .sc .ring .bg { stroke: var(--subtle); } .sc .ring .fg { stroke: var(--green); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+  .ring { width: 84px; height: 84px; margin: 0 auto; display: block; }
+  .ring circle { fill: none; stroke-width: 7; } .ring .bg { stroke: var(--line); } .ring .fg { stroke: var(--green); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; } .ring-wrap { position: relative; } .ring-wrap .rv { position: absolute; inset: 0; display: grid; place-items: center; color: var(--green); } .ring-wrap .rv svg { width: 26px; height: 26px; }
   .sc .toastx { position: absolute; left: 50%; top: 54px; transform: translateX(-50%); background: var(--text); color: #fff; padding: 9px 16px; border-radius: 99px; font-size: 13px; opacity: 0; white-space: nowrap; }
   .tallyx { height: 100%; display: grid; grid-template-columns: 1fr 250px; background: #FFFEF6; color: #1d2733; font: 12.5px/1.5 var(--mono); }
   .tallyx .l { border-right: 1px solid #d9d2bd; } .tallyx .hd { background: #1F4E79; color: #fff; padding: 8px 14px; display: flex; justify-content: space-between; }
@@ -249,7 +249,7 @@
       build() {
         const g = [["c1", "Exporters", "50 / 50", 1], ["c2", "Lots traced", "74%", 0.74], ["c3", "Mills", "2 / 2", 1], ["c4", "Stockists", "15 / 15", 1]];
         stage.insertAdjacentHTML("beforeend", `<div class="scene"><div class="light screen" style="width:min(100%,760px)" id="c-box"><div class="screen-top"><i></i><i></i><i></i><span>eepc · ludhiana pilot</span></div><div class="screen-body" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center">
-          ${g.map(([id, l, v]) => `<div>${ring(id)}<div style="font-weight:500;margin-top:8px">${v}</div><div style="color:var(--text-3);font-size:12.5px">${l}</div></div>`).join("")}
+          ${g.map(([id, l, v, f]) => `<div><div class="ring-wrap">${ring(id)}<div class="rv">${icon("check")}</div></div><div style="font-weight:600;margin-top:10px">${v}</div><div style="color:var(--text-3);font-size:12.5px">${l}</div></div>`).join("")}
           <div style="grid-column:1/-1;margin-top:6px;padding:12px;border-radius:12px;background:var(--green-tint);color:var(--green)">Gate met: 74% of lots traced, against a 70% target</div></div></div>
           <div class="end" id="c-end" style="position:absolute;opacity:0"><div class="bigx">₹500 cr</div><p>a year of EU margin protected by Year 3, across 600 exporters. Fix the data now; cut the carbon next.</p><div class="btns"><a class="btn btn-primary btn-lg" href="/platform">Try the platform</a><a class="btn btn-secondary btn-lg" href="/pilot">Join the pilot</a></div></div></div>`);
         const tl = gsap.timeline({ paused: true });
