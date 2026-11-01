@@ -3,657 +3,294 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carbon Khata</title>
-<meta name="description" content="Carbon Khata carries a steel mill's verified emissions, lot by lot through stockists, into a verifier-signed EU CBAM file for Indian MSME exporters.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Carbon Khata · CBAM-ready emissions data for India's steel supply chain</title>
+<meta name="description" content="Carbon Khata carries a steel mill's verified emissions through stockist invoices to Indian MSME exporters, so EU buyers pay CBAM on actual carbon instead of India's default values.">
+<meta property="og:title" content="Carbon Khata · CBAM-ready emissions data for India's steel supply chain">
+<meta property="og:description" content="Carbon Khata carries a steel mill's verified emissions through stockist invoices to Indian MSME exporters, so EU buyers pay CBAM on actual carbon instead of India's default values.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0E3B35">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#1B1A17; --ink2:#4A463D; --ink3:#7A7465;
-  --paper:#F6F0E2; --paper2:#EFE5CD; --card:#FFFBF2; --rule:#DCCFB0;
-  --khata:#B3282D; --khata-lt:#F6DEDB;
-  --turmeric:#E3A21A; --turmeric-lt:#FBEBC4;
-  --leaf:#1E5E46; --leaf-lt:#D7E8DD;
-  --steel:#3E4C59; --steel-lt:#DCE3E8;
-  --shadow:0 1px 0 rgba(27,26,23,.06),0 8px 24px -12px rgba(27,26,23,.25);
-  --r:14px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;margin:0}
-.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-
-/* header */
-header.top{position:sticky;top:0;z-index:20;background:rgba(246,240,226,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
-.bar{display:flex;align-items:center;gap:18px;min-height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none;white-space:nowrap}
-@media (max-width:980px){
-  .bar{flex-wrap:wrap;gap:6px;padding-top:10px;padding-bottom:8px}
-  .brand small{display:none}
-  nav.roles{margin-left:0;width:100%;padding-bottom:2px}
-}
-.brand b{font-family:Fraunces,serif;font-size:21px;font-weight:800}
-.brand small{display:block;font-size:11px;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-top:-3px}
-nav.roles{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
-nav.roles a{padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;color:var(--ink2);white-space:nowrap}
-nav.roles a:hover{background:var(--paper2)}
-nav.roles a.on{background:var(--ink);color:var(--paper)}
-
-/* ledger page feel */
-.ledger{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);position:relative;overflow:hidden}
-.ledger.ruled{background-image:linear-gradient(transparent 31px,var(--paper2) 32px);background-size:100% 32px}
-.ledger .margin{position:absolute;left:46px;top:0;bottom:0;border-left:2px solid var(--khata-lt)}
-.pad{padding:22px 24px}
-.tag{display:inline-block;font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:6px;background:var(--paper2);color:var(--ink2)}
-.tag.red{background:var(--khata-lt);color:var(--khata)}
-.tag.green{background:var(--leaf-lt);color:var(--leaf)}
-.tag.gold{background:var(--turmeric-lt);color:#8A5F00}
-.muted{color:var(--ink3)}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);font-weight:600;font-size:14px;text-decoration:none;cursor:pointer}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.small{padding:7px 11px;font-size:13px}
-.btn:hover{transform:translateY(-1px)}
-.grid{display:grid;gap:18px}
-.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
-@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}.pad{padding:18px}}
-
-/* hero */
-.hero{padding:56px 0 30px}
-.hero h1{font-size:clamp(34px,5.4vw,62px);line-height:1.02;font-weight:800;max-width:15ch}
-.hero h1 em{font-style:normal;color:var(--khata)}
-.hero p.lead{font-size:18px;max-width:58ch;color:var(--ink2);margin:18px 0 26px}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:start}
-@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
-.stat{padding:16px 18px;border-bottom:1px dashed var(--rule)}
-.stat:last-child{border-bottom:0}
-.stat .n{font:700 30px/1.1 Fraunces,serif}
-.stat .l{font-size:13px;color:var(--ink2)}
-
-/* role cards */
-.section{padding:34px 0}
-.section h2{font-size:30px;margin-bottom:6px}
-.role{display:block;text-decoration:none;padding:20px;border-radius:var(--r);border:1px solid var(--rule);background:var(--card);box-shadow:var(--shadow);transition:transform .15s}
-.role:hover{transform:translateY(-3px)}
-.role .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;margin-bottom:12px}
-.role h3{font-size:19px;margin-bottom:4px}
-.role p{margin:0;font-size:14px;color:var(--ink2)}
-.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:s}
-.flow div{padding:16px 14px;border-top:3px solid var(--ink);position:relative}
-.flow div::before{counter-increment:s;content:counter(s);font:700 12px "IBM Plex Mono";color:var(--khata);display:block;margin-bottom:6px}
-.flow b{display:block;font-family:Fraunces,serif;font-size:17px;margin-bottom:4px}
-.flow span{font-size:13px;color:var(--ink2)}
-.flow i{display:block;font:500 11px "IBM Plex Mono";color:var(--leaf);margin-top:8px;font-style:normal}
-@media (max-width:900px){.flow{grid-template-columns:1fr 1fr}}
-
-/* view header */
-.vhead{padding:34px 0 18px;display:flex;gap:24px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
-.vhead h1{font-size:clamp(28px,4vw,42px);font-weight:800;max-width:22ch}
-.persona{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:10px 14px;max-width:420px}
-.persona .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:700 15px Fraunces;color:#fff;flex:none}
-.persona p{margin:0;font-size:13px;color:var(--ink2)}
-
-/* tables */
-table{width:100%;border-collapse:collapse;font-size:14px}
-th{text-align:left;font:600 11px "IBM Plex Mono";letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);padding:9px 10px;border-bottom:1.5px solid var(--ink)}
-td{padding:10px;border-bottom:1px solid var(--rule);vertical-align:top}
-td.num,th.num{text-align:right;font-family:"IBM Plex Mono";white-space:nowrap}
-td.mono{white-space:nowrap}
-tr.total td{font-weight:700;border-top:1.5px solid var(--ink);border-bottom:0}
-
-/* bars */
-.bars .row{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;margin:9px 0;font-size:14px}
-.bars .track{height:16px;background:var(--paper2);border-radius:4px;overflow:hidden}
-.bars .fill{height:100%;border-radius:4px;transition:width .5s ease}
-.bars .v{font-family:"IBM Plex Mono";font-weight:600;text-align:right}
-@media (max-width:640px){.bars .row{grid-template-columns:110px 1fr 74px}}
-
-/* timeline */
-.steps{list-style:none;margin:0;padding:0}
-.steps li{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:8px 0;position:relative}
-.steps li::after{content:"";position:absolute;left:12px;top:32px;bottom:-8px;border-left:2px solid var(--rule)}
-.steps li:last-child::after{display:none}
-.dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:700 12px "IBM Plex Mono";border:2px solid var(--rule);background:var(--card)}
-.dot.done{background:var(--leaf);border-color:var(--leaf);color:#fff}
-.dot.now{background:var(--turmeric);border-color:var(--turmeric);color:var(--ink)}
-.steps b{display:block;font-size:14px}
-.steps span{font-size:13px;color:var(--ink3)}
-
-/* misc */
-.kpi{padding:16px 18px;border-radius:12px;background:var(--card);border:1px solid var(--rule)}
-.kpi .n{font:700 26px Fraunces}
-.kpi .l{font-size:13px;color:var(--ink2)}
-.kpi.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.kpi.dark .l{color:#CFC6B2}
-.kpi.gold{background:var(--turmeric-lt);border-color:#EED390}
-.note{font-size:12.5px;color:var(--ink3);margin-top:10px}
-.callout{border-left:4px solid var(--khata);background:var(--khata-lt);padding:12px 14px;border-radius:0 10px 10px 0;font-size:14px}
-.callout.green{border-color:var(--leaf);background:var(--leaf-lt)}
-.chat{display:flex;flex-direction:column;gap:10px}
-.msg{max-width:88%;padding:10px 12px;border-radius:12px;font-size:14px}
-.msg.in{background:#E7F5DF;align-self:flex-start;border-top-left-radius:2px}
-.msg.out{background:var(--card);border:1px solid var(--rule);align-self:flex-end;border-top-right-radius:2px}
-.field{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-bottom:1px dotted var(--rule)}
-.field:last-child{border-bottom:0}
-.ok{color:var(--leaf);font-weight:700}
-.bad{color:var(--khata);font-weight:700}
-label.ctl{display:block;margin:12px 0}
-label.ctl .row{display:flex;justify-content:space-between;font-size:13px;font-weight:600}
-label.ctl output{font-family:"IBM Plex Mono"}
-input[type=range]{width:100%;accent-color:var(--khata)}
-select,input[type=number]{font:inherit;padding:8px 10px;border:1.5px solid var(--rule);border-radius:8px;background:#fff;width:100%}
-.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:10px;overflow:hidden}
-.seg button{border:0;background:transparent;padding:8px 13px;font:600 13px "IBM Plex Sans";cursor:pointer}
-.seg button.on{background:var(--ink);color:var(--paper)}
-.alert{margin-top:10px;padding:10px 12px;border-radius:8px;font-size:13.5px;display:none}
-.alert.show{display:block}
-.alert.err{background:var(--khata-lt);color:var(--khata)}
-.alert.okk{background:var(--leaf-lt);color:var(--leaf)}
-.week{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.day{background:var(--paper2);border-radius:10px;padding:10px;min-height:120px}
-.day h4{margin:0 0 6px;font:600 12px "IBM Plex Mono";text-transform:uppercase;color:var(--ink3)}
-.site{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--leaf);border-radius:6px;padding:6px 8px;font-size:12.5px;margin-bottom:6px}
-.site.pending{border-left-color:var(--turmeric)}
-@media (max-width:760px){.week{grid-template-columns:1fr 1fr}}
-.tally{background:#FFFEF8;border:1px solid #CBBF9C;border-radius:8px;font-family:"IBM Plex Mono";font-size:12.5px}
-.tally .tt{background:#2F5D8C;color:#fff;padding:6px 10px;border-radius:7px 7px 0 0;font-weight:600}
-.tally .tb{padding:10px 12px}
-.toggle{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dotted var(--rule);font-size:14px}
-.sw{width:40px;height:22px;border-radius:999px;background:var(--rule);position:relative;cursor:pointer;flex:none;border:0}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
-.sw.on{background:var(--leaf)}
-.sw.on::after{left:21px}
-.sw.lock{background:#C9BFA8;cursor:not-allowed}
-footer{margin-top:40px;border-top:1px solid var(--rule);padding:28px 0 40px;font-size:13px;color:var(--ink3)}
-.fade{animation:fade .35s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
-<header class="top">
-  <div class="wrap bar">
-    <a class="brand" href="#/">
-      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="5" width="25" height="25" rx="3" fill="#B3282D"/><rect x="3" y="5" width="25" height="5" fill="#8E1F23"/><path d="M8 16h15M8 21h11" stroke="#F6F0E2" stroke-width="2"/><circle cx="27" cy="9" r="6" fill="#E3A21A"/><text x="27" y="12" font-size="7" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" fill="#1B1A17">CO₂</text></svg>
-      <span><b>Carbon Khata</b><small>Verified steel emissions ledger</small></span>
+<body data-page="home">
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="Carbon Khata home">
+      <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="20" height="23" rx="3" fill="#0E3B35"/><rect x="2" y="3" width="5" height="23" rx="2" fill="#B42318"/><path d="M10 10h8M10 14.5h8M10 19h5" stroke="#FAF9F6" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="4.5" fill="#FAF9F6" stroke="#0E3B35" stroke-width="1.6"/><path d="m20.6 6.6 1.3 1.3 2.5-2.6" stroke="#0B7A53" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Carbon Khata
     </a>
-    <nav class="roles" id="nav"></nav>
+    <nav class="main-nav" aria-label="Main">
+      <a href="/platform" data-page="platform">Platform</a>
+      <div class="nav-drop" data-open="false">
+        <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
+        <div class="drop-panel" role="menu">
+          <a href="/solutions#exporters" role="menuitem"><span class="ico" data-icon="bolt"></span><span><b>Exporters</b><span>File EU data on actual emissions</span></span></a>
+          <a href="/solutions#stockists" role="menuitem"><span class="ico" data-icon="store"></span><span><b>Stockists</b><span>Pass mill reports on with every sale</span></span></a>
+          <a href="/solutions#mills" role="menuitem"><span class="ico" data-icon="factory"></span><span><b>Steel mills</b><span>Publish one report for every buyer</span></span></a>
+          <a href="/solutions#verifiers" role="menuitem"><span class="ico" data-icon="shield"></span><span><b>Verifiers</b><span>Run one campaign per cluster</span></span></a>
+          <a href="/solutions#importers" role="menuitem"><span class="ico" data-icon="ship"></span><span><b>EU importers</b><span>Buy fewer CBAM certificates</span></span></a>
+          <a href="/solutions#lenders" role="menuitem"><span class="ico" data-icon="bank"></span><span><b>Lenders</b><span>Lend on verified emissions records</span></span></a>
+        </div>
+      </div>
+      <a href="/calculator" data-page="calculator">Calculator</a>
+      <a href="/pricing" data-page="pricing">Pricing</a>
+      <a href="/trust" data-page="trust">Trust &amp; compliance</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-ghost btn-sm" href="/platform">Live demo</a>
+      <a class="btn btn-primary btn-sm" href="/pilot">Join the pilot</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
+  <nav class="mobile-nav" data-open="false" aria-label="Mobile">
+    <a href="/platform">Platform</a>
+    <div class="group">Solutions</div>
+    <a href="/solutions#exporters">Exporters</a>
+    <a href="/solutions#stockists">Stockists</a>
+    <a href="/solutions#mills">Steel mills</a>
+    <a href="/solutions#verifiers">Verifiers</a>
+    <a href="/solutions#importers">EU importers</a>
+    <a href="/solutions#lenders">Lenders</a>
+    <div class="group">More</div>
+    <a href="/calculator">Calculator</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/trust">Trust &amp; compliance</a>
+    <a class="btn btn-primary" href="/pilot">Join the pilot</a>
+  </nav>
 </header>
-<main id="app"></main>
-<footer>
-  <div class="wrap">
-    <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
-      <div><b style="color:var(--ink);font-family:Fraunces,serif;font-size:16px">Carbon Khata</b><br>Team Carbon Khata, XLRI Delhi-NCR · Quest EYP 2026 final</div>
-      <div style="max-width:640px">Demo data is illustrative: firms, lots, invoice numbers and heat numbers are made up. Regulatory values and prices are real: EU Reg. 2023/956; IR 2025/2546, 2025/2547, 2025/2620, 2025/2621 as amended by 2026/1740; Reg. (EU) 2026/1384; DG TAXUD quarterly certificate prices; Commission CBAM Q&amp;A. Certificate price €75.28 (Q2 2026), €1 = ₹108.</div>
+<main id="main">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">EU CBAM is payable on every tonne imported since 1 January 2026</span>
+      <h1>CBAM-ready emissions data for India's steel supply chain</h1>
+      <p class="lead">Carbon Khata carries a mill's verified emissions through each stockist invoice to the exporter, so EU buyers pay for the carbon in Indian steel and not for India's default values.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="/platform">Explore the live demo <span data-icon="arrow"></span></a>
+        <a class="btn btn-secondary btn-lg" href="/calculator">Estimate your CBAM cost</a>
+      </div>
+      <div class="hero-note">
+        <span><span data-icon="check"></span>Built on EU Implementing Regulations 2025/2546, 2547, 2620 and 2621</span>
+        <span><span data-icon="check"></span>Ludhiana pilot opens December 2026</span>
+      </div>
+    </div>
+
+    <div class="mock" aria-label="Product preview: shipment EU-2391">
+      <div class="mock-top"><i></i><i></i><i></i><span>app.carbonkhata / shipments / EU-2391</span></div>
+      <div class="mock-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+          <div>
+            <div class="xs muted mono">SHIPMENT EU-2391</div>
+            <div style="font-weight:600;font-size:18px;margin-top:4px">120 t of M10 bolts to Hamburg</div>
+          </div>
+          <span class="badge amber">Verification scheduled</span>
+        </div>
+        <div class="divider" style="margin:18px 0"></div>
+        <div class="xs muted" style="margin-bottom:10px">CBAM cost on this shipment, 2026</div>
+        <div class="bars">
+          <div class="bar-row"><span>India default value <span class="muted mono xs">6.29 tCO₂/t</span></span><span class="val">₹46.8 L</span><div class="track"><div class="fill" style="width:100%;background:var(--khata)"></div></div></div>
+          <div class="bar-row"><span>Own plant verified, no mill data <span class="muted mono xs">4.78</span></span><span class="val">₹33.6 L</span><div class="track"><div class="fill" style="width:71.8%;background:#D97757"></div></div></div>
+          <div class="bar-row"><span>With Carbon Khata <span class="muted mono xs">2.40</span></span><span class="val">₹10.4 L</span><div class="track"><div class="fill" style="width:22.2%;background:var(--green)"></div></div></div>
+        </div>
+        <div class="divider" style="margin:18px 0"></div>
+        <table class="data" style="font-size:13px">
+          <thead><tr><th>Steel lot</th><th>Source</th><th class="r">Tonnes</th><th class="r">tCO₂/t</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">WR-5.5-A</td><td>Stockist, Mandi Gobindgarh</td><td class="r">72</td><td class="r">2.38</td></tr>
+            <tr><td class="mono">WR-5.5-B</td><td>Direct from mill</td><td class="r">54</td><td class="r">2.31</td></tr>
+          </tbody>
+        </table>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding:14px 16px;border-radius:10px;background:var(--green-tint)">
+          <span class="small" style="color:var(--green);font-weight:500">Saved on this shipment</span>
+          <span class="mono" style="font-weight:600;font-size:20px;color:var(--green)">₹36.4 L</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container" aria-label="Key figures">
+  <div class="metrics-band">
+    <div class="metric red"><div class="v num">₹30,400</div><div class="l">extra CBAM cost per tonne of Indian bolts filed on default values in 2026</div></div>
+    <div class="metric"><div class="v num">−22% to −27%</div><div class="l">fall in Indian fastener exports to the EU in the 2026 payment phase</div></div>
+    <div class="metric"><div class="v num">5</div><div class="l">bodies worldwide hold EU CBAM verifier accreditation (Oct 2026)</div></div>
+    <div class="metric"><div class="v num">30 Sep 2027</div><div class="l">deadline for the first EU declaration, covering all 2026 imports</div></div>
+  </div>
+  <p class="source">Sources: EU Implementing Regulation 2025/2621 and DG TAXUD Q2 2026 price; Agaran Analytica, Oct 2026; cbamguide.com verifier tracker, Oct 2026; EU Regulation 2023/956 as amended.</p>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">The problem</span>
+      <h2>Small exporters lose the mill's data on the way to them</h2>
+      <p class="lead">India's large mills already measure and verify their emissions. The report stops at the stockist, so the bolt maker who exports to Europe has nothing to file, and the EU charges its buyer on India's default value.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card"><div class="icon-box red" data-icon="link"></div><h3>Reports don't survive a lot split</h3><p class="muted">Stockists in Mandi Gobindgarh split mill coils into small lots for Ludhiana workshops. The mill's emissions report is not passed on with the invoice.</p></div>
+      <div class="card"><div class="icon-box red" data-icon="file"></div><h3>Plant records sit on paper</h3><p class="muted">Fuel bills, weighbridge slips and production logs are paper or WhatsApp photos. Few MSMEs have a monitoring plan or anyone trained in CBAM.</p></div>
+      <div class="card"><div class="icon-box red" data-icon="shield"></div><h3>Verification is scarce and costly</h3><p class="muted">Every site needs an accredited verifier's visit in year one. Done alone, a small plant pays about ₹17.5 lakh for the plan, the visit and the fee.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2>One verified report, carried lot by lot</h2>
+      <p class="lead">Each step follows an EU rule that is already in force.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Mill publishes</h3><p>The mill shares the verified report it already prepares for its own EU customers, with heat numbers.</p><div class="rule">IR 2025/2547, IR 2025/2620</div></div>
+      <div class="step"><div class="n">02</div><h3>Stockist passes it on</h3><p>Each sale is logged against its GST e-invoice number. Tonnes sold can never exceed tonnes bought.</p><div class="rule">Weighted average, Art. 14</div></div>
+      <div class="step"><div class="n">03</div><h3>Exporter completes it</h3><p>The exporter adds its own fuel and process data from bills and meters. A reviewer checks every field.</p><div class="rule">Direct emissions only for steel</div></div>
+      <div class="step"><div class="n">04</div><h3>Verifier signs</h3><p>Accredited verifiers visit every site in one cluster campaign and sign the file the EU importer submits.</p><div class="rule">IR 2025/2546</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Solutions</span>
+      <h2>Built for everyone who touches the steel</h2>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Solutions by role" id="roleTabs"></div>
+    <div class="tab-panel" id="rolePanel" role="tabpanel"></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container grid cols-2" style="align-items:center;gap:56px">
+    <div>
+      <span class="eyebrow">CBAM calculator</span>
+      <h2>See what default values cost you</h2>
+      <p class="lead" style="margin-top:16px">Enter a shipment size to compare the CBAM bill on India's default value with the bill on verified data. The full calculator covers coil and bolts, 2026 to 2028, and any certificate price.</p>
+      <a class="btn btn-secondary" href="/calculator" style="margin-top:12px">Open the full calculator <span data-icon="arrow"></span></a>
+    </div>
+    <div class="card">
+      <div class="field" style="margin-bottom:8px">
+        <div class="range-row"><label for="qt">Bolts shipped to the EU in 2026</label><output id="qtOut" for="qt"></output></div>
+        <input type="range" id="qt" min="20" max="1000" step="10" value="300">
+      </div>
+      <div class="grid cols-2" style="gap:16px;margin-top:16px">
+        <div class="metric red"><div class="v num" id="qDef"></div><div class="l">on India's default value</div></div>
+        <div class="metric green"><div class="v num" id="qAct"></div><div class="l">on verified data</div></div>
+      </div>
+      <div class="callout" style="margin-top:20px">You keep <b class="num" id="qSave"></b> a year before fees. Carbon Khata charges <b class="num" id="qFee"></b>.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Frequently asked</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Doesn't the 97.5% free allocation make the 2026 bill almost zero?</summary><p>No. The 97.5% factor scales the EU benchmark deduction (1.53 tonnes of CO₂ per tonne of steel), not the exporter's emissions. A bolt filed on India's default carries 6.29 tonnes, so about 4.8 certificates a tonne are still payable. Our <a class="link" href="/calculator">calculator</a> shows every step.</p></details>
+      <details><summary>Why can't an exporter just verify its own plant?</summary><p>It should, and Carbon Khata organises that. But most of a bolt's emissions come from the wire rod. Without the mill's report, the rod takes India's default of about 4.3 tonnes plus the mark-up, so the exporter still pays about ₹19,300 a tonne more than it would with the mill's data.</p></details>
+      <details><summary>Does Carbon Khata verify the data?</summary><p>No. Accredited verifiers do. EU impartiality rules bar a verifier from preparing its own client's plan, so we prepare the evidence and the verifier checks and signs it.</p></details>
+      <details><summary>Will stockists share their buying prices or customers?</summary><p>No. The ledger holds tonnes, lot numbers, heat numbers and the mill's emissions report. Prices, margins and customer lists never leave the stockist's books.</p></details>
+      <details><summary>Is the GST e-invoice changed?</summary><p>No. We use the invoice reference number only as a key to match a lot to its report. Emissions data stays in Carbon Khata, so nothing in the GST schema changes.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="padding-bottom:96px">
+  <div class="cta-band">
+    <div>
+      <h2 style="color:#fff">Join the Ludhiana pilot</h2>
+      <p style="margin-top:14px;font-size:17px">Fifty exporters, two mills and fifteen stockists, from December 2026. We co-fund the first verification campaign so 2026 files are signed before 30 September 2027.</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn-secondary btn-lg" href="/pilot">Request a pilot slot</a>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const roles = [
+    ["Exporters", "bolt", "File EU data on actual emissions and keep over 90% of the saving.",
+      ["Mill reports arrive with every steel lot you buy", "Send bills and weighbridge slips on WhatsApp; a reviewer checks each field", "One verifier campaign for your cluster instead of a solo audit", "Billed per verified tonne when the file is signed"], "/platform#exporter", "₹36.4 L", "kept on a 120 t bolt shipment in 2026"],
+    ["Stockists", "store", "Keep the mill's report attached when you split a lot, and earn for it.",
+      ["Tag lots from Tally while you bill", "The ledger blocks sales beyond the tonnes you bought", "Earn ₹50 for every traced tonne, paid by the exporter", "Prices and customers stay private"], "/platform#stockist", "₹50/t", "paid to the stockist for each traced tonne"],
+    ["Steel mills", "factory", "Publish the report you already make, once, for every downstream buyer.",
+      ["Free to join", "Choose exactly which fields are shared", "Heat numbers prove melt-and-pour origin for the EU steel quota", "See demand for your lower-carbon grades"], "/platform#mill", "Free", "for mills and stockists"],
+    ["Verifiers", "shield", "Fill a week of site visits in one cluster with ready evidence packs.",
+      ["Standard monitoring plan per product family", "Evidence packs built from the ledger", "Field work by your Indian branch; your EU entity signs", "Travel shared across about ten sites a week"], "/platform#verifier", "₹17.5 L → ₹6 L", "cost per exporter site, alone vs batched"],
+    ["EU importers", "ship", "Buy certificates on actual emissions and prove origin for the quota.",
+      ["Verified supplier list for Indian fasteners", "Actual-data files for every shipment", "Melt-and-pour evidence from the mill's heat numbers", "Files ready before the 30 September 2027 declaration"], "/platform#importer", "576 → 128", "certificates on one 120 t shipment"],
+    ["Lenders", "bank", "Lend for cleaner steel against records an EU verifier has signed.",
+      ["Twelve months of verified emissions per borrower", "No separate emissions due diligence", "Track the effect of each loan on tCO₂ per tonne", "Origination fee of 0.5%"], "/platform#lender", "0.5%", "origination fee on green loans"],
+  ];
+  const tabs = document.getElementById("roleTabs"), panel = document.getElementById("rolePanel");
+  function show(i) {
+    tabs.querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-selected", String(i === j)));
+    const [name, ic, line, pts, href, big, bigL] = roles[i];
+    panel.innerHTML = `<div class="role-panel">
+      <div><h3 style="font-size:26px;letter-spacing:-0.02em">${line}</h3>
+        <ul>${pts.map((p) => `<li>${icon("check")}<span>${p}</span></li>`).join("")}</ul>
+        <a class="link" href="${href}" style="margin-top:20px">See the ${name.toLowerCase()} view in the demo ${icon("arrow")}</a></div>
+      <div class="card" style="background:var(--pine);border-color:var(--pine);color:#fff;padding:40px">
+        <div class="icon-box" style="background:rgba(255,255,255,.1);color:#fff">${icon(ic)}</div>
+        <div class="num" style="font-size:44px;font-weight:600;letter-spacing:-0.03em">${big}</div>
+        <p style="color:#C9DAD5;margin-top:8px">${bigL}</p></div></div>`;
+  }
+  tabs.innerHTML = roles.map((r, i) => `<button role="tab" type="button">${r[0]}</button>`).join("");
+  tabs.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => show(i)));
+  show(0);
+
+  const q = document.getElementById("qt");
+  const draw = () => {
+    const t = +q.value, r = CK.perTonne({ product: "bolts", year: 2026 });
+    document.getElementById("qtOut").textContent = t + " t";
+    document.getElementById("qDef").textContent = fmt.lakh(r.def * t);
+    document.getElementById("qAct").textContent = fmt.lakh(r.act * t);
+    document.getElementById("qSave").textContent = fmt.lakh(r.saving * t);
+    document.getElementById("qFee").textContent = fmt.lakh(120000 + 400 * t, 2);
+  };
+  q.addEventListener("input", draw); draw();
+});
+</script>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="/"><svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="20" height="23" rx="3" fill="#0E3B35"/><rect x="2" y="3" width="5" height="23" rx="2" fill="#B42318"/><path d="M10 10h8M10 14.5h8M10 19h5" stroke="#FAF9F6" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="4.5" fill="#FAF9F6" stroke="#0E3B35" stroke-width="1.6"/><path d="m20.6 6.6 1.3 1.3 2.5-2.6" stroke="#0B7A53" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Carbon Khata</a>
+        <p style="margin-top:16px;max-width:34ch">The shared emissions ledger for India's steel supply chain, built for the EU Carbon Border Adjustment Mechanism.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul><li><a href="/platform">Platform</a></li><li><a href="/calculator">CBAM calculator</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/pilot">Ludhiana pilot</a></li></ul>
+      </div>
+      <div>
+        <h4>Solutions</h4>
+        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li></ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul><li><a href="/trust#rules">EU rules we follow</a></li><li><a href="/trust#data">Data protection</a></li><li><a href="/trust#ai">How we use AI</a></li><li><a href="/trust#governance">Governance</a></li></ul>
+      </div>
+      <div>
+        <h4>Team</h4>
+        <ul><li>Team Carbon Khata</li><li>XLRI Delhi-NCR</li><li>Quest EY-Parthenon 2026</li></ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 Carbon Khata. Product in pilot; sample data in the demo is illustrative.</span>
+      <span>Prices: EU CBAM certificate €75.28 (Q2 2026) · €1 = ₹108</span>
     </div>
   </div>
 </footer>
-
-<script>
-/* ---------- model: same numbers as the deck ---------- */
-const FX = 108;
-const CF = { 2026: 0.975, 2027: 0.95, 2028: 0.90 };       // CBAM factor on the benchmark
-const MU = { 2026: 0.10, 2027: 0.20, 2028: 0.30 };        // default mark-up
-const BENCH = { def: 1.53, act: 1.37 };
-const P = {
-  bolts: { name: "M10 bolts (CN 7318 15)", def: 5.72, rodDef: 4.30, rod: 2.35, own: 0.05 },
-  hrc:   { name: "Hot-rolled coil (CN 7208)", def: 4.28, act: 2.30 },
-};
-const certs = (see, bench, y) => Math.max(see - bench * CF[y], 0);
-const rs = (v) => "₹" + Math.round(v).toLocaleString("en-IN");
-const r100 = (v) => "₹" + (Math.round(v / 100) * 100).toLocaleString("en-IN");
-const lakh = (v) => "₹" + (v / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 1 }) + " L";
-const t2 = (v) => v.toFixed(2);
-
-function costs(prod, y, price, traced = 1) {
-  const pf = price * FX;
-  if (prod === "hrc") {
-    const d = P.hrc.def * (1 + MU[y]);
-    return { defSEE: d, actSEE: P.hrc.act, noMillSEE: d,
-      def: certs(d, BENCH.def, y) * pf, act: certs(P.hrc.act, BENCH.act, y) * pf, noMill: certs(d, BENCH.def, y) * pf };
-  }
-  const b = P.bolts, d = b.def * (1 + MU[y]);
-  const rodDef = b.rodDef * (1 + MU[y]);
-  const act = traced * b.rod + (1 - traced) * rodDef + b.own;
-  const noMill = rodDef + b.own;
-  return { defSEE: d, actSEE: act, noMillSEE: noMill,
-    def: certs(d, BENCH.def, y) * pf, act: certs(act, BENCH.act, y) * pf, noMill: certs(noMill, BENCH.act, y) * pf };
-}
-
-/* ---------- demo data ---------- */
-const SHIP = { id: "EU-2391", t: 120, to: "Hamburg", buyer: "Rheinwerk Befestigung GmbH (demo)",
-  lots: [
-    { lot: "WR-5.5-A", mill: "Integrated mill, BF-BOF", via: "Stockist lot ST-7781, Mandi Gobindgarh", irn: "…9f3a21", t: 72, see: 2.38 },
-    { lot: "WR-5.5-B", mill: "Integrated mill, BF-BOF", via: "Bought direct", irn: "…44c0de", t: 54, see: 2.31 },
-  ] };
-const ledger = { parent: 100, see: 2.38, heat: "H-24K118", kids: [
-  { to: "Demo fastener unit A, Ludhiana", t: 40, irn: "…9f3a21" },
-  { to: "Demo forging unit B, Ludhiana", t: 35, irn: "…b71e04" },
-] };
-
-/* ---------- routing ---------- */
-const ROUTES = [
-  ["", "Overview"], ["exporter", "Exporter"], ["stockist", "Stockist"], ["mill", "Mill"],
-  ["verifier", "Verifier"], ["importer", "EU importer"], ["lender", "Lender"], ["cluster", "EEPC cluster"], ["calculator", "Calculator"],
-];
-const nav = document.getElementById("nav"), app = document.getElementById("app");
-function route() {
-  const r = (location.hash.replace(/^#\/?/, "") || "").split("?")[0];
-  nav.innerHTML = ROUTES.map(([k, l]) => `<a href="#/${k}" class="${k === r ? "on" : ""}">${l}</a>`).join("");
-  app.innerHTML = `<div class="fade">${(V[r] || V[""])()}</div>`;
-  (H[r] || (() => {}))();
-  window.scrollTo({ top: 0 });
-}
-window.addEventListener("hashchange", route);
-
-const head = (tag, title, who, initials, color, about) => `
-  <div class="wrap vhead">
-    <div><span class="tag ${tag[1] || ""}">${tag[0]}</span><h1 style="margin-top:10px">${title}</h1></div>
-    <div class="persona"><div class="av" style="background:${color}">${initials}</div><p><b style="color:var(--ink)">${who}</b><br>${about}</p></div>
-  </div>`;
-
-/* ---------- views ---------- */
-const V = {};
-const H = {};
-
-V[""] = () => {
-  const c = costs("bolts", 2026, 75.28);
-  return `
-  <section class="wrap hero">
-    <div class="hero-grid">
-      <div>
-        <span class="tag red">EU CBAM · payable on 2026 imports</span>
-        <h1 style="margin-top:14px">The mill's verified emissions, carried <em>lot by lot</em> to the EU file.</h1>
-        <p class="lead">A Ludhiana bolt maker buys steel through a stockist, so the mill's emissions report never reaches it. The EU then bills its buyer on India's default value. Carbon Khata keeps that report attached to every tonne, from the mill through the stockist's invoice to a verifier-signed file.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn" href="#/exporter">Follow shipment EU-2391</a>
-          <a class="btn ghost" href="#/calculator">Run the numbers</a>
-        </div>
-      </div>
-      <div class="ledger ruled"><div class="margin"></div>
-        <div style="padding:14px 18px 6px 64px"><span class="tag">2026 · per tonne of bolts</span></div>
-        <div class="stat" style="padding-left:64px"><div class="n mono" style="color:var(--khata)">${r100(c.def)}</div><div class="l">CBAM cost on India's default (5.72 t +10%)</div></div>
-        <div class="stat" style="padding-left:64px"><div class="n mono">${r100(c.noMill)}</div><div class="l">own plant verified, wire rod still on default</div></div>
-        <div class="stat" style="padding-left:64px"><div class="n mono" style="color:var(--leaf)">${r100(c.act)}</div><div class="l">with the mill's report carried through Carbon Khata</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap section">
-    <h2>How a tonne travels</h2>
-    <p class="muted" style="margin:0 0 18px">Each step rests on an EU rule that already exists.</p>
-    <div class="ledger pad"><div class="flow">
-      <div><b>Steel mill</b><span>Shares the verified report it already makes for its own EU sales.</span><i>IR 2025/2547 · 2025/2620</i></div>
-      <div><b>Stockist</b><span>Logs each onward sale against its GST invoice number. Tonnes out never exceed tonnes in.</span><i>Art. 14 weighted average</i></div>
-      <div><b>Exporter</b><span>Adds its own fuel and process data. Untraced tonnes take the default for that share only.</span><i>Untraced share on default</i></div>
-      <div><b>Verifier</b><span>Visits every site in year 1, run as one cluster campaign.</span><i>IR 2025/2546</i></div>
-      <div><b>EU importer</b><span>Files actual data and proves melt-and-pour origin for the steel quota.</span><i>Reg. 2026/1384</i></div>
-    </div></div>
-  </section>
-
-  <section class="wrap section">
-    <h2>Seven people use the same ledger</h2>
-    <p class="muted" style="margin:0 0 18px">Pick a role to see what Carbon Khata does for them.</p>
-    <div class="grid g4">
-      ${[
-        ["exporter", "Exporter", "Files EU data on actual numbers and keeps over 90% of the saving.", "#B3282D", "E"],
-        ["stockist", "Stockist", "Splits lots without losing the mill's report and earns ₹50 a traced tonne.", "#E3A21A", "S"],
-        ["mill", "Steel mill", "Publishes one report that reaches every downstream buyer.", "#3E4C59", "M"],
-        ["verifier", "Verifier", "Runs one Ludhiana campaign instead of 50 separate trips.", "#1E5E46", "V"],
-        ["importer", "EU importer", "Buys fewer certificates and gets origin proof for the quota.", "#2F5D8C", "I"],
-        ["lender", "Lender", "Underwrites green loans on verified records.", "#6B4E9B", "L"],
-        ["cluster", "EEPC cluster", "Tracks the pilot against its gates.", "#1B1A17", "C"],
-        ["calculator", "Calculator", "Changes price, mark-up and traced share live.", "#8E1F23", "₹"],
-      ].map(([k, h, p, c, i]) => `<a class="role" href="#/${k}"><div class="ic" style="background:${c};color:#fff;font:700 17px Fraunces">${i}</div><h3>${h}</h3><p>${p}</p></a>`).join("")}
-    </div>
-  </section>
-
-  <section class="wrap section">
-    <div class="grid g3">
-      <div class="kpi dark"><div class="n">5</div><div class="l">bodies hold EU CBAM verifier accreditation (Oct 2026); NABCB does not qualify</div></div>
-      <div class="kpi"><div class="n">30 Sep 2027</div><div class="l">first EU declaration, covering every 2026 import</div></div>
-      <div class="kpi gold"><div class="n">−22% to −27%</div><div class="l">fall in Indian fastener exports to the EU in the 2026 payment phase (Agaran Analytica)</div></div>
-    </div>
-  </section>`;
-};
-
-V.exporter = () => {
-  const c = costs("bolts", 2026, 75.28), t = SHIP.t;
-  const w = (v) => (v / c.def * 100).toFixed(1) + "%";
-  const wavg = (SHIP.lots.reduce((a, l) => a + l.t * l.see, 0) / SHIP.lots.reduce((a, l) => a + l.t, 0));
-  return head(["Exporter view", "red"], "Shipment EU-2391: 120 t of M10 bolts to Hamburg", "Demo fastener unit A, Ludhiana", "A", "#B3282D", "18 people, 300 t a year to the EU, buys wire rod through a Mandi Gobindgarh stockist") + `
-  <div class="wrap grid g2" style="align-items:start">
-    <div class="ledger pad">
-      <span class="tag">CBAM cost on this shipment, 2026</span>
-      <div class="bars" style="margin-top:12px">
-        <div class="row"><span>EU default ${t2(c.defSEE)}</span><div class="track"><div class="fill" style="width:${w(c.def)};background:var(--khata)"></div></div><span class="v">${lakh(c.def * t)}</span></div>
-        <div class="row"><span>No mill data ${t2(c.noMillSEE)}</span><div class="track"><div class="fill" style="width:${w(c.noMill)};background:#8E1F23"></div></div><span class="v">${lakh(c.noMill * t)}</span></div>
-        <div class="row"><span>Carbon Khata ${t2(c.actSEE)}</span><div class="track"><div class="fill" style="width:${w(c.act)};background:var(--leaf)"></div></div><span class="v">${lakh(c.act * t)}</span></div>
-      </div>
-      <div class="grid g3" style="margin-top:16px">
-        <div class="kpi gold"><div class="n">${lakh((c.def - c.act) * t)}</div><div class="l">kept on this shipment</div></div>
-        <div class="kpi"><div class="n">${lakh((c.noMill - c.act) * t)}</div><div class="l">of it needs the mill's report</div></div>
-        <div class="kpi"><div class="n">₹48,000</div><div class="l">filing fee at ₹400/t, billed when the file is signed</div></div>
-      </div>
-      <p class="note">Figures in tCO₂ per tonne. Certificates = emissions − benchmark × 97.5%. The 97.5% applies to the 1.53 t benchmark, not to the exporter's emissions.</p>
-    </div>
-    <div class="ledger pad">
-      <span class="tag">Where the steel came from</span>
-      <table style="margin-top:10px">
-        <tr><th>Lot</th><th>Via</th><th>Invoice (IRN)</th><th class="num">t</th><th class="num">tCO₂/t</th></tr>
-        ${SHIP.lots.map((l) => `<tr><td class="mono">${l.lot}</td><td>${l.via}</td><td class="mono">${l.irn}</td><td class="num">${l.t}</td><td class="num">${t2(l.see)}</td></tr>`).join("")}
-        <tr><td colspan="3">Weighted average of both mill reports (Art. 14)</td><td class="num">126</td><td class="num">${t2(wavg)}</td></tr>
-        <tr><td colspan="4">Own heat treatment, from meter and fuel bill</td><td class="num">+0.05</td></tr>
-        <tr class="total"><td colspan="4">Embedded emissions per tonne of bolts</td><td class="num">2.40</td></tr>
-      </table>
-      <ul class="steps" style="margin-top:16px">
-        <li><div class="dot done">✓</div><div><b>Mill reports linked</b><span>2 of 2 lots traced through the stockist ledger</span></div></li>
-        <li><div class="dot done">✓</div><div><b>Evidence checked</b><span>Fuel bills, weighbridge slips and production log read, then checked by a reviewer</span></div></li>
-        <li><div class="dot now">3</div><div><b>Verifier campaign</b><span>Ludhiana batch, site visit in week 3</span></div></li>
-        <li><div class="dot">4</div><div><b>Signed in the EU CBAM Registry</b><span>Verifier signs; importer files before 30 Sep 2027</span></div></li>
-      </ul>
-      <button class="btn small" id="dl" style="margin-top:8px">Download the emissions data package (demo)</button>
-    </div>
-  </div>
-
-  <div class="wrap grid g2" style="margin-top:18px;align-items:start">
-    <div class="ledger pad">
-      <span class="tag green">Evidence inbox · WhatsApp</span>
-      <div class="chat" style="margin-top:14px">
-        <div class="msg in">📷 Photo: furnace oil bill, Oct 2026</div>
-        <div class="msg out">
-          <div class="field"><span>Supplier</span><b>Punjab Fuels (demo)</b></div>
-          <div class="field"><span>Furnace oil</span><b class="mono">3,200 L</b></div>
-          <div class="field"><span>Period</span><b class="mono">01–31 Oct 2026</b></div>
-          <div class="field"><span>Read by</span><span>Document reader · checked by reviewer <span class="ok">✓</span></span></div>
-        </div>
-        <div class="msg in">📷 Photo: weighbridge slip, lot WR-5.5-A</div>
-        <div class="msg out">
-          <div class="field"><span>Net weight</span><b class="mono">24.62 t</b></div>
-          <div class="field"><span>Check against invoice</span><span class="bad">0.38 t short, flagged for the reviewer</span></div>
-        </div>
-      </div>
-      <p class="note">The software reads documents in Punjabi, Hindi and English and flags gaps. A person checks every field. It never fills in missing data.</p>
-    </div>
-    <div class="ledger pad">
-      <span class="tag">This exporter's year (300 t)</span>
-      <table style="margin-top:10px">
-        <tr><td>Penalty avoided</td><td class="num ok">${lakh((c.def - c.act) * 300)}</td></tr>
-        <tr><td>Carbon Khata fees (₹1.2 L + 300 t × ₹400)</td><td class="num">₹2.4 L</td></tr>
-        <tr><td>Stockist tracing fee (300 t × ₹50)</td><td class="num">₹0.15 L</td></tr>
-        <tr><td>Batched verifier fee</td><td class="num">₹6 L</td></tr>
-        <tr class="total"><td>Kept by the exporter after all costs</td><td class="num">${Math.round((1 - 855000 / ((c.def - c.act) * 300)) * 100)}%</td></tr>
-      </table>
-      <div class="callout green" style="margin-top:14px">Punjab's 2026 industrial policy repays 75% of MSME audit costs, up to ₹3 L per audit.</div>
-    </div>
-  </div>`;
-};
-H.exporter = () => {
-  document.getElementById("dl").onclick = () => {
-    const c = costs("bolts", 2026, 75.28);
-    const pkg = { demo: true, shipment: SHIP.id, cn: "7318 15", tonnes: SHIP.t, destination: SHIP.to,
-      precursors: SHIP.lots.map((l) => ({ lot: l.lot, tonnes: l.t, see_direct_tco2_per_t: l.see, irn: l.irn, route: "BF-BOF" })),
-      own_process_tco2_per_t: 0.05, see_direct_tco2_per_t: 2.40, method: "IR 2025/2547 Art. 14 weighted average",
-      benchmark: 1.37, cbam_factor_2026: 0.975, certificates_per_t: +(2.40 - 1.37 * 0.975).toFixed(3),
-      cost_inr: Math.round(c.act * SHIP.t), default_cost_inr: Math.round(c.def * SHIP.t), verifier: "pending: Ludhiana campaign week 3" };
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(pkg, null, 2)], { type: "application/json" }));
-    a.download = "carbon-khata-EU-2391-demo.json"; a.click();
-  };
-};
-
-V.stockist = () => head(["Stockist view", "gold"], "Split a mill lot without losing its report", "Demo steel stockist, Mandi Gobindgarh", "S", "#E3A21A", "Sells wire rod from several mills to about 40 Ludhiana workshops") + `
-  <div class="wrap grid g2" style="align-items:start">
-    <div class="ledger pad">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
-        <span class="tag">Lot ST-7781 · wire rod 5.5 mm</span><span class="tag green">Mill report ${t2(ledger.see)} tCO₂/t · heat ${ledger.heat}</span>
-      </div>
-      <div style="margin:16px 0 6px;display:flex;justify-content:space-between;font-size:13px"><b>Mass balance</b><span class="mono" id="mb"></span></div>
-      <div class="track" style="height:20px;background:var(--paper2);border-radius:6px;overflow:hidden"><div id="mbfill" class="fill" style="height:100%;background:var(--turmeric);transition:width .4s"></div></div>
-      <table style="margin-top:14px" id="kids"></table>
-      <div class="grid g3" style="margin-top:14px;grid-template-columns:1.6fr 1fr auto;align-items:end">
-        <label>Buyer<select id="buyer"><option>Demo bolt unit C, Ludhiana</option><option>Demo hand-tool unit D, Jalandhar</option><option>Demo fastener unit A, Ludhiana</option></select></label>
-        <label>Tonnes<input type="number" id="tons" value="20" min="1"></label>
-        <button class="btn" id="add">Sell</button>
-      </div>
-      <div class="alert" id="msg"></div>
-    </div>
-    <div class="grid" style="gap:18px">
-      <div class="tally">
-        <div class="tt">Tally Prime · Sales voucher T-4471</div>
-        <div class="tb">
-          <div class="field"><span>Party</span><span>Demo fastener unit A</span></div>
-          <div class="field"><span>Item</span><span>Wire rod 5.5 mm, 40 t</span></div>
-          <div class="field"><span>e-Invoice IRN</span><span>…9f3a21</span></div>
-          <div class="field"><span>Carbon Khata tag</span><span class="ok">ST-7781 · 2.38 · H-24K118 ✓</span></div>
-        </div>
-      </div>
-      <p class="note" style="margin-top:-8px">The add-on tags the lot while the stockist bills. The invoice number is only the lookup key; emissions data stays in Carbon Khata, and nothing changes in the GST schema.</p>
-      <div class="grid g2">
-        <div class="kpi gold"><div class="n" id="earn"></div><div class="l">earned this lot at ₹50 per traced tonne, paid by the exporter</div></div>
-        <div class="kpi"><div class="n">Carbon-ready</div><div class="l">listing shown to exporters choosing a supplier</div></div>
-      </div>
-      <div class="callout">Buyers see emissions per lot. They never see this stockist's buying price, margin or other customers.</div>
-    </div>
-  </div>`;
-H.stockist = () => {
-  const draw = () => {
-    const used = ledger.kids.reduce((a, k) => a + k.t, 0), left = ledger.parent - used;
-    document.getElementById("mb").textContent = `${used} t sold · ${left} t left of ${ledger.parent} t`;
-    document.getElementById("mbfill").style.width = used / ledger.parent * 100 + "%";
-    document.getElementById("kids").innerHTML = `<tr><th>Sold to</th><th>Invoice (IRN)</th><th class="num">t</th></tr>` +
-      ledger.kids.map((k) => `<tr><td>${k.to}</td><td class="mono">${k.irn}</td><td class="num">${k.t}</td></tr>`).join("");
-    document.getElementById("earn").textContent = rs(used * 50);
-  };
-  draw();
-  document.getElementById("add").onclick = () => {
-    const t = Math.round(+document.getElementById("tons").value), m = document.getElementById("msg");
-    const left = ledger.parent - ledger.kids.reduce((a, k) => a + k.t, 0);
-    m.className = "alert show " + (t > left || t <= 0 ? "err" : "okk");
-    if (t <= 0) { m.textContent = "Enter tonnes above zero."; return; }
-    if (t > left) { m.textContent = `Blocked: only ${left} t of lot ST-7781 is left. The mill's report can't cover more tonnes than the stockist bought. Bill the extra from another lot, or it goes out untraced and takes the EU default.`; return; }
-    ledger.kids.push({ to: document.getElementById("buyer").value, t, irn: "…" + Math.random().toString(16).slice(2, 8) });
-    m.textContent = `Invoice raised. ${t} t carries the mill's 2.38 tCO₂/t report and heat ${ledger.heat}.`;
-    draw();
-  };
-};
-
-V.mill = () => head(["Steel mill view", ""], "One verified report, reused by every downstream buyer", "Demo integrated mill, BF-BOF route", "M", "#3E4C59", "Already prepares verified CBAM reports for its own EU customers") + `
-  <div class="wrap grid g2" style="align-items:start">
-    <div class="ledger pad">
-      <span class="tag">Report RPT-2026-0142 · published</span>
-      <table style="margin-top:10px">
-        <tr><td>Product</td><td>Wire rod, CN 7213</td></tr>
-        <tr><td>Route</td><td>Blast furnace, basic oxygen furnace</td></tr>
-        <tr><td>Reporting period</td><td class="mono">Jan to Dec 2026</td></tr>
-        <tr><td>Direct emissions (SEE)</td><td class="mono">2.38 tCO₂/t</td></tr>
-        <tr><td>Free allocation data (SEFA)</td><td>attached, as IR 2025/2620 requires</td></tr>
-        <tr><td>Verified by</td><td>EU-accredited body (demo)</td></tr>
-        <tr><td>Heat numbers covered</td><td class="mono">H-24K101 to H-24K160</td></tr>
-      </table>
-      <p class="note">India's default for wire rod is about 4.3 tCO₂/t before the mark-up. This report lets buyers use 2.38.</p>
-    </div>
-    <div class="grid" style="gap:18px">
-      <div class="grid g3">
-        <div class="kpi dark"><div class="n">4</div><div class="l">stockists carrying this report</div></div>
-        <div class="kpi"><div class="n">31</div><div class="l">exporters using it</div></div>
-        <div class="kpi gold"><div class="n">1,860 t</div><div class="l">reused in EU files this year</div></div>
-      </div>
-      <div class="ledger pad">
-        <span class="tag">What the mill shares</span>
-        ${[["Emissions per tonne, route, period", 1, 1], ["Heat numbers, for melt-and-pour origin", 1, 1], ["Free allocation data (SEFA)", 1, 1], ["Prices and discounts", 0, 1], ["Customer list", 0, 1], ["Process recipes", 0, 1]]
-          .map(([l, on, lock]) => `<div class="toggle"><span>${l}</span><button class="sw ${on ? "on" : ""} ${lock && !on ? "lock" : ""}" aria-label="${l}" disabled></button></div>`).join("")}
-        <p class="note">Joining is free. The mill already makes this report for its own EU sales.</p>
-      </div>
-      <div class="callout green">Two exporters asked for lower-carbon steel this month. The same records match them to scrap-based supply such as Tata Steel's Ludhiana EAF (0.3 tCO₂/t design intensity).</div>
-    </div>
-  </div>`;
-
-V.verifier = () => {
-  const sites = ["Unit A · bolts", "Unit C · bolts", "Unit F · nuts", "Unit H · washers", "Unit K · rivets", "Unit M · bolts", "Unit P · studs", "Unit R · bolts", "Unit T · screws", "Unit W · anchors"];
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-  return head(["Verifier view", "green"], "One Ludhiana campaign instead of 50 separate trips", "EU-accredited verifier, Indian branch (demo)", "V", "#1E5E46", "Field work by the Indian branch; the accredited EU body reviews and signs") + `
-  <div class="wrap">
-    <div class="ledger pad">
-      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><span class="tag">Campaign week 3 · 10 sites</span><span class="tag green">Every site gets its own year-1 visit (IR 2025/2546)</span></div>
-      <div class="week" style="margin-top:14px">
-        ${days.map((d, i) => `<div class="day"><h4>${d}</h4>${sites.slice(i * 2, i * 2 + 2).map((s, j) => `<div class="site ${i > 2 ? "pending" : ""}">${s}<br><span class="muted">${i > 2 ? "evidence pack ready" : "visited ✓"}</span></div>`).join("")}</div>`).join("")}
-      </div>
-    </div>
-  </div>
-  <div class="wrap grid g2" style="margin-top:18px;align-items:start">
-    <div class="ledger pad">
-      <span class="tag">Cost per exporter site (₹ lakh)</span>
-      <table style="margin-top:10px">
-        <tr><th>Item</th><th class="num">Alone</th><th class="num">Batched</th></tr>
-        <tr><td>Verifier fee, simple site<br><span class="muted" style="font-size:12.5px">€5,000 less a 15 to 25% multi-site discount</span></td><td class="num">5.4</td><td class="num ok">4.2</td></tr>
-        <tr><td>Year-1 site-visit travel<br><span class="muted" style="font-size:12.5px">one trip shared across ~10 sites a week</span></td><td class="num">4.3</td><td class="num ok">0.6</td></tr>
-        <tr><td>Monitoring plan and data<br><span class="muted" style="font-size:12.5px">one plan per product family; evidence pack from the ledger</span></td><td class="num">7.8</td><td class="num ok">1.2</td></tr>
-        <tr class="total"><td>Total</td><td class="num">17.5</td><td class="num ok">6.0</td></tr>
-      </table>
-    </div>
-    <div class="grid" style="gap:18px">
-      <div class="ledger pad">
-        <span class="tag">Evidence pack · Unit A</span>
-        ${[["Monitoring plan (bolts family template)", "ready"], ["Mill reports for 2 lots, with invoice links", "ready"], ["Fuel bills Jan to Dec 2026", "12 of 12"], ["Weighbridge slips", "1 flag resolved"], ["Production log", "ready"]].map(([a, b]) => `<div class="field"><span>${a}</span><span class="ok">${b}</span></div>`).join("")}
-      </div>
-      <div class="callout">Carbon Khata prepares the evidence and never verifies. Impartiality rules bar a verifier from preparing its own client's plan, so the two roles stay separate.</div>
-    </div>
-  </div>`;
-};
-
-V.importer = () => {
-  const y = 2026, d = 5.72 * 1.1, a = 2.40;
-  const cd = certs(d, BENCH.def, y) * SHIP.t, ca = certs(a, BENCH.act, y) * SHIP.t;
-  return head(["EU importer view", ""], "Fewer certificates, and origin proof for the steel quota", "Demo importer, Hamburg", "I", "#2F5D8C", "Authorised CBAM declarant buying fasteners from three Indian suppliers") + `
-  <div class="wrap grid g2" style="align-items:start">
-    <div class="ledger pad">
-      <span class="tag">Import of EU-2391 · certificates to buy</span>
-      <div class="grid g2" style="margin-top:12px">
-        <div class="kpi"><div class="n mono" style="color:var(--khata)">${Math.round(cd)}</div><div class="l">certificates on India's default</div></div>
-        <div class="kpi"><div class="n mono" style="color:var(--leaf)">${Math.round(ca)}</div><div class="l">certificates on actual data</div></div>
-      </div>
-      <p style="margin:14px 0 0;font-size:15px">At €75.28, that is <b class="mono">€${Math.round((cd - ca) * 75.28).toLocaleString("en-IN")}</b> less on one 120 t shipment.</p>
-      <p class="note">Certificate sales open on 1 February 2027. The first declaration for 2026 imports is due on 30 September 2027.</p>
-    </div>
-    <div class="ledger pad">
-      <span class="tag">Verified Indian suppliers</span>
-      <table style="margin-top:10px">
-        <tr><th>Supplier</th><th>Product</th><th class="num">tCO₂/t</th><th>Origin</th></tr>
-        <tr><td>Demo fastener unit A</td><td>Bolts</td><td class="num">2.40</td><td>India ✓</td></tr>
-        <tr><td>Demo bolt unit C</td><td>Bolts</td><td class="num">2.44</td><td>India ✓</td></tr>
-        <tr><td>Demo forging unit B</td><td>Forgings</td><td class="num">2.52</td><td>India ✓</td></tr>
-      </table>
-      <div class="callout" style="margin-top:14px">Since 1 July 2026, steel above a country's quota pays a 50% duty and must show where it was first melted and poured (Reg. 2026/1384). The mill's heat numbers in the ledger prove Indian origin.</div>
-    </div>
-  </div>`;
-};
-
-V.lender = () => head(["Lender view", ""], "A green loan underwritten on verified records", "SIDBI or a partner bank (demo)", "L", "#6B4E9B", "Lends to MSMEs that want to switch to lower-carbon steel") + `
-  <div class="wrap grid g2" style="align-items:start">
-    <div class="ledger pad">
-      <span class="tag">Application · Demo fastener unit A</span>
-      <table style="margin-top:10px">
-        <tr><td>Purpose</td><td>Move 30% of wire rod to scrap-based EAF steel; working capital for the price gap</td></tr>
-        <tr><td>Amount asked</td><td class="mono">₹40 L</td></tr>
-        <tr><td>Verified history</td><td>12 months of filed EU data, 300 t, 2.40 tCO₂/t</td></tr>
-        <tr><td>CBAM saving already banked</td><td class="mono">₹91.1 L a year</td></tr>
-        <tr><td>Projected intensity after switch</td><td class="mono">about 1.8 tCO₂/t</td></tr>
-      </table>
-    </div>
-    <div class="grid" style="gap:18px">
-      <div class="grid g2">
-        <div class="kpi dark"><div class="n">0.5%</div><div class="l">origination fee to Carbon Khata on the loan</div></div>
-        <div class="kpi gold"><div class="n">₹20,000</div><div class="l">fee on this ₹40 L loan</div></div>
-      </div>
-      <div class="callout green">The lender reads the same signed records the EU importer files, so it skips its own emissions check.</div>
-      <p class="note">Projected intensity is a demo estimate: 70% at 2.35 plus 30% at about 0.3 for scrap EAF steel, plus 0.05 for own process. The same records are reused for UK CBAM from January 2027 and for India's carbon market.</p>
-    </div>
-  </div>`;
-
-V.cluster = () => {
-  const gates = [["Exporters onboarded", 50, 50, ""], ["Lots traced to a mill report", 74, 70, "%"], ["Mills publishing", 2, 2, ""], ["Stockists on the ledger", 15, 15, ""]];
-  return head(["EEPC cluster view", ""], "Ludhiana pilot, December 2026 to March 2027", "EEPC India cluster cell (demo)", "C", "#1B1A17", "CBAM nodal body for engineering exporters; runs the camps") + `
-  <div class="wrap grid g4">
-    ${gates.map(([l, v, g, u]) => `<div class="kpi ${v >= g ? "" : "gold"}"><div class="n">${v}${u}</div><div class="l">${l} · target ${g}${u} ${v >= g ? '<span class="ok">✓</span>' : ""}</div></div>`).join("")}
-  </div>
-  <div class="wrap grid g2" style="margin-top:18px;align-items:start">
-    <div class="ledger pad">
-      <span class="tag">Roadmap and gates</span>
-      <ul class="steps" style="margin-top:12px">
-        <li><div class="dot now">1</div><div><b>Pilot · Dec 2026 to Mar 2027</b><span>50 exporters, 2 mills, 15 stockists. Gate: at least 70% of lots traced. Below 50%, we stop and become a verifier-scheduling service.</span></div></li>
-        <li><div class="dot">2</div><div><b>Verify · Apr to Sep 2027</b><span>Batched campaign; 2026 files signed before 30 Sep 2027. Gate: audit at or under ₹7 L a site.</span></div></li>
-        <li><div class="dot">3</div><div><b>Scale · 2028</b><span>250 exporters in 4 clusters: Ludhiana, Jalandhar, Howrah, Faridabad.</span></div></li>
-        <li><div class="dot">4</div><div><b>Decarbonise · 2029</b><span>600 exporters; matching to lower-carbon steel; tCO₂/t down 15% for members.</span></div></li>
-      </ul>
-    </div>
-    <div class="ledger pad">
-      <span class="tag">By the end of Year 3</span>
-      <table style="margin-top:10px">
-        <tr><td>EU carbon cost avoided</td><td class="num">~₹500 cr a year</td></tr>
-        <tr><td>Filings on actual data</td><td class="num">95% or more</td></tr>
-        <tr><td>Audit cost per site</td><td class="num">−66%</td></tr>
-        <tr><td>Tonnes on verified data</td><td class="num">210 kt a year</td></tr>
-        <tr><td>CO₂ avoided by switching steel</td><td class="num">~24 kt a year</td></tr>
-      </table>
-      <p class="note">Run-rate = 600 exporters × 350 t × ₹24,000 a tonne blended saving.</p>
-    </div>
-  </div>`;
-};
-
-V.calculator = () => head(["Calculator", "red"], "Work out the CBAM bill for your own shipment", "Anyone with a shipment", "₹", "#8E1F23", "Uses EU default values for India and official 2026 certificate prices") + `
-  <div class="wrap grid g2" style="align-items:start">
-    <div class="ledger pad">
-      <div class="seg" id="prod"><button data-v="bolts" class="on">Bolts</button><button data-v="hrc">Hot-rolled coil</button></div>
-      <div class="seg" id="yr" style="margin-left:8px"><button data-v="2026" class="on">2026</button><button data-v="2027">2027</button><button data-v="2028">2028</button></div>
-      <label class="ctl"><span class="row"><span>Tonnes shipped</span><output id="o-t"></output></span><input type="range" id="t" min="10" max="1000" step="10" value="120"></label>
-      <label class="ctl"><span class="row"><span>Certificate price (€ per tCO₂)</span><output id="o-p"></output></span><input type="range" id="p" min="50" max="130" step="0.01" value="75.28"></label>
-      <label class="ctl" id="tracedWrap"><span class="row"><span>Share of steel traced to a mill report</span><output id="o-s"></output></span><input type="range" id="s" min="0" max="100" step="5" value="100"></label>
-      <p class="note">Mark-up on defaults: +10% in 2026, +20% in 2027, +30% from 2028. CBAM factor: 97.5%, 95%, 90%. Benchmark 1.53 t on defaults and 1.37 t on actual data.</p>
-    </div>
-    <div class="ledger pad" id="out"></div>
-  </div>`;
-H.calculator = () => {
-  const st = { prod: "bolts", y: 2026 };
-  const seg = (id, key) => document.querySelectorAll(`#${id} button`).forEach((b) => b.onclick = () => {
-    document.querySelectorAll(`#${id} button`).forEach((x) => x.classList.toggle("on", x === b));
-    st[key] = key === "y" ? +b.dataset.v : b.dataset.v; draw();
-  });
-  seg("prod", "prod"); seg("yr", "y");
-  ["t", "p", "s"].forEach((i) => document.getElementById(i).oninput = draw);
-  function draw() {
-    const t = +document.getElementById("t").value, p = +document.getElementById("p").value, s = +document.getElementById("s").value / 100;
-    document.getElementById("o-t").textContent = t + " t";
-    document.getElementById("o-p").textContent = "€" + p;
-    document.getElementById("o-s").textContent = Math.round(s * 100) + "%";
-    document.getElementById("tracedWrap").style.display = st.prod === "bolts" ? "" : "none";
-    const c = costs(st.prod, st.y, p, st.prod === "bolts" ? s : 1);
-    const w = (v) => (v / c.def * 100).toFixed(1) + "%";
-    document.getElementById("out").innerHTML = `
-      <span class="tag">${P[st.prod].name} · ${st.y}</span>
-      <div class="bars" style="margin-top:12px">
-        <div class="row"><span>EU default ${t2(c.defSEE)}</span><div class="track"><div class="fill" style="width:${w(c.def)};background:var(--khata)"></div></div><span class="v">${lakh(c.def * t)}</span></div>
-        ${st.prod === "bolts" ? `<div class="row"><span>No mill data ${t2(c.noMillSEE)}</span><div class="track"><div class="fill" style="width:${w(c.noMill)};background:#8E1F23"></div></div><span class="v">${lakh(c.noMill * t)}</span></div>` : ""}
-        <div class="row"><span>Carbon Khata ${t2(c.actSEE)}</span><div class="track"><div class="fill" style="width:${w(c.act)};background:var(--leaf)"></div></div><span class="v">${lakh(c.act * t)}</span></div>
-      </div>
-      <div class="grid g2" style="margin-top:14px">
-        <div class="kpi gold"><div class="n">${lakh((c.def - c.act) * t)}</div><div class="l">saved on this shipment</div></div>
-        <div class="kpi"><div class="n">${r100(c.def - c.act)}</div><div class="l">saved per tonne</div></div>
-      </div>
-      <p class="note">${st.prod === "bolts" ? `Untraced steel takes India's wire-rod default (about 4.3 t plus mark-up) for that share only (IR 2025/2547 Art. 14). Own process adds 0.05 t.` : `Verified coil at 2.30 tCO₂/t, in line with Tata (2.32) and JSW (2.36) per tonne of steel.`} Direct emissions only, as the rules require for steel. Article 9 credit for Indian carbon prices: €0, since none is recognised yet.</p>`;
-  }
-  draw();
-};
-
-route();
-</script>
+<script src="/assets/site.js"></script>
 </body>
 </html>

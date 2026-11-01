@@ -1,0 +1,72 @@
+<!-- title: CBAM calculator -->
+<!-- description: Estimate the EU CBAM cost of an Indian steel shipment on India's default values and on verified data, with every step shown. -->
+<!-- page: calculator -->
+<!-- scripts: /assets/calc.js -->
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">CBAM calculator</span>
+    <h1>What will your EU buyer pay in CBAM?</h1>
+    <p class="lead">Compare the certificate bill on India's default values with the bill on verified data. Every step of the formula is shown below the result.</p>
+  </div>
+</section>
+
+<section class="section tight">
+  <div class="container grid" style="grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:32px;align-items:start" id="calcGrid">
+    <form class="card" id="calcForm" novalidate>
+      <div class="field"><span class="label">Product</span>
+        <div class="seg" id="segProduct"><button type="button" data-v="bolts" aria-pressed="true">Bolts and screws</button><button type="button" data-v="coil" aria-pressed="false">Hot-rolled coil</button></div>
+        <span class="hint" id="cnHint">CN 7318 15</span>
+      </div>
+      <div class="field"><span class="label">Year of import</span>
+        <div class="seg" id="segYear"><button type="button" data-v="2026" aria-pressed="true">2026</button><button type="button" data-v="2027" aria-pressed="false">2027</button><button type="button" data-v="2028" aria-pressed="false">2028</button></div>
+        <span class="hint" id="yearHint"></span>
+      </div>
+      <div class="field">
+        <label for="tons">Tonnes shipped</label>
+        <input type="number" id="tons" min="1" max="100000" step="1" value="120" inputmode="numeric">
+        <span class="err">Enter a number of tonnes above zero.</span>
+      </div>
+      <div class="field">
+        <label for="price">Certificate price (€ per tCO₂)</label>
+        <input type="number" id="price" min="1" max="300" step="0.01" value="75.28" inputmode="decimal">
+        <span class="hint">Q1 2026 €75.36 · Q2 €75.28 · Q3 €82.32 (DG TAXUD)</span>
+        <span class="err">Enter a price above zero.</span>
+      </div>
+      <div class="field" id="tracedField">
+        <div class="range-row"><label for="traced">Steel traced to a mill report</label><output id="tracedOut" for="traced"></output></div>
+        <input type="range" id="traced" min="0" max="100" step="5" value="100">
+        <span class="hint">Untraced steel takes India's wire-rod default for its share only.</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button type="button" class="btn btn-secondary btn-sm" id="share"><span data-icon="link"></span>Copy link to this result</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="reset">Reset</button>
+      </div>
+    </form>
+
+    <div>
+      <div class="grid cols-3" style="gap:16px">
+        <div class="card" style="padding:22px"><div class="metric red"><div class="v num" id="mDef"></div><div class="l">on India's default value</div></div></div>
+        <div class="card" style="padding:22px"><div class="metric green"><div class="v num" id="mAct"></div><div class="l">on verified data</div></div></div>
+        <div class="card" style="padding:22px;background:var(--pine);border-color:var(--pine);color:#fff"><div class="metric"><div class="v num" id="mSave"></div><div class="l" style="color:#C9DAD5" id="mSaveL"></div></div></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>Cost per shipment</h3>
+        <div class="bars" style="margin-top:18px" id="bars"></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>How the figure is built</h3>
+        <div class="table-wrap" style="margin-top:12px"><table class="data" id="walk"></table></div>
+        <p class="source" id="walkNote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container grid cols-3">
+    <div><h3>Method</h3><p class="muted small" style="margin-top:10px">Certificates per tonne equal embedded emissions minus the free-allocation adjustment, which is the EU benchmark times the CBAM factor (IR 2025/2620). Steel counts direct emissions only.</p></div>
+    <div><h3>Default values</h3><p class="muted small" style="margin-top:10px">India: bolts 5.72, hot-rolled coil 4.28, wire rod about 4.3 tCO₂/t (IR 2025/2621 as amended by 2026/1740), plus a mark-up of 10% in 2026, 20% in 2027 and 30% from 2028.</p></div>
+    <div><h3>What we leave out</h3><p class="muted small" style="margin-top:10px">No deduction for Indian carbon prices: the EU has not recognised any under Article 9. Default filings use the higher 1.53 t benchmark, so the saving shown is conservative.</p></div>
+  </div>
+</section>

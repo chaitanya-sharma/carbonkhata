@@ -1,0 +1,51 @@
+<!-- title: Platform -->
+<!-- description: Explore the Carbon Khata platform as an exporter, stockist, steel mill, verifier, EU importer, lender or cluster lead, using a sample Ludhiana workspace. -->
+<!-- page: platform -->
+<!-- scripts: /assets/app.js -->
+
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="container">
+    <span class="eyebrow">Platform</span>
+    <h1>One ledger, seven working views</h1>
+    <p class="lead">Switch roles to see how the same steel lot looks to the exporter, the stockist, the mill, the verifier, the EU importer, the lender and the cluster lead. Every number follows the EU rules and 2026 prices.</p>
+  </div>
+</section>
+
+<section class="section tight">
+  <div class="container">
+    <div class="app" id="app">
+      <aside class="app-side">
+        <div class="app-org"><div class="av" id="orgAv"></div><div><b id="orgName"></b><span id="orgSub"></span></div></div>
+        <nav class="app-nav" id="appNav" aria-label="Workspace"></nav>
+        <div class="foot">Sample workspace. Firms, lots and invoice numbers are illustrative; rules and prices are real.</div>
+      </aside>
+      <div class="app-main">
+        <div class="app-top">
+          <h2 id="viewTitle"></h2>
+          <div class="right">
+            <label class="notice" for="roleSel">Viewing as</label>
+            <select id="roleSel" aria-label="Choose a role">
+              <option value="exporter">Exporter</option>
+              <option value="stockist">Stockist</option>
+              <option value="mill">Steel mill</option>
+              <option value="verifier">Verifier</option>
+              <option value="importer">EU importer</option>
+              <option value="lender">Lender</option>
+              <option value="cluster">Cluster lead (EEPC)</option>
+            </select>
+          </div>
+        </div>
+        <div class="app-body" id="appBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="drawer" id="drawer" data-open="false" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <div class="scrim" data-close></div>
+  <div class="sheet">
+    <div class="sheet-h"><div><div class="xs muted mono" id="drawerKicker"></div><h3 id="drawerTitle" style="font-size:20px;margin-top:4px"></h3></div><button class="icon-btn" data-close aria-label="Close"><span data-icon="close"></span></button></div>
+    <div class="sheet-b" id="drawerBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>

@@ -1,0 +1,70 @@
+<!-- title: Ludhiana pilot -->
+<!-- description: Join the Carbon Khata pilot in Ludhiana from December 2026: 50 exporters, 2 mills and 15 stockists, with a co-funded verification campaign. -->
+<!-- page: pilot -->
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Ludhiana pilot · December 2026 to March 2027</span>
+    <h1>Get your 2026 shipments signed before the first EU deadline</h1>
+    <p class="lead">The pilot traces 2026 steel purchases back from invoices, books verifier capacity in December and runs the first cluster campaign from April, so files are signed before 30 September 2027.</p>
+  </div>
+</section>
+
+<section class="section tight">
+  <div class="container grid" style="grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:56px;align-items:start" id="pilotGrid">
+    <div>
+      <div class="grid cols-3" style="gap:16px">
+        <div class="card" style="padding:22px"><div class="metric"><div class="v num">50</div><div class="l">exporters</div></div></div>
+        <div class="card" style="padding:22px"><div class="metric"><div class="v num">2</div><div class="l">mills</div></div></div>
+        <div class="card" style="padding:22px"><div class="metric"><div class="v num">15</div><div class="l">stockists</div></div></div>
+      </div>
+      <h3 style="margin-top:40px">Who should apply</h3>
+      <ul style="padding-left:18px;color:var(--text-2);margin-top:12px">
+        <li>Exporters of fasteners and steel articles (HS 7318, 7326) to the EU, in Ludhiana or nearby</li>
+        <li>Stockists in Mandi Gobindgarh and Ludhiana that sell to them</li>
+        <li>Mills with verified CBAM reports for wire rod, bars or coil</li>
+      </ul>
+      <h3 style="margin-top:32px">Timeline</h3>
+      <ul class="timeline" style="margin-top:16px">
+        <li><div class="d now"></div><div><b>December 2026</b><span>Agreements with EEPC and associations; verifier slots booked; first mill live</span></div></li>
+        <li><div class="d"></div><div><b>January to March 2027</b><span>Onboarding camps; 2026 purchases traced from invoices; monitoring plans drafted</span></div></li>
+        <li><div class="d"></div><div><b>March 2027</b><span>Gate: at least 70% of lots traced to a mill report</span></div></li>
+        <li><div class="d"></div><div><b>April to September 2027</b><span>Cluster verifier campaign; 2026 files signed before 30 September</span></div></li>
+      </ul>
+      <div class="callout" style="margin-top:24px">The first file is free during the pilot, and we co-fund the first verification campaign.</div>
+    </div>
+
+    <form class="card" id="pilotForm" novalidate>
+      <h3>Request a pilot slot</h3>
+      <p class="muted small" style="margin-top:6px">Fill this in and we prepare a request you can send to the team.</p>
+      <div class="field" style="margin-top:20px"><label for="f-name">Your name</label><input id="f-name" type="text" autocomplete="name" required><span class="err">Enter your name.</span></div>
+      <div class="field"><label for="f-firm">Company</label><input id="f-firm" type="text" autocomplete="organization" required><span class="err">Enter your company name.</span></div>
+      <div class="field"><label for="f-role">You are</label><select id="f-role"><option>Exporter</option><option>Stockist</option><option>Steel mill</option><option>Verifier</option><option>EU importer</option><option>Lender</option></select></div>
+      <div class="field"><label for="f-phone">Phone or WhatsApp</label><input id="f-phone" type="tel" autocomplete="tel" inputmode="tel" required><span class="err">Enter a 10-digit mobile number.</span></div>
+      <div class="field"><label for="f-tons">Steel shipped to the EU in 2026 (tonnes)</label><input id="f-tons" type="number" min="0" inputmode="numeric"><span class="hint">Optional. An estimate is fine.</span></div>
+      <button class="btn btn-primary" type="submit" style="width:100%">Prepare my request</button>
+      <div id="formOut"></div>
+    </form>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const CONTACT_EMAIL = ""; // set the team's inbox here to enable the "Send by email" button
+  if (window.matchMedia("(max-width: 900px)").matches) document.getElementById("pilotGrid").style.gridTemplateColumns = "1fr";
+  const f = document.getElementById("pilotForm");
+  const check = (id, test) => { const el = document.getElementById(id), ok = test(el.value.trim()); el.setAttribute("aria-invalid", String(!ok)); el.closest(".field").classList.toggle("invalid", !ok); return ok; };
+  f.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const ok = [check("f-name", (v) => v.length > 1), check("f-firm", (v) => v.length > 1), check("f-phone", (v) => /^(\+?91[\s-]?)?[6-9]\d{9}$/.test(v.replace(/\s/g, "")))].every(Boolean);
+    if (!ok) { f.querySelector('[aria-invalid="true"]').focus(); return; }
+    const v = (id) => document.getElementById(id).value.trim();
+    const body = `Pilot request\nName: ${v("f-name")}\nCompany: ${v("f-firm")}\nRole: ${v("f-role")}\nPhone: ${v("f-phone")}\n2026 EU tonnes: ${v("f-tons") || "not given"}`;
+    const mail = CONTACT_EMAIL ? `<a class="btn btn-primary btn-sm" href="mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Carbon Khata pilot request")}&body=${encodeURIComponent(body)}">Send by email</a>` : "";
+    document.getElementById("formOut").innerHTML = `<div class="alert success" style="margin-top:16px">${icon("check")}<span>Your request is ready. ${CONTACT_EMAIL ? "Send it by email, or copy it." : "Copy it and share it with the Carbon Khata team."}</span></div>
+      <pre class="mono xs" style="white-space:pre-wrap;background:var(--subtle);padding:12px;border-radius:8px;margin:12px 0">${body.replace(/</g, "&lt;")}</pre>
+      <div style="display:flex;gap:8px">${mail}<button type="button" class="btn btn-secondary btn-sm" id="copyReq">Copy request</button></div>`;
+    document.getElementById("copyReq").onclick = async (ev) => { try { await navigator.clipboard.writeText(body); ev.target.textContent = "Copied"; } catch { ev.target.textContent = "Select and copy the text above"; } };
+  });
+});
+</script>
