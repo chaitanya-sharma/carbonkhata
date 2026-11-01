@@ -75,7 +75,6 @@
     const hideTip = () => tip.classList.remove("on");
     M.lands.forEach((l) => {
       const pth = el("path", { d: l.d, class: "land land-" + l.k, "vector-effect": "non-scaling-stroke" }, gLand);
-      if (l.k !== "o") { pth.addEventListener("mousemove", (e) => showTip(e, l.k === "in" ? "<b>India</b>Official boundary" : `<b>${l.n}</b>EU member · CBAM applies to imports`)); pth.addEventListener("mouseleave", hideTip); }
     });
     const base = el("path", { d: M.route, class: "base" });
     const lit = el("path", { d: M.route, class: "lit" });
@@ -116,56 +115,28 @@
       camera(v);
     }
     lit.style.strokeDasharray = L;
-    const stopsBox = $("#stops"), bar = $("#jvSteps"), playBtn = $("#jvPlay");
-    const NAMES = ["Mill", "Stockist", "Workshop", "Verifier", "Port", "Hamburg"];
-    bar.innerHTML = NAMES.map((n, i) => `<button type="button" data-i="${i}"><span class="tr"><i></i></span><span class="nm"><b>${String(i + 1).padStart(2, "0")}</b> <em>${n}</em></span></button>`).join("");
-    const ticks = [...bar.children];
+    const stopsBox = $("#stops");
     let cur = -1;
-    const setStop = (i) => {
-      if (i === cur) return;
-      stopsEls.forEach((el, k) => el.classList.toggle("on", k === i));
-      $("#jProg").innerHTML = `<b>0${i + 1}</b> / 06`; cur = i;
-    };
+    const setStop = (i) => { if (i === cur) return; stopsEls.forEach((el, k) => el.classList.toggle("on", k === i)); $("#jProg").innerHTML = `<b>0${i + 1}</b> / 06`; cur = i; };
     if (!animated || !hasGsap || reduce) {
       draw(1, 5, V_W); nodes.forEach((n) => n.g.classList.add("on"));
       stopsBox.classList.add("static"); stopsEls.forEach((el) => el.classList.add("on"));
-      $(".jv-bar").style.display = "none";
       window.addEventListener("resize", () => camera(V_W)); return;
     }
-    // a short film: world view, settle on India, follow the lot stop by stop, then pull back for the sea leg
-    const st = { f: 0, c: 0 }, HOLD = 3.1, labels = [];
-    const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.4, onUpdate: render });
-    tl.set(st, { f: 0, c: 0 }, 0).set(lit, { opacity: 1 }, 0);
-    labels[0] = 0;
+    // plays once when the map scrolls into view: world, settle on India, stop by stop, then the sea leg to Hamburg
+    const st = { f: 0, c: 0 }, HOLD = 2.8, labels = [0];
+    const tl = gsap.timeline({ paused: true, onUpdate: render });
     tl.to(st, { c: 1, duration: 1.8, ease: "power2.inOut" }, 0.5);
     let t = 0.5 + HOLD;
-    const legs = [2.0, 0.9, 0, 1.9];
-    legs.forEach((d, i) => {
-      if (d) tl.to(st, { f: at[i + 1], duration: d, ease: "power1.inOut" }, t);
-      t += d; labels[i + 1] = t; t += HOLD;
-    });
-    tl.to(st, { f: 1, duration: 4.6, ease: "power1.inOut" }, t).to(st, { c: 0, duration: 3.2, ease: "power2.inOut" }, t);
-    t += 4.6; labels[5] = t; t += HOLD + 0.8;
-    tl.to(lit, { opacity: 0, duration: 0.7 }, t - 0.7);
-    tl.to({}, { duration: 0.01 }, t);
-    const total = tl.duration();
+    [2.0, 0.9, 0, 1.9].forEach((d, i) => { if (d) tl.to(st, { f: at[i + 1], duration: d, ease: "power1.inOut" }, t); t += d; labels[i + 1] = t; t += HOLD; });
+    tl.to(st, { f: 1, duration: 5, ease: "power1.inOut" }, t).to(st, { c: 0, duration: 3.4, ease: "power2.inOut" }, t);
+    labels[5] = t + 5;
     function render() {
-      const time = tl.time();
-      let idx = 0; labels.forEach((lt, i) => { if (time >= lt) idx = i; });
-      draw(st.f, idx, lerpV(V_W, V_IN, st.c));
-      setStop(idx);
-      ticks.forEach((b, i) => {
-        const a = labels[i], z = i < 5 ? labels[i + 1] : total;
-        $("i", b).style.width = Math.max(0, Math.min(1, (time - a) / (z - a))) * 100 + "%";
-        b.classList.toggle("on", i === idx);
-      });
+      const time = tl.time(); let idx = 0; labels.forEach((lt, i) => { if (time >= lt) idx = i; });
+      draw(st.f, idx, lerpV(V_W, V_IN, st.c)); setStop(idx);
     }
     render();
-    let userPaused = false, visible = false;
-    const sync = () => { const go = visible && !userPaused; go ? tl.play() : tl.pause(); playBtn.innerHTML = icon(userPaused ? "play" : "pause"); playBtn.setAttribute("aria-label", userPaused ? "Play" : "Pause"); };
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold: 0.35 }).observe($("#mapWrap"));
-    playBtn.addEventListener("click", () => { userPaused = !userPaused; sync(); });
-    ticks.forEach((b, i) => b.addEventListener("click", () => { tl.time(labels[i] + (i === 0 ? 2.4 : 0.05)); render(); }));
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { tl.play(); o.disconnect(); } }, { threshold: 0.4 }).observe($("#mapWrap"));
     window.addEventListener("resize", render);
   }
 

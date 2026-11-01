@@ -124,13 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
   } else document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("in"));
 
-  if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
-    const T = [["8940", "Molten", "#FF5B1F"], ["8941", "Ledger", "#A3171C"], ["8942", "Forest", "#2FCB8A"], ["8943", "Cobalt", "#2350E0"]];
-    const sw = document.createElement("nav"); sw.className = "theme-switch"; sw.setAttribute("aria-label", "Palette preview");
-    sw.innerHTML = T.map(([port, name, c]) => `<a href="http://localhost:${port}${location.pathname}${location.hash}" aria-current="${location.port === port}"><i style="background:${c}"></i>${name}</a>`).join("");
-    document.body.appendChild(sw);
-  }
-
   const page = document.body.dataset.page;
   document.querySelectorAll(`.main-nav > a[data-page="${page}"]`).forEach((a) => a.setAttribute("aria-current", "page"));
 });
