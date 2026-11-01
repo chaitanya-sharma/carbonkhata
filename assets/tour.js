@@ -55,7 +55,7 @@
   .chk i { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--line-strong); display: grid; place-items: center; font-style: normal; font-size: 11px; color: transparent; flex: none; }
   .chk.ok i { background: var(--green); border-color: var(--green); color: #fff; }
   .end { text-align: center; max-width: 640px; }
-  .end .bigx { font: 500 clamp(56px, 8vw, 110px)/.9 var(--font); letter-spacing: -0.06em; background: linear-gradient(120deg, #FFB547, #FF5B1F 50%, #3DDC97); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .end .bigx { font: 700 clamp(56px, 8vw, 110px)/.9 var(--display); letter-spacing: -0.06em; background: linear-gradient(120deg, var(--accent-2), var(--accent) 50%, var(--good)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .end p { color: var(--text-2); font-size: 18px; margin-top: 18px; }
   .end .btns { display: flex; gap: 12px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
   @media (max-width: 760px) { .sc .wrap { grid-template-columns: 1fr; } .sc .side { display: none; } .sc .row2 { grid-template-columns: 1fr; } .tallyx { grid-template-columns: 1fr; } .tallyx .l { display: none; } .wk { grid-template-columns: repeat(3, 1fr); } .wk .c:nth-child(n+4) { display: none; } }

@@ -11,7 +11,11 @@
     const ctx = c.getContext("2d");
     let w, h, dpr, parts = [], t = 0, running = true;
     const N = window.innerWidth < 700 ? 70 : 150;
-    function size() { dpr = Math.min(window.devicePixelRatio || 1, 2); w = c.clientWidth; h = c.clientHeight; c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.fillStyle = "#0A0C0B"; ctx.fillRect(0, 0, w, h); }
+    const css = getComputedStyle(document.documentElement), V = (k) => css.getPropertyValue(k).trim();
+    const BG = V("--bg-rgb"), C1 = V("--accent-rgb"), C2 = V("--accent2-rgb"), C3 = V("--pos-rgb");
+    const light = (css.colorScheme || V("color-scheme")).includes("light") || document.documentElement.dataset.theme === "ledger" || document.documentElement.dataset.theme === "cobalt";
+    const AMP = light ? 0.32 : 0.55;
+    function size() { dpr = Math.min(window.devicePixelRatio || 1, 2); w = c.clientWidth; h = c.clientHeight; c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.fillStyle = `rgb(${BG})`; ctx.fillRect(0, 0, w, h); }
     function spawn(p) { p.x = Math.random() * w * 0.5 + w * 0.45; p.y = Math.random() * h; p.life = 120 + Math.random() * 220; p.age = 0; p.hue = Math.random(); return p; }
     size(); for (let i = 0; i < N; i++) parts.push(spawn({}));
     window.addEventListener("resize", size);
@@ -19,12 +23,12 @@
     function loop() {
       if (!running) return;
       t += 0.0025;
-      ctx.fillStyle = "rgba(10,12,11,0.085)"; ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = `rgba(${BG},0.085)`; ctx.fillRect(0, 0, w, h);
       for (const p of parts) {
         const a = Math.sin(p.x * 0.0032 + t * 2) * 1.6 + Math.cos(p.y * 0.0041 - t) * 1.6 + 2.3;
         const nx = p.x + Math.cos(a) * 1.25, ny = p.y + Math.sin(a) * 1.25;
-        const k = p.age / p.life, alpha = Math.sin(Math.PI * k) * 0.55;
-        ctx.strokeStyle = p.hue > 0.82 ? `rgba(61,220,151,${alpha * 0.6})` : p.hue > 0.45 ? `rgba(255,181,71,${alpha})` : `rgba(255,91,31,${alpha})`;
+        const k = p.age / p.life, alpha = Math.sin(Math.PI * k) * AMP;
+        ctx.strokeStyle = p.hue > 0.82 ? `rgba(${C3},${alpha * 0.6})` : p.hue > 0.45 ? `rgba(${C2},${alpha})` : `rgba(${C1},${alpha})`;
         ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke();
         p.x = nx; p.y = ny; p.age++;
         if (p.age > p.life || p.x < -10 || p.x > w + 10 || p.y < -10 || p.y > h + 10) spawn(p);
@@ -63,8 +67,8 @@
   function journey(animated) {
     const M = window.CK_MAP, svg = $("#map"); if (!M || !svg) return;
     const NS = "http://www.w3.org/2000/svg", el = (t, a = {}, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
-    svg.innerHTML = `<defs><linearGradient id="routeGrad" gradientUnits="userSpaceOnUse" x1="1000" y1="480" x2="80" y2="140"><stop offset="0" stop-color="#FF5B1F"/><stop offset=".55" stop-color="#FFB547"/><stop offset="1" stop-color="#3DDC97"/></linearGradient>
-      <radialGradient id="glowIn" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF5B1F" stop-opacity=".55"/><stop offset="1" stop-color="#FF5B1F" stop-opacity="0"/></radialGradient></defs>`;
+    svg.innerHTML = `<defs><linearGradient id="routeGrad" gradientUnits="userSpaceOnUse" x1="1000" y1="480" x2="80" y2="140"><stop offset="0" style="stop-color:var(--accent)"/><stop offset=".55" style="stop-color:var(--accent-2)"/><stop offset="1" style="stop-color:var(--good)"/></linearGradient>
+      <radialGradient id="glowIn" cx="50%" cy="50%" r="50%"><stop offset="0" style="stop-color:var(--accent)" stop-opacity=".55"/><stop offset="1" style="stop-color:var(--accent)" stop-opacity="0"/></radialGradient></defs>`;
     const gLand = el("g", { class: "lands" });
     const tip = $("#mapTip"), wrap = $("#mapWrap");
     const showTip = (e, html) => { const r = wrap.getBoundingClientRect(); tip.innerHTML = html; tip.style.transform = `translate(${e.clientX - r.left + 14}px, ${e.clientY - r.top + 14}px)`; tip.classList.add("on"); };
@@ -80,16 +84,12 @@
     const OFF = { mill: [16, 5, "start"], stockist: [16, -10, "start"], workshop: [-16, -12, "end"], verifier: [-16, 22, "end"], port: [-16, 5, "end"], eu: [16, 5, "start"] };
     const stopsEls = $$(".stop");
     const nodes = M.nodes.map((n, i) => {
-      const g = el("g", { class: "node n-" + n.id + (n.id === "verifier" ? " twin" : ""), tabindex: 0, role: "button", "aria-label": `${n.label}, ${n.sub}` }, nodeLayer);
+      const g = el("g", { class: "node n-" + n.id + (n.id === "verifier" ? " twin" : ""), "aria-hidden": "true" }, nodeLayer);
       el("circle", { r: 16, class: "pulse" }, g); el("circle", { r: 9, class: "ring" }, g); el("circle", { r: 3.6, class: "core" }, g);
       let [dx, dy, anchor] = OFF[n.id];
       if (n.id === "mill" && svg.clientWidth < 600) { dx = -16; dy = 26; anchor = "end"; }
       const t = el("text", { x: dx, y: dy, "text-anchor": anchor, class: "lbl" }, g); t.textContent = n.label;
       const t2 = el("text", { x: dx, y: dy + 16, "text-anchor": anchor, class: "sub" }, g); t2.textContent = n.sub;
-      const blurb = stopsEls[i] ? stopsEls[i].querySelector("h3").textContent : "";
-      g.addEventListener("mousemove", (e) => showTip(e, `<b>${n.label} · ${n.sub}</b>${blurb}`)); g.addEventListener("mouseleave", hideTip);
-      const goTo = () => { if (journey.st) { const st = journey.st; window.scrollTo({ top: st.start + (st.end - st.start) * ((i + 0.55) / 6), behavior: "smooth" }); } };
-      g.addEventListener("click", goTo); g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(); } });
       return { ...n, g };
     });
     const puck = el("circle", { r: 5.5, class: "puck" });
@@ -116,29 +116,57 @@
       camera(v);
     }
     lit.style.strokeDasharray = L;
-    const pinned = animated && hasGsap && !reduce && window.matchMedia("(min-width: 961px)").matches;
-    if (!pinned) { draw(1, 5, V_W); nodes.forEach((n) => n.g.classList.add("on")); window.addEventListener("resize", () => camera(V_W)); return; }
-    let cur = 0;
-    draw(0, 0, V_W);
-    journey.st = ScrollTrigger.create({
-      trigger: "#journey", start: "top top", end: "bottom bottom", scrub: 0.5,
-      onUpdate: (s) => {
-        const p = Math.min(1, s.progress * 1.04);
-        const seg = Math.min(4, Math.floor(p * 5)), local = Math.min(1, p * 5 - seg);
-        const move = local < 0.4 ? 0 : (local - 0.4) / 0.6;
-        const frac = at[seg] + (at[seg + 1] - at[seg]) * ease(move);
-        let idx = 0; at.forEach((a, i) => { if (frac >= a - 0.0005) idx = i; });
-        if (seg === 3 && move === 0) idx = 3;
-        // camera: open on the world, settle on India, pull back for the sea leg
-        let v;
-        if (p < 0.08) v = lerpV(V_W, V_IN, ease(p / 0.08));
-        else if (frac <= at[4]) v = V_IN;
-        else v = lerpV(V_IN, V_W, ease(Math.min(1, (frac - at[4]) / ((at[5] - at[4]) * 0.7))));
-        draw(frac, idx, v);
-        if (idx !== cur) { stopsEls[cur].classList.remove("on"); stopsEls[idx].classList.add("on"); cur = idx; $("#jProg").innerHTML = `<b>0${idx + 1}</b> / 06`; }
-      },
+    const stopsBox = $("#stops"), bar = $("#jvSteps"), playBtn = $("#jvPlay");
+    const NAMES = ["Mill", "Stockist", "Workshop", "Verifier", "Port", "Hamburg"];
+    bar.innerHTML = NAMES.map((n, i) => `<button type="button" data-i="${i}"><span class="tr"><i></i></span><span class="nm"><b>${String(i + 1).padStart(2, "0")}</b> <em>${n}</em></span></button>`).join("");
+    const ticks = [...bar.children];
+    let cur = -1;
+    const setStop = (i) => {
+      if (i === cur) return;
+      stopsEls.forEach((el, k) => el.classList.toggle("on", k === i));
+      $("#jProg").innerHTML = `<b>0${i + 1}</b> / 06`; cur = i;
+    };
+    if (!animated || !hasGsap || reduce) {
+      draw(1, 5, V_W); nodes.forEach((n) => n.g.classList.add("on"));
+      stopsBox.classList.add("static"); stopsEls.forEach((el) => el.classList.add("on"));
+      $(".jv-bar").style.display = "none";
+      window.addEventListener("resize", () => camera(V_W)); return;
+    }
+    // a short film: world view, settle on India, follow the lot stop by stop, then pull back for the sea leg
+    const st = { f: 0, c: 0 }, HOLD = 3.1, labels = [];
+    const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.4, onUpdate: render });
+    tl.set(st, { f: 0, c: 0 }, 0).set(lit, { opacity: 1 }, 0);
+    labels[0] = 0;
+    tl.to(st, { c: 1, duration: 1.8, ease: "power2.inOut" }, 0.5);
+    let t = 0.5 + HOLD;
+    const legs = [2.0, 0.9, 0, 1.9];
+    legs.forEach((d, i) => {
+      if (d) tl.to(st, { f: at[i + 1], duration: d, ease: "power1.inOut" }, t);
+      t += d; labels[i + 1] = t; t += HOLD;
     });
-    window.addEventListener("resize", () => ScrollTrigger.refresh());
+    tl.to(st, { f: 1, duration: 4.6, ease: "power1.inOut" }, t).to(st, { c: 0, duration: 3.2, ease: "power2.inOut" }, t);
+    t += 4.6; labels[5] = t; t += HOLD + 0.8;
+    tl.to(lit, { opacity: 0, duration: 0.7 }, t - 0.7);
+    tl.to({}, { duration: 0.01 }, t);
+    const total = tl.duration();
+    function render() {
+      const time = tl.time();
+      let idx = 0; labels.forEach((lt, i) => { if (time >= lt) idx = i; });
+      draw(st.f, idx, lerpV(V_W, V_IN, st.c));
+      setStop(idx);
+      ticks.forEach((b, i) => {
+        const a = labels[i], z = i < 5 ? labels[i + 1] : total;
+        $("i", b).style.width = Math.max(0, Math.min(1, (time - a) / (z - a))) * 100 + "%";
+        b.classList.toggle("on", i === idx);
+      });
+    }
+    render();
+    let userPaused = false, visible = false;
+    const sync = () => { const go = visible && !userPaused; go ? tl.play() : tl.pause(); playBtn.innerHTML = icon(userPaused ? "play" : "pause"); playBtn.setAttribute("aria-label", userPaused ? "Play" : "Pause"); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold: 0.35 }).observe($("#mapWrap"));
+    playBtn.addEventListener("click", () => { userPaused = !userPaused; sync(); });
+    ticks.forEach((b, i) => b.addEventListener("click", () => { tl.time(labels[i] + (i === 0 ? 2.4 : 0.05)); render(); }));
+    window.addEventListener("resize", render);
   }
 
   /* ---------- 3. count-ups ---------- */

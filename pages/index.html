@@ -30,25 +30,25 @@
             <span class="badge amber">Verifier visit, week 3</span>
           </div>
           <div class="bars" style="margin-top:20px">
-            <div class="bar-row"><span>India default value <span class="mono xs" style="color:var(--text-3)">6.29</span></span><span class="val">₹46.8 L</span><div class="track"><div class="fill hb" data-w="100" style="background:#C2410C"></div></div></div>
-            <div class="bar-row"><span>Own plant only <span class="mono xs" style="color:var(--text-3)">4.78</span></span><span class="val">₹33.6 L</span><div class="track"><div class="fill hb" data-w="71.8" style="background:#E8915F"></div></div></div>
-            <div class="bar-row"><span>With Carbon Khata <span class="mono xs" style="color:var(--text-3)">2.40</span></span><span class="val">₹10.4 L</span><div class="track"><div class="fill hb" data-w="22.2" style="background:#0E7A52"></div></div></div>
+            <div class="bar-row"><span>India default value <span class="mono xs" style="color:var(--text-3)">6.29</span></span><span class="val">₹46.8 L</span><div class="track"><div class="fill hb" data-w="100" style="background:var(--khata)"></div></div></div>
+            <div class="bar-row"><span>Own plant only <span class="mono xs" style="color:var(--text-3)">4.78</span></span><span class="val">₹33.6 L</span><div class="track"><div class="fill hb" data-w="71.8" style="background:var(--amber)"></div></div></div>
+            <div class="bar-row"><span>With Carbon Khata <span class="mono xs" style="color:var(--text-3)">2.40</span></span><span class="val">₹10.4 L</span><div class="track"><div class="fill hb" data-w="22.2" style="background:var(--green)"></div></div></div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 16px;border-radius:12px;background:#E2F4EB;color:#0E7A52">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 16px;border-radius:12px;background:var(--green-tint);color:var(--green)">
             <span class="small" style="font-weight:500">Kept on this shipment</span><span class="mono" style="font-weight:600;font-size:22px" id="heroKept">₹36.4 L</span>
           </div>
         </div>
       </div>
       <div class="float glass f-chip" data-depth="1.4" style="left:-34px;top:470px">
-        <span class="dot" style="background:rgba(61,220,151,.14);color:#3DDC97" data-icon="phone"></span>
+        <span class="dot" style="background:rgba(var(--pos-rgb),.14);color:var(--pos)" data-icon="phone"></span>
         <div><b>Fuel bill read from WhatsApp</b><span>3,200 L furnace oil · checked by a reviewer</span></div>
       </div>
       <div class="float glass f-chip" data-depth="1.9" style="right:-10px;top:-6px">
-        <span class="dot" style="background:rgba(255,181,71,.14);color:#FFB547" data-icon="link"></span>
+        <span class="dot" style="background:rgba(var(--accent2-rgb),.14);color:var(--accent-2)" data-icon="link"></span>
         <div><b>Lot ST-7781 · 2.38 tCO₂/t</b><span>Mill report attached · heat H-24K118</span></div>
       </div>
       <div class="float glass f-chip" data-depth="1.1" style="right:-14px;top:544px">
-        <span class="dot" style="background:rgba(138,180,255,.14);color:#8AB4FF" data-icon="shield"></span>
+        <span class="dot" style="background:rgba(var(--info-rgb),.14);color:var(--info)" data-icon="shield"></span>
         <div><b>Signed by an EU-accredited verifier</b><span>Ready for the CBAM Registry</span></div>
       </div>
     </div>
@@ -71,26 +71,29 @@
         <p class="lead" style="margin-top:28px;max-width:40ch" id="bigCap">On India's default value of 6.29 tonnes of CO₂ per tonne of bolts.</p>
       </div>
       <div class="cost-stack">
-        <div class="cost-row" data-step="0"><div class="nm">India default value<small>5.72 t + 10% mark-up = 6.29 tCO₂/t</small></div><div class="vv">₹46.8 L</div><div class="tr"><div style="background:linear-gradient(90deg,#C2410C,#FF5B1F)"></div></div></div>
-        <div class="cost-row" data-step="1"><div class="nm">Own plant verified, no mill data<small>wire rod on India's ~4.3 t default = 4.78</small></div><div class="vv">₹33.6 L</div><div class="tr"><div style="background:linear-gradient(90deg,#B4683B,#FFB547)"></div></div></div>
-        <div class="cost-row" data-step="2"><div class="nm">With the mill's report, via Carbon Khata<small>2.35 from two mill lots + 0.05 own process = 2.40</small></div><div class="vv" style="color:var(--mint)">₹10.4 L</div><div class="tr"><div style="background:linear-gradient(90deg,#0E7A52,#3DDC97)"></div></div></div>
+        <div class="cost-row" data-step="0"><div class="nm">India default value<small>5.72 t + 10% mark-up = 6.29 tCO₂/t</small></div><div class="vv">₹46.8 L</div><div class="tr"><div style="background:var(--bad)"></div></div></div>
+        <div class="cost-row" data-step="1"><div class="nm">Own plant verified, no mill data<small>wire rod on India's ~4.3 t default = 4.78</small></div><div class="vv">₹33.6 L</div><div class="tr"><div style="background:var(--mid)"></div></div></div>
+        <div class="cost-row" data-step="2"><div class="nm">With the mill's report, via Carbon Khata<small>2.35 from two mill lots + 0.05 own process = 2.40</small></div><div class="vv" style="color:var(--good)">₹10.4 L</div><div class="tr"><div style="background:var(--good)"></div></div></div>
         <p class="small" style="color:var(--text-3);margin:10px 0 0">The 97.5% free allocation reduces only the 1.53 t benchmark, not the emissions, so 4.8 certificates a tonne remain on the default. €75.28 per certificate, €1 = ₹108.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="journey-pin" id="journey">
+<section class="journey-pin journey-film" id="journey">
   <div class="journey-stick">
     <div class="journey-head">
       <div><span class="eyebrow">How it works</span><h2>Follow one lot from the furnace to Hamburg</h2></div>
       <div class="journey-progress" id="jProg"><b>01</b> / 06</div>
     </div>
     <div class="journey-body">
+      <div class="map-col">
       <div class="map-wrap" id="mapWrap">
         <svg class="route-svg" id="map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map: the steel lot travels from a mill in Odisha to a stockist in Mandi Gobindgarh and a bolt workshop in Ludhiana, then by sea from Mundra to Hamburg"></svg>
         <div class="map-tip" id="mapTip" role="status"></div>
         <div class="map-legend"><span><i class="lg-in"></i>India</span><span><i class="lg-eu"></i>EU member states</span><span><i class="lg-pt"></i>Stops on this lot's route</span></div>
+      </div>
+      <div class="jv-bar"><button class="tour-ctrl" id="jvPlay" type="button" aria-label="Pause"><span data-icon="pause"></span></button><div class="jv-steps" id="jvSteps"></div></div>
       </div>
 
       <div class="stop-cards" id="stops">
@@ -119,7 +122,7 @@
           <div class="kicker">04 · Verifier · cluster campaign</div>
           <h3>Ten sites a week, one accredited signature each</h3>
           <p>Every site still gets its own year-1 visit. Shared travel, a standard monitoring plan and a ready evidence pack bring the cost from ₹17.5 lakh to ₹6 lakh a site.</p>
-          <div class="mini light screen"><div class="screen-body" style="padding:16px"><div class="bars"><div class="bar-row"><span>Alone</span><span class="val">₹17.5 L</span><div class="track"><div class="fill" style="width:100%;background:#C2410C"></div></div></div><div class="bar-row"><span>Batched</span><span class="val">₹6.0 L</span><div class="track"><div class="fill" style="width:34%;background:#0E7A52"></div></div></div></div></div></div>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px"><div class="bars"><div class="bar-row"><span>Alone</span><span class="val">₹17.5 L</span><div class="track"><div class="fill" style="width:100%;background:var(--khata)"></div></div></div><div class="bar-row"><span>Batched</span><span class="val">₹6.0 L</span><div class="track"><div class="fill" style="width:34%;background:var(--green)"></div></div></div></div></div></div>
           <div class="rule">IR 2025/2546 · Commission CBAM Q&amp;A on local field work</div>
         </article>
         <article class="stop">
@@ -133,7 +136,7 @@
           <div class="kicker">06 · EU importer · Hamburg</div>
           <h3>576 certificates become 128</h3>
           <p>The importer declares actual emissions for the shipment. At €75.28 a certificate, that is about €33,700 less on one container of bolts, and a supplier worth keeping.</p>
-          <div class="mini light screen"><div class="screen-body" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><div class="xs" style="color:var(--text-3)">On default</div><div class="mono" style="font-size:26px;color:#C2410C">576</div></div><div><div class="xs" style="color:var(--text-3)">On actual data</div><div class="mono" style="font-size:26px;color:#0E7A52">128</div></div></div></div>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><div class="xs" style="color:var(--text-3)">On default</div><div class="mono" style="font-size:26px;color:var(--khata)">576</div></div><div><div class="xs" style="color:var(--text-3)">On actual data</div><div class="mono" style="font-size:26px;color:var(--green)">128</div></div></div></div>
           <div class="rule">First declaration due 30 September 2027</div>
         </article>
       </div>
@@ -167,7 +170,7 @@
               </tbody></table></div>
               <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px">
                 <div class="callout" style="font-size:13.5px"><b style="color:var(--text)">Weighbridge gap on WR-5.5-A</b><br>0.38 t below the invoice. Confirm with the stockist.</div>
-                <div class="callout" style="font-size:13.5px;border-left-color:#C2410C"><b style="color:var(--text)">Lot BR-12-E has no mill report</b><br>42 t of EU-2402 will take India's default.</div>
+                <div class="callout" style="font-size:13.5px;border-left-color:var(--khata)"><b style="color:var(--text)">Lot BR-12-E has no mill report</b><br>42 t of EU-2402 will take India's default.</div>
               </div>
             </div>
           </div>
@@ -205,7 +208,7 @@
         <span class="tag">EU importer · portal</span>
         <h3>Certificates to buy</h3>
         <p>For one 120 t shipment.</p>
-        <div class="stage"><div class="big-figure count" data-from="576" data-to="128" style="font-size:72px;color:var(--mint)">576</div><div class="small" style="color:var(--text-3);margin-top:8px">down from 576 on India's default</div></div>
+        <div class="stage"><div class="big-figure count" data-from="576" data-to="128" style="font-size:72px;color:var(--good)">576</div><div class="small" style="color:var(--text-3);margin-top:8px">down from 576 on India's default</div></div>
       </article>
     </div>
   </div>
@@ -223,7 +226,7 @@
     <div class="section-head" data-reveal><span class="eyebrow">Why now</span><h2>The first EU bill for 2026 lands in <em>September 2027</em></h2></div>
     <div class="counters" data-reveal>
       <div><div class="v num count" data-to="2400" data-prefix="₹" data-suffix=" cr">₹0 cr</div><div class="l">a year of avoidable CBAM on about 1 Mt of MSME-linked EU steel</div></div>
-      <div><div class="v num" style="color:var(--molten)">−22 to −27%</div><div class="l">fall in Indian fastener exports to the EU in the 2026 payment phase</div></div>
+      <div><div class="v num" style="color:var(--bad)">−22 to −27%</div><div class="l">fall in Indian fastener exports to the EU in the 2026 payment phase</div></div>
       <div><div class="v num count" data-to="5">0</div><div class="l">bodies worldwide hold EU CBAM verifier accreditation (Oct 2026)</div></div>
       <div><div class="v num">30·09·27</div><div class="l">first declaration covering every 2026 import</div></div>
     </div>
