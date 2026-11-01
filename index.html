@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carbon Khata · CBAM-ready emissions data for India's steel supply chain</title>
-<meta name="description" content="Carbon Khata carries a steel mill's verified emissions through stockist invoices to Indian MSME exporters, so EU buyers pay CBAM on actual carbon instead of India's default values.">
-<meta property="og:title" content="Carbon Khata · CBAM-ready emissions data for India's steel supply chain">
-<meta property="og:description" content="Carbon Khata carries a steel mill's verified emissions through stockist invoices to Indian MSME exporters, so EU buyers pay CBAM on actual carbon instead of India's default values.">
+<title>Carbon Khata · Every tonne of Indian steel, with its carbon receipt</title>
+<meta name="description" content="Carbon Khata carries a steel mill's verified emissions through stockist invoices to Indian MSME exporters and into a verifier-signed EU CBAM file, so EU buyers pay for actual carbon instead of India's default values.">
+<meta property="og:title" content="Carbon Khata · Every tonne of Indian steel, with its carbon receipt">
+<meta property="og:description" content="Carbon Khata carries a steel mill's verified emissions through stockist invoices to Indian MSME exporters and into a verifier-signed EU CBAM file, so EU buyers pay for actual carbon instead of India's default values.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0E3B35">
+<meta name="theme-color" content="#0A0C0B">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="home">
@@ -20,10 +20,11 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="/" aria-label="Carbon Khata home">
-      <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="20" height="23" rx="3" fill="#0E3B35"/><rect x="2" y="3" width="5" height="23" rx="2" fill="#B42318"/><path d="M10 10h8M10 14.5h8M10 19h5" stroke="#FAF9F6" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="4.5" fill="#FAF9F6" stroke="#0E3B35" stroke-width="1.6"/><path d="m20.6 6.6 1.3 1.3 2.5-2.6" stroke="#0B7A53" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><defs><linearGradient id="lgM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB547"/><stop offset="1" stop-color="#FF5B1F"/></linearGradient></defs><rect x="2" y="3" width="20" height="23" rx="3.5" fill="#F2EFE8"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="url(#lgM)"/><path d="M10.5 10h8M10.5 14.5h8M10.5 19h5" stroke="#0A0C0B" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="5" fill="#0A0C0B" stroke="#3DDC97" stroke-width="1.6"/><path d="m20.5 6.6 1.3 1.3 2.6-2.7" stroke="#3DDC97" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Carbon Khata
     </a>
     <nav class="main-nav" aria-label="Main">
+      <a href="/tour" data-page="tour">Product tour</a>
       <a href="/platform" data-page="platform">Platform</a>
       <div class="nav-drop" data-open="false">
         <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
@@ -41,12 +42,13 @@
       <a href="/trust" data-page="trust">Trust &amp; compliance</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="/platform">Live demo</a>
-      <a class="btn btn-primary btn-sm" href="/pilot">Join the pilot</a>
+      <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
+      <a class="btn btn-primary btn-sm" href="/tour">Watch the tour</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
+    <a href="/tour">Product tour</a>
     <a href="/platform">Platform</a>
     <div class="group">Solutions</div>
     <a href="/solutions#exporters">Exporters</a>
@@ -63,214 +65,271 @@
   </nav>
 </header>
 <main id="main">
-<section class="hero">
+<section class="hero" id="top">
+  <canvas class="flow" id="flow" aria-hidden="true"></canvas>
   <div class="container hero-grid">
     <div>
-      <span class="eyebrow">EU CBAM is payable on every tonne imported since 1 January 2026</span>
-      <h1>CBAM-ready emissions data for India's steel supply chain</h1>
-      <p class="lead">Carbon Khata carries a mill's verified emissions through each stockist invoice to the exporter, so EU buyers pay for the carbon in Indian steel and not for India's default values.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary btn-lg" href="/platform">Explore the live demo <span data-icon="arrow"></span></a>
-        <a class="btn btn-secondary btn-lg" href="/calculator">Estimate your CBAM cost</a>
+      <span class="eyebrow">EU CBAM · payable on every tonne imported since 1 January 2026</span>
+      <h1 id="heroTitle"><span class="split-line"><span>Every tonne</span></span><span class="split-line"><span>should carry its</span></span><span class="split-line"><span><em>carbon receipt.</em></span></span></h1>
+      <p class="lead hero-fade">Carbon Khata is a shared ledger that carries a steel mill's verified emissions through each stockist invoice to the MSME exporter, and on into a verifier-signed EU CBAM file.</p>
+      <div class="hero-actions hero-fade">
+        <a class="btn btn-accent btn-lg" href="/tour"><span class="play" data-icon="play"></span>Watch the 90-second tour</a>
+        <a class="btn btn-secondary btn-lg" href="/platform">Try the platform</a>
       </div>
-      <div class="hero-note">
-        <span><span data-icon="check"></span>Built on EU Implementing Regulations 2025/2546, 2547, 2620 and 2621</span>
-        <span><span data-icon="check"></span>Ludhiana pilot opens December 2026</span>
+      <div class="hero-meta hero-fade">
+        <div><b>₹36.4 L</b>kept on one 120 t bolt shipment</div>
+        <div><b>4.80 → 1.06</b>certificates per tonne</div>
+        <div><b>Dec 2026</b>Ludhiana pilot opens</div>
       </div>
     </div>
 
-    <div class="mock" aria-label="Product preview: shipment EU-2391">
-      <div class="mock-top"><i></i><i></i><i></i><span>app.carbonkhata / shipments / EU-2391</span></div>
-      <div class="mock-body">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-          <div>
-            <div class="xs muted mono">SHIPMENT EU-2391</div>
-            <div style="font-weight:600;font-size:18px;margin-top:4px">120 t of M10 bolts to Hamburg</div>
+    <div class="hero-stage" id="heroStage" aria-label="Product preview">
+      <div class="float f-main light screen" data-depth="0.6">
+        <div class="screen-top"><i></i><i></i><i></i><span>carbonkhata · shipments · EU-2391</span></div>
+        <div class="screen-body">
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
+            <div><div class="xs mono" style="color:var(--text-3)">SHIPMENT EU-2391</div><div style="font-weight:500;font-size:18px;margin-top:4px">120 t of M10 bolts to Hamburg</div></div>
+            <span class="badge amber">Verifier visit, week 3</span>
           </div>
-          <span class="badge amber">Verification scheduled</span>
+          <div class="bars" style="margin-top:20px">
+            <div class="bar-row"><span>India default value <span class="mono xs" style="color:var(--text-3)">6.29</span></span><span class="val">₹46.8 L</span><div class="track"><div class="fill hb" data-w="100" style="background:#C2410C"></div></div></div>
+            <div class="bar-row"><span>Own plant only <span class="mono xs" style="color:var(--text-3)">4.78</span></span><span class="val">₹33.6 L</span><div class="track"><div class="fill hb" data-w="71.8" style="background:#E8915F"></div></div></div>
+            <div class="bar-row"><span>With Carbon Khata <span class="mono xs" style="color:var(--text-3)">2.40</span></span><span class="val">₹10.4 L</span><div class="track"><div class="fill hb" data-w="22.2" style="background:#0E7A52"></div></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 16px;border-radius:12px;background:#E2F4EB;color:#0E7A52">
+            <span class="small" style="font-weight:500">Kept on this shipment</span><span class="mono" style="font-weight:600;font-size:22px" id="heroKept">₹36.4 L</span>
+          </div>
         </div>
-        <div class="divider" style="margin:18px 0"></div>
-        <div class="xs muted" style="margin-bottom:10px">CBAM cost on this shipment, 2026</div>
-        <div class="bars">
-          <div class="bar-row"><span>India default value <span class="muted mono xs">6.29 tCO₂/t</span></span><span class="val">₹46.8 L</span><div class="track"><div class="fill" style="width:100%;background:var(--khata)"></div></div></div>
-          <div class="bar-row"><span>Own plant verified, no mill data <span class="muted mono xs">4.78</span></span><span class="val">₹33.6 L</span><div class="track"><div class="fill" style="width:71.8%;background:#D97757"></div></div></div>
-          <div class="bar-row"><span>With Carbon Khata <span class="muted mono xs">2.40</span></span><span class="val">₹10.4 L</span><div class="track"><div class="fill" style="width:22.2%;background:var(--green)"></div></div></div>
-        </div>
-        <div class="divider" style="margin:18px 0"></div>
-        <table class="data" style="font-size:13px">
-          <thead><tr><th>Steel lot</th><th>Source</th><th class="r">Tonnes</th><th class="r">tCO₂/t</th></tr></thead>
-          <tbody>
-            <tr><td class="mono">WR-5.5-A</td><td>Stockist, Mandi Gobindgarh</td><td class="r">72</td><td class="r">2.38</td></tr>
-            <tr><td class="mono">WR-5.5-B</td><td>Direct from mill</td><td class="r">54</td><td class="r">2.31</td></tr>
-          </tbody>
-        </table>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding:14px 16px;border-radius:10px;background:var(--green-tint)">
-          <span class="small" style="color:var(--green);font-weight:500">Saved on this shipment</span>
-          <span class="mono" style="font-weight:600;font-size:20px;color:var(--green)">₹36.4 L</span>
-        </div>
+      </div>
+      <div class="float glass f-chip" data-depth="1.4" style="left:-34px;top:470px">
+        <span class="dot" style="background:rgba(61,220,151,.14);color:#3DDC97" data-icon="phone"></span>
+        <div><b>Fuel bill read from WhatsApp</b><span>3,200 L furnace oil · checked by a reviewer</span></div>
+      </div>
+      <div class="float glass f-chip" data-depth="1.9" style="right:-10px;top:-6px">
+        <span class="dot" style="background:rgba(255,181,71,.14);color:#FFB547" data-icon="link"></span>
+        <div><b>Lot ST-7781 · 2.38 tCO₂/t</b><span>Mill report attached · heat H-24K118</span></div>
+      </div>
+      <div class="float glass f-chip" data-depth="1.1" style="right:-14px;top:544px">
+        <span class="dot" style="background:rgba(138,180,255,.14);color:#8AB4FF" data-icon="shield"></span>
+        <div><b>Signed by an EU-accredited verifier</b><span>Ready for the CBAM Registry</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="container" aria-label="Key figures">
-  <div class="metrics-band">
-    <div class="metric red"><div class="v num">₹30,400</div><div class="l">extra CBAM cost per tonne of Indian bolts filed on default values in 2026</div></div>
-    <div class="metric"><div class="v num">−22% to −27%</div><div class="l">fall in Indian fastener exports to the EU in the 2026 payment phase</div></div>
-    <div class="metric"><div class="v num">5</div><div class="l">bodies worldwide hold EU CBAM verifier accreditation (Oct 2026)</div></div>
-    <div class="metric"><div class="v num">30 Sep 2027</div><div class="l">deadline for the first EU declaration, covering all 2026 imports</div></div>
+<section class="statement">
+  <div class="container">
+    <span class="eyebrow">The problem</span>
+    <p class="big" id="statement">India's large mills already measure their carbon. The report stops at the stockist. So a fifteen-person bolt workshop in Ludhiana files on India's <em>default value</em>, and its EU buyer pays for carbon that was never emitted.</p>
   </div>
-  <p class="source">Sources: EU Implementing Regulation 2025/2621 and DG TAXUD Q2 2026 price; Agaran Analytica, Oct 2026; cbamguide.com verifier tracker, Oct 2026; EU Regulation 2023/956 as amended.</p>
+</section>
+
+<section class="reveal-pin" id="reveal">
+  <div class="reveal-stick">
+    <div class="reveal-inner">
+      <div>
+        <div class="cost-label">CBAM on one 120 t shipment of bolts · 2026</div>
+        <div class="big-figure" id="bigFig">₹46.8<small>lakh</small></div>
+        <p class="lead" style="margin-top:28px;max-width:40ch" id="bigCap">On India's default value of 6.29 tonnes of CO₂ per tonne of bolts.</p>
+      </div>
+      <div class="cost-stack">
+        <div class="cost-row" data-step="0"><div class="nm">India default value<small>5.72 t + 10% mark-up = 6.29 tCO₂/t</small></div><div class="vv">₹46.8 L</div><div class="tr"><div style="background:linear-gradient(90deg,#C2410C,#FF5B1F)"></div></div></div>
+        <div class="cost-row" data-step="1"><div class="nm">Own plant verified, no mill data<small>wire rod on India's ~4.3 t default = 4.78</small></div><div class="vv">₹33.6 L</div><div class="tr"><div style="background:linear-gradient(90deg,#B4683B,#FFB547)"></div></div></div>
+        <div class="cost-row" data-step="2"><div class="nm">With the mill's report, via Carbon Khata<small>2.35 from two mill lots + 0.05 own process = 2.40</small></div><div class="vv" style="color:var(--mint)">₹10.4 L</div><div class="tr"><div style="background:linear-gradient(90deg,#0E7A52,#3DDC97)"></div></div></div>
+        <p class="small" style="color:var(--text-3);margin:10px 0 0">The 97.5% free allocation reduces only the 1.53 t benchmark, not the emissions, so 4.8 certificates a tonne remain on the default. €75.28 per certificate, €1 = ₹108.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey-pin" id="journey">
+  <div class="journey-stick">
+    <div class="journey-head">
+      <div><span class="eyebrow">How it works</span><h2>Follow one lot from the furnace to Hamburg</h2></div>
+      <div class="journey-progress" id="jProg"><b>01</b> / 06</div>
+    </div>
+    <div class="journey-body">
+      <svg class="route-svg" viewBox="0 0 800 520" aria-hidden="true">
+        <defs>
+          <linearGradient id="routeGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FF5B1F"/><stop offset=".6" stop-color="#FFB547"/><stop offset="1" stop-color="#3DDC97"/></linearGradient>
+          <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="rgba(255,255,255,.07)"/></pattern>
+        </defs>
+        <rect width="800" height="520" fill="url(#dots)"/>
+        <path class="land" d="M118 120c40-34 110-46 160-30 34 10 60 6 92 20 44 18 70 52 104 70 36 20 82 22 90 60 8 34-26 54-48 80-26 30-34 66-62 92-24 22-48 54-74 60-22 6-30-26-46-44-22-26-52-40-74-66-26-30-36-66-66-92-28-24-74-28-84-60-8-26 2-62 8-90Z"/>
+        <path class="land" d="M600 28c30-12 70-14 104-4 30 10 66 6 84 30 14 20 0 46-20 58-24 14-56 10-82 22-28 12-58 22-84 8-24-12-30-42-26-66 4-22 2-40 24-48Z"/>
+        <path id="routeBase" class="base" d="M470 402 C 420 330, 330 270, 290 214 C 276 196, 250 186, 232 176 C 214 190, 196 214, 186 246 C 172 290, 140 320, 128 362 C 220 300, 420 160, 560 110 C 620 88, 680 76, 716 70"/>
+        <path id="routeLit" class="lit" d="M470 402 C 420 330, 330 270, 290 214 C 276 196, 250 186, 232 176 C 214 190, 196 214, 186 246 C 172 290, 140 320, 128 362 C 220 300, 420 160, 560 110 C 620 88, 680 76, 716 70"/>
+        <g class="node" data-i="0" transform="translate(470 402)"><circle class="ring" r="11"/><circle class="core" r="4"/><text x="18" y="4">Steel mill</text><text class="sub" x="18" y="20">Odisha</text></g>
+        <g class="node" data-i="1" transform="translate(290 214)"><circle class="ring" r="11"/><circle class="core" r="4"/><text x="18" y="4">Stockist</text><text class="sub" x="18" y="20">Mandi Gobindgarh</text></g>
+        <g class="node" data-i="2" transform="translate(232 176)"><circle class="ring" r="11"/><circle class="core" r="4"/><text x="-18" y="-14" text-anchor="end">Bolt workshop</text><text class="sub" x="-18" y="2" text-anchor="end">Ludhiana</text></g>
+        <g class="node" data-i="3" transform="translate(186 246)"><circle class="ring" r="11"/><circle class="core" r="4"/><text x="-18" y="4" text-anchor="end">Verifier visit</text><text class="sub" x="-18" y="20" text-anchor="end">Cluster campaign</text></g>
+        <g class="node" data-i="4" transform="translate(128 362)"><circle class="ring" r="11"/><circle class="core" r="4"/><text x="-18" y="4" text-anchor="end">Port</text><text class="sub" x="-18" y="20" text-anchor="end">Mundra</text></g>
+        <g class="node" data-i="5" transform="translate(716 70)"><circle class="ring" r="11"/><circle class="core" r="4"/><text x="0" y="-22" text-anchor="middle">EU importer</text><text class="sub" x="0" y="34" text-anchor="middle">Hamburg</text></g>
+        <circle id="puck" class="puck" r="6" cx="470" cy="402"/>
+      </svg>
+
+      <div class="stop-cards" id="stops">
+        <article class="stop on">
+          <div class="kicker">01 · Steel mill · Odisha</div>
+          <h3>The mill publishes the report it already makes</h3>
+          <p>Large mills already verify their emissions for their own EU customers. They share that report on Carbon Khata once, with heat numbers, and choose exactly which fields travel.</p>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px"><dl class="kv"><dt>Report</dt><dd class="mono">RPT-2026-0142</dd><dt>Wire rod, BF-BOF</dt><dd class="mono">2.38 tCO₂/t direct</dd><dt>Heats</dt><dd class="mono">H-24K101 to H-24K160</dd></dl></div></div>
+          <div class="rule">IR 2025/2547 · IR 2025/2620 (free-allocation data travels with it)</div>
+        </article>
+        <article class="stop">
+          <div class="kicker">02 · Stockist · Mandi Gobindgarh</div>
+          <h3>A 100 t lot splits, and the report goes with every piece</h3>
+          <p>The stockist bills from Tally as usual. The add-on tags each sale with the lot and its mill report. The ledger refuses any sale beyond the tonnes bought.</p>
+          <div class="mini tally"><div class="tt"><span>Sales voucher T-4471</span><span>Tally Prime</span></div><div class="tb"><div class="row"><span>Wire rod 5.5 mm</span><span>40 t</span></div><div class="ck">Carbon Khata · ST-7781 · 2.38 · H-24K118 ✓</div></div></div>
+          <div class="rule">Weighted average of precursors, IR 2025/2547 Art. 14</div>
+        </article>
+        <article class="stop">
+          <div class="kicker">03 · Bolt workshop · Ludhiana</div>
+          <h3>The owner sends bills on WhatsApp, in Punjabi</h3>
+          <p>Fuel bills, weighbridge slips and production logs arrive as photos. Software reads them; a reviewer approves every field. Nothing is guessed or filled in.</p>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px"><div style="display:flex;justify-content:space-between;font-size:14px"><span>Furnace oil, Oct 2026</span><b class="mono">3,200 L</b></div><div style="display:flex;justify-content:space-between;font-size:14px;margin-top:8px"><span>Weighbridge, lot WR-5.5-A</span><span class="badge red">0.38 t short</span></div></div></div>
+          <div class="rule">Steel counts direct emissions only</div>
+        </article>
+        <article class="stop">
+          <div class="kicker">04 · Verifier · cluster campaign</div>
+          <h3>Ten sites a week, one accredited signature each</h3>
+          <p>Every site still gets its own year-1 visit. Shared travel, a standard monitoring plan and a ready evidence pack bring the cost from ₹17.5 lakh to ₹6 lakh a site.</p>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px"><div class="bars"><div class="bar-row"><span>Alone</span><span class="val">₹17.5 L</span><div class="track"><div class="fill" style="width:100%;background:#C2410C"></div></div></div><div class="bar-row"><span>Batched</span><span class="val">₹6.0 L</span><div class="track"><div class="fill" style="width:34%;background:#0E7A52"></div></div></div></div></div></div>
+          <div class="rule">IR 2025/2546 · Commission CBAM Q&amp;A on local field work</div>
+        </article>
+        <article class="stop">
+          <div class="kicker">05 · Port · Mundra</div>
+          <h3>The bolts ship with a file, not a guess</h3>
+          <p>Heat numbers from the mill prove where the steel was first melted and poured, which the EU steel quota now requires. Above the quota, the duty is 50%.</p>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px;display:flex;gap:10px;flex-wrap:wrap"><span class="badge green">Melt and pour: India</span><span class="badge green">2 of 2 lots traced</span><span class="badge blue">Verifier signed</span></div></div>
+          <div class="rule">Regulation (EU) 2026/1384, from 1 July 2026</div>
+        </article>
+        <article class="stop">
+          <div class="kicker">06 · EU importer · Hamburg</div>
+          <h3>576 certificates become 128</h3>
+          <p>The importer declares actual emissions for the shipment. At €75.28 a certificate, that is about €33,700 less on one container of bolts, and a supplier worth keeping.</p>
+          <div class="mini light screen"><div class="screen-body" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><div class="xs" style="color:var(--text-3)">On default</div><div class="mono" style="font-size:26px;color:#C2410C">576</div></div><div><div class="xs" style="color:var(--text-3)">On actual data</div><div class="mono" style="font-size:26px;color:#0E7A52">128</div></div></div></div>
+          <div class="rule">First declaration due 30 September 2027</div>
+        </article>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">The problem</span>
-      <h2>Small exporters lose the mill's data on the way to them</h2>
-      <p class="lead">India's large mills already measure and verify their emissions. The report stops at the stockist, so the bolt maker who exports to Europe has nothing to file, and the EU charges its buyer on India's default value.</p>
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">The product</span>
+      <h2>A tool for each person who <em>touches the steel</em></h2>
+      <p class="lead">Each one works the way that person already works: WhatsApp for the workshop owner, Tally for the stockist, a tablet for the verifier, and an EU-ready file for the importer.</p>
     </div>
-    <div class="grid cols-3">
-      <div class="card"><div class="icon-box red" data-icon="link"></div><h3>Reports don't survive a lot split</h3><p class="muted">Stockists in Mandi Gobindgarh split mill coils into small lots for Ludhiana workshops. The mill's emissions report is not passed on with the invoice.</p></div>
-      <div class="card"><div class="icon-box red" data-icon="file"></div><h3>Plant records sit on paper</h3><p class="muted">Fuel bills, weighbridge slips and production logs are paper or WhatsApp photos. Few MSMEs have a monitoring plan or anyone trained in CBAM.</p></div>
-      <div class="card"><div class="icon-box red" data-icon="shield"></div><h3>Verification is scarce and costly</h3><p class="muted">Every site needs an accredited verifier's visit in year one. Done alone, a small plant pays about ₹17.5 lakh for the plan, the visit and the fee.</p></div>
+    <div class="bento">
+      <article class="tile t-a" data-reveal>
+        <span class="tag">Exporter · web</span>
+        <h3>See what every shipment will cost, before it sails</h3>
+        <p>Each lot's mill report, your own fuel data and the verifier's status in one view.</p>
+        <div class="stage">
+          <div class="light screen">
+            <div class="screen-top"><i></i><i></i><i></i><span>carbonkhata · overview</span></div>
+            <div class="screen-body" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+              <div class="kpi"><div class="l">Shipped in 2026</div><div class="v count" data-to="300" data-suffix=" t">0 t</div></div>
+              <div class="kpi"><div class="l">Traced to a mill</div><div class="v count" data-to="87" data-suffix="%">0%</div></div>
+              <div class="kpi"><div class="l">CBAM avoided</div><div class="v green count" data-to="83.4" data-dec="1" data-prefix="₹" data-suffix=" L">₹0 L</div></div>
+              <div style="grid-column:1/-1" class="table-wrap"><table class="data"><thead><tr><th>Shipment</th><th>To</th><th class="r">t</th><th>Status</th></tr></thead><tbody>
+                <tr><td class="mono">EU-2391</td><td>Hamburg</td><td class="r">120</td><td><span class="badge amber">Verifier visit, week 3</span></td></tr>
+                <tr><td class="mono">EU-2377</td><td>Rotterdam</td><td class="r">80</td><td><span class="badge green">Signed</span></td></tr>
+                <tr><td class="mono">EU-2402</td><td>Antwerp</td><td class="r">100</td><td><span class="badge blue">Collecting data</span></td></tr>
+              </tbody></table></div>
+              <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div class="callout" style="font-size:13.5px"><b style="color:var(--text)">Weighbridge gap on WR-5.5-A</b><br>0.38 t below the invoice. Confirm with the stockist.</div>
+                <div class="callout" style="font-size:13.5px;border-left-color:#C2410C"><b style="color:var(--text)">Lot BR-12-E has no mill report</b><br>42 t of EU-2402 will take India's default.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="tile t-b" data-reveal data-reveal-delay="1">
+        <span class="tag">Workshop owner · WhatsApp</span>
+        <h3>Send a photo. Done.</h3>
+        <p>In Punjabi, Hindi or English.</p>
+        <div class="stage">
+          <div class="phone"><div class="phone-screen"><div class="phone-notch"></div>
+            <div class="wa-top"><div class="av"><svg width="22" height="22" viewBox="0 0 28 28"><rect x="2" y="3" width="20" height="23" rx="3.5" fill="#0A0C0B"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="#FF5B1F"/></svg></div><div><b>Carbon Khata</b><span>business account</span></div></div>
+            <div class="wa-body" id="waBody"></div>
+            <div class="wa-input"><div></div><i></i></div>
+          </div></div>
+        </div>
+      </article>
+      <article class="tile t-c" data-reveal>
+        <span class="tag">Stockist · Tally add-on</span>
+        <h3>Bill as usual</h3>
+        <p>The lot and its report attach to the invoice.</p>
+        <div class="stage"><div class="tally"><div class="tt"><span>Sales voucher</span><span>T-4471</span></div><div class="tb"><div class="row"><span>Party</span><span>Sample Fasteners</span></div><div class="row"><span>Wire rod 5.5 mm</span><span>40 t</span></div><div class="ck" id="tallyTag" style="opacity:0">ST-7781 · 2.38 tCO₂/t · H-24K118 ✓</div></div></div></div>
+      </article>
+      <article class="tile t-d" data-reveal data-reveal-delay="1">
+        <span class="tag">Verifier · tablet</span>
+        <h3>Evidence ready on arrival</h3>
+        <p>Ten sites a week in one cluster.</p>
+        <div class="stage light" style="display:grid;gap:8px;background:transparent">
+          <div class="screen" style="padding:12px 14px;display:flex;justify-content:space-between;font-size:14px"><span>Sample Fasteners</span><span class="badge green vchk">Visited</span></div>
+          <div class="screen" style="padding:12px 14px;display:flex;justify-content:space-between;font-size:14px"><span>Sample Bolts</span><span class="badge green vchk">Visited</span></div>
+          <div class="screen" style="padding:12px 14px;display:flex;justify-content:space-between;font-size:14px"><span>Sample Nuts</span><span class="badge amber vchk">Pack 92%</span></div>
+        </div>
+      </article>
+      <article class="tile t-e" data-reveal data-reveal-delay="2">
+        <span class="tag">EU importer · portal</span>
+        <h3>Certificates to buy</h3>
+        <p>For one 120 t shipment.</p>
+        <div class="stage"><div class="big-figure count" data-from="576" data-to="128" style="font-size:72px;color:var(--mint)">576</div><div class="small" style="color:var(--text-3);margin-top:8px">down from 576 on India's default</div></div>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="section alt">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">How it works</span>
-      <h2>One verified report, carried lot by lot</h2>
-      <p class="lead">Each step follows an EU rule that is already in force.</p>
-    </div>
-    <div class="steps">
-      <div class="step"><div class="n">01</div><h3>Mill publishes</h3><p>The mill shares the verified report it already prepares for its own EU customers, with heat numbers.</p><div class="rule">IR 2025/2547, IR 2025/2620</div></div>
-      <div class="step"><div class="n">02</div><h3>Stockist passes it on</h3><p>Each sale is logged against its GST e-invoice number. Tonnes sold can never exceed tonnes bought.</p><div class="rule">Weighted average, Art. 14</div></div>
-      <div class="step"><div class="n">03</div><h3>Exporter completes it</h3><p>The exporter adds its own fuel and process data from bills and meters. A reviewer checks every field.</p><div class="rule">Direct emissions only for steel</div></div>
-      <div class="step"><div class="n">04</div><h3>Verifier signs</h3><p>Accredited verifiers visit every site in one cluster campaign and sign the file the EU importer submits.</p><div class="rule">IR 2025/2546</div></div>
-    </div>
+<div class="marquee" aria-label="EU rules Carbon Khata follows">
+  <div class="track">
+    <span><b>Reg. 2023/956</b>CBAM in force</span><span><b>IR 2025/2547</b>Weighted precursors</span><span><b>IR 2025/2620</b>Free-allocation adjustment</span><span><b>IR 2025/2621</b>Default values and mark-ups</span><span><b>IR 2025/2546</b>Year-one site visits</span><span><b>Reg. 2026/1384</b>Steel quota, melt and pour</span><span><b>DPDP Act 2023</b>Consent for every field</span>
+    <span><b>Reg. 2023/956</b>CBAM in force</span><span><b>IR 2025/2547</b>Weighted precursors</span><span><b>IR 2025/2620</b>Free-allocation adjustment</span><span><b>IR 2025/2621</b>Default values and mark-ups</span><span><b>IR 2025/2546</b>Year-one site visits</span><span><b>Reg. 2026/1384</b>Steel quota, melt and pour</span><span><b>DPDP Act 2023</b>Consent for every field</span>
   </div>
-</section>
+</div>
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Solutions</span>
-      <h2>Built for everyone who touches the steel</h2>
+    <div class="section-head" data-reveal><span class="eyebrow">Why now</span><h2>The first EU bill for 2026 lands in <em>September 2027</em></h2></div>
+    <div class="counters" data-reveal>
+      <div><div class="v num count" data-to="2400" data-prefix="₹" data-suffix=" cr">₹0 cr</div><div class="l">a year of avoidable CBAM on about 1 Mt of MSME-linked EU steel</div></div>
+      <div><div class="v num" style="color:var(--molten)">−22 to −27%</div><div class="l">fall in Indian fastener exports to the EU in the 2026 payment phase</div></div>
+      <div><div class="v num count" data-to="5">0</div><div class="l">bodies worldwide hold EU CBAM verifier accreditation (Oct 2026)</div></div>
+      <div><div class="v num">30·09·27</div><div class="l">first declaration covering every 2026 import</div></div>
     </div>
-    <div class="tabs" role="tablist" aria-label="Solutions by role" id="roleTabs"></div>
-    <div class="tab-panel" id="rolePanel" role="tabpanel"></div>
+    <p class="source">Sources: our estimate at ₹24,000/t blended; Agaran Analytica, Oct 2026; cbamguide.com verifier tracker, Oct 2026; Regulation (EU) 2023/956 as amended.</p>
   </div>
 </section>
 
-<section class="section alt">
-  <div class="container grid cols-2" style="align-items:center;gap:56px">
+<section class="container" style="padding-bottom:128px">
+  <div class="cta-band" data-reveal>
     <div>
-      <span class="eyebrow">CBAM calculator</span>
-      <h2>See what default values cost you</h2>
-      <p class="lead" style="margin-top:16px">Enter a shipment size to compare the CBAM bill on India's default value with the bill on verified data. The full calculator covers coil and bolts, 2026 to 2028, and any certificate price.</p>
-      <a class="btn btn-secondary" href="/calculator" style="margin-top:12px">Open the full calculator <span data-icon="arrow"></span></a>
-    </div>
-    <div class="card">
-      <div class="field" style="margin-bottom:8px">
-        <div class="range-row"><label for="qt">Bolts shipped to the EU in 2026</label><output id="qtOut" for="qt"></output></div>
-        <input type="range" id="qt" min="20" max="1000" step="10" value="300">
-      </div>
-      <div class="grid cols-2" style="gap:16px;margin-top:16px">
-        <div class="metric red"><div class="v num" id="qDef"></div><div class="l">on India's default value</div></div>
-        <div class="metric green"><div class="v num" id="qAct"></div><div class="l">on verified data</div></div>
-      </div>
-      <div class="callout" style="margin-top:20px">You keep <b class="num" id="qSave"></b> a year before fees. Carbon Khata charges <b class="num" id="qFee"></b>.</div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Questions</span>
-      <h2>Frequently asked</h2>
-    </div>
-    <div class="faq">
-      <details><summary>Doesn't the 97.5% free allocation make the 2026 bill almost zero?</summary><p>No. The 97.5% factor scales the EU benchmark deduction (1.53 tonnes of CO₂ per tonne of steel), not the exporter's emissions. A bolt filed on India's default carries 6.29 tonnes, so about 4.8 certificates a tonne are still payable. Our <a class="link" href="/calculator">calculator</a> shows every step.</p></details>
-      <details><summary>Why can't an exporter just verify its own plant?</summary><p>It should, and Carbon Khata organises that. But most of a bolt's emissions come from the wire rod. Without the mill's report, the rod takes India's default of about 4.3 tonnes plus the mark-up, so the exporter still pays about ₹19,300 a tonne more than it would with the mill's data.</p></details>
-      <details><summary>Does Carbon Khata verify the data?</summary><p>No. Accredited verifiers do. EU impartiality rules bar a verifier from preparing its own client's plan, so we prepare the evidence and the verifier checks and signs it.</p></details>
-      <details><summary>Will stockists share their buying prices or customers?</summary><p>No. The ledger holds tonnes, lot numbers, heat numbers and the mill's emissions report. Prices, margins and customer lists never leave the stockist's books.</p></details>
-      <details><summary>Is the GST e-invoice changed?</summary><p>No. We use the invoice reference number only as a key to match a lot to its report. Emissions data stays in Carbon Khata, so nothing in the GST schema changes.</p></details>
-    </div>
-  </div>
-</section>
-
-<section class="container" style="padding-bottom:96px">
-  <div class="cta-band">
-    <div>
-      <h2 style="color:#fff">Join the Ludhiana pilot</h2>
-      <p style="margin-top:14px;font-size:17px">Fifty exporters, two mills and fifteen stockists, from December 2026. We co-fund the first verification campaign so 2026 files are signed before 30 September 2027.</p>
+      <span class="eyebrow">Product tour</span>
+      <h2>Watch one lot travel from the mill to the <em>EU file</em></h2>
+      <p style="margin-top:18px;font-size:17px;max-width:46ch">Eight short chapters, about 90 seconds. Use the arrow keys to step through, or let it play.</p>
     </div>
     <div class="actions">
-      <a class="btn btn-secondary btn-lg" href="/pilot">Request a pilot slot</a>
+      <a class="btn btn-accent btn-lg" href="/tour"><span class="play" data-icon="play"></span>Start the tour</a>
+      <a class="btn btn-secondary btn-lg" href="/pilot">Join the pilot</a>
     </div>
   </div>
 </section>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const roles = [
-    ["Exporters", "bolt", "File EU data on actual emissions and keep over 90% of the saving.",
-      ["Mill reports arrive with every steel lot you buy", "Send bills and weighbridge slips on WhatsApp; a reviewer checks each field", "One verifier campaign for your cluster instead of a solo audit", "Billed per verified tonne when the file is signed"], "/platform#exporter", "₹36.4 L", "kept on a 120 t bolt shipment in 2026"],
-    ["Stockists", "store", "Keep the mill's report attached when you split a lot, and earn for it.",
-      ["Tag lots from Tally while you bill", "The ledger blocks sales beyond the tonnes you bought", "Earn ₹50 for every traced tonne, paid by the exporter", "Prices and customers stay private"], "/platform#stockist", "₹50/t", "paid to the stockist for each traced tonne"],
-    ["Steel mills", "factory", "Publish the report you already make, once, for every downstream buyer.",
-      ["Free to join", "Choose exactly which fields are shared", "Heat numbers prove melt-and-pour origin for the EU steel quota", "See demand for your lower-carbon grades"], "/platform#mill", "Free", "for mills and stockists"],
-    ["Verifiers", "shield", "Fill a week of site visits in one cluster with ready evidence packs.",
-      ["Standard monitoring plan per product family", "Evidence packs built from the ledger", "Field work by your Indian branch; your EU entity signs", "Travel shared across about ten sites a week"], "/platform#verifier", "₹17.5 L → ₹6 L", "cost per exporter site, alone vs batched"],
-    ["EU importers", "ship", "Buy certificates on actual emissions and prove origin for the quota.",
-      ["Verified supplier list for Indian fasteners", "Actual-data files for every shipment", "Melt-and-pour evidence from the mill's heat numbers", "Files ready before the 30 September 2027 declaration"], "/platform#importer", "576 → 128", "certificates on one 120 t shipment"],
-    ["Lenders", "bank", "Lend for cleaner steel against records an EU verifier has signed.",
-      ["Twelve months of verified emissions per borrower", "No separate emissions due diligence", "Track the effect of each loan on tCO₂ per tonne", "Origination fee of 0.5%"], "/platform#lender", "0.5%", "origination fee on green loans"],
-  ];
-  const tabs = document.getElementById("roleTabs"), panel = document.getElementById("rolePanel");
-  function show(i) {
-    tabs.querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-selected", String(i === j)));
-    const [name, ic, line, pts, href, big, bigL] = roles[i];
-    panel.innerHTML = `<div class="role-panel">
-      <div><h3 style="font-size:26px;letter-spacing:-0.02em">${line}</h3>
-        <ul>${pts.map((p) => `<li>${icon("check")}<span>${p}</span></li>`).join("")}</ul>
-        <a class="link" href="${href}" style="margin-top:20px">See the ${name.toLowerCase()} view in the demo ${icon("arrow")}</a></div>
-      <div class="card" style="background:var(--pine);border-color:var(--pine);color:#fff;padding:40px">
-        <div class="icon-box" style="background:rgba(255,255,255,.1);color:#fff">${icon(ic)}</div>
-        <div class="num" style="font-size:44px;font-weight:600;letter-spacing:-0.03em">${big}</div>
-        <p style="color:#C9DAD5;margin-top:8px">${bigL}</p></div></div>`;
-  }
-  tabs.innerHTML = roles.map((r, i) => `<button role="tab" type="button">${r[0]}</button>`).join("");
-  tabs.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => show(i)));
-  show(0);
-
-  const q = document.getElementById("qt");
-  const draw = () => {
-    const t = +q.value, r = CK.perTonne({ product: "bolts", year: 2026 });
-    document.getElementById("qtOut").textContent = t + " t";
-    document.getElementById("qDef").textContent = fmt.lakh(r.def * t);
-    document.getElementById("qAct").textContent = fmt.lakh(r.act * t);
-    document.getElementById("qSave").textContent = fmt.lakh(r.saving * t);
-    document.getElementById("qFee").textContent = fmt.lakh(120000 + 400 * t, 2);
-  };
-  q.addEventListener("input", draw); draw();
-});
-</script>
 </main>
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a class="logo" href="/"><svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="20" height="23" rx="3" fill="#0E3B35"/><rect x="2" y="3" width="5" height="23" rx="2" fill="#B42318"/><path d="M10 10h8M10 14.5h8M10 19h5" stroke="#FAF9F6" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="4.5" fill="#FAF9F6" stroke="#0E3B35" stroke-width="1.6"/><path d="m20.6 6.6 1.3 1.3 2.5-2.6" stroke="#0B7A53" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Carbon Khata</a>
+        <a class="logo" href="/"><svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><defs><linearGradient id="lgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB547"/><stop offset="1" stop-color="#FF5B1F"/></linearGradient></defs><rect x="2" y="3" width="20" height="23" rx="3.5" fill="#F2EFE8"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="url(#lgF)"/><path d="M10.5 10h8M10.5 14.5h8M10.5 19h5" stroke="#0A0C0B" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="5" fill="#0A0C0B" stroke="#3DDC97" stroke-width="1.6"/><path d="m20.5 6.6 1.3 1.3 2.6-2.7" stroke="#3DDC97" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Carbon Khata</a>
         <p style="margin-top:16px;max-width:34ch">The shared emissions ledger for India's steel supply chain, built for the EU Carbon Border Adjustment Mechanism.</p>
       </div>
       <div>
         <h4>Product</h4>
-        <ul><li><a href="/platform">Platform</a></li><li><a href="/calculator">CBAM calculator</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/pilot">Ludhiana pilot</a></li></ul>
+        <ul><li><a href="/tour">Product tour</a></li><li><a href="/platform">Platform</a></li><li><a href="/calculator">CBAM calculator</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/pilot">Ludhiana pilot</a></li></ul>
       </div>
       <div>
         <h4>Solutions</h4>
@@ -285,6 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <ul><li>Team Carbon Khata</li><li>XLRI Delhi-NCR</li><li>Quest EY-Parthenon 2026</li></ul>
       </div>
     </div>
+    <div class="footer-word" aria-hidden="true">Carbon Khata</div>
     <div class="footer-base">
       <span>© 2026 Carbon Khata. Product in pilot; sample data in the demo is illustrative.</span>
       <span>Prices: EU CBAM certificate €75.28 (Q2 2026) · €1 = ₹108</span>
@@ -292,5 +352,8 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </footer>
 <script src="/assets/site.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/assets/home.js"></script>
 </body>
 </html>

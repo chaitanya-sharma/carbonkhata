@@ -78,6 +78,13 @@ const ICON = {
   leaf: '<path d="M5 19C5 10 11 4 20 4c0 9-6 15-15 15Z"/><path d="M5 19 13 11"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
   rupee: '<path d="M7 4h11M7 9h11M7 4c6 0 8 2 8 5s-3 5-8 5l8 7"/>',
+  play: '<path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none"/>',
+  pause: '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" stroke="none"/>',
+  prev: '<path d="M15 6l-6 6 6 6"/>',
+  next: '<path d="M9 6l6 6-6 6"/>',
+  phone: '<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/>',
+  spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
 };
 const icon = (name, cls = "") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name] || ""}</svg>`;
 
@@ -107,6 +114,11 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.innerHTML = icon(open ? "menu" : "close");
     document.body.style.overflow = open ? "" : "hidden";
   });
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -10% 0px" });
+    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+  } else document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("in"));
 
   const page = document.body.dataset.page;
   document.querySelectorAll(`.main-nav > a[data-page="${page}"]`).forEach((a) => a.setAttribute("aria-current", "page"));

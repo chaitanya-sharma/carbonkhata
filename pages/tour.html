@@ -1,0 +1,28 @@
+<!-- title: Product tour -->
+<!-- description: A 90-second guided tour of Carbon Khata: one steel lot from the mill, through a stockist and a Ludhiana workshop, to a verifier-signed EU CBAM file. -->
+<!-- page: tour -->
+<!-- scripts: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js, /assets/tour.js -->
+
+<section class="tour" aria-label="Product tour">
+  <div class="tour-main">
+    <div class="tour-copy" aria-live="polite">
+      <div class="chap" id="tChap"></div>
+      <h1 id="tTitle"></h1>
+      <p id="tText"></p>
+      <div class="stat" id="tStat"></div>
+      <div class="who"><div class="av" id="tWhoIco"></div><div><b id="tWho"></b><span id="tWhoRole"></span></div></div>
+    </div>
+    <div class="tour-stage" id="stage">
+      <div class="cursor" id="cursor" aria-hidden="true"><span class="ripple"></span><svg viewBox="0 0 22 22" width="22" height="22"><path d="M3 2l15 8.5-6.3 1.4L8.8 18z" fill="#fff" stroke="#0A0C0B" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+    </div>
+  </div>
+  <div class="tour-bar">
+    <div class="tour-bar-in">
+      <button class="tour-ctrl" id="tPrev" aria-label="Previous chapter"><span data-icon="prev"></span></button>
+      <button class="tour-ctrl main" id="tPlay" aria-label="Pause"><span data-icon="pause"></span></button>
+      <button class="tour-ctrl" id="tNext" aria-label="Next chapter"><span data-icon="next"></span></button>
+      <div class="chapters" id="tChapters" role="tablist" aria-label="Chapters"></div>
+      <span class="tour-hint">Space to pause · ← → to step</span>
+    </div>
+  </div>
+</section>
