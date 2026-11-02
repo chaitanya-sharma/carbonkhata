@@ -12,7 +12,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"forest";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
@@ -25,6 +25,7 @@
       Carbon Khata
     </a>
     <nav class="main-nav" aria-label="Main">
+      <a href="/judge" data-page="judge">Judge mode</a>
       <a href="/tour" data-page="tour">Product tour</a>
       <a href="/platform" data-page="platform">Platform</a>
       <div class="nav-drop" data-open="false">
@@ -40,7 +41,7 @@
       </div>
       <a href="/calculator" data-page="calculator">Calculator</a>
       <a href="/pricing" data-page="pricing">Pricing</a>
-      <a href="/trust" data-page="trust">Trust &amp; compliance</a>
+      <a href="/trust" data-page="trust">Trust</a>
     </nav>
     <div class="header-cta">
       <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
@@ -49,6 +50,7 @@
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
+    <a href="/judge">Judge mode</a>
     <a href="/tour">Product tour</a>
     <a href="/platform">Platform</a>
     <div class="group">Solutions</div>
@@ -171,7 +173,7 @@
           <div class="kicker">02 · Stockist · Mandi Gobindgarh</div>
           <h3>A 100 t lot splits, and the report goes with every piece</h3>
           <p>The stockist bills from Tally as usual. The add-on tags each sale with the lot and its mill report. The ledger refuses any sale beyond the tonnes bought.</p>
-          <div class="mini tally"><div class="tt"><span>Sales voucher T-4471</span><span>Tally Prime</span></div><div class="tb"><div class="row"><span>Wire rod 5.5 mm</span><span>40 t</span></div><div class="ck">Carbon Khata · ST-7781 · 2.38 · H-24K118 ✓</div></div></div>
+          <div class="mini tally"><div class="tt"><span>Sales voucher T-4471</span><span>Tally Prime</span></div><div class="tb"><div class="row"><span>Wire rod 5.5 mm</span><span>40 t</span></div><div class="ck">Carbon Khata · ST-7781 · 2.38 · H-24K118</div></div></div>
           <div class="rule">Weighted average of precursors, IR 2025/2547 Art. 14</div>
         </article>
         <article class="stop">
@@ -255,7 +257,7 @@
         <span class="tag">Stockist · Tally add-on</span>
         <h3>Bill as usual</h3>
         <p>The lot and its report attach to the invoice.</p>
-        <div class="stage"><div class="tally"><div class="tt"><span>Sales voucher</span><span>T-4471</span></div><div class="tb"><div class="row"><span>Party</span><span>Sample Fasteners</span></div><div class="row"><span>Wire rod 5.5 mm</span><span>40 t</span></div><div class="ck" id="tallyTag" style="opacity:0">ST-7781 · 2.38 tCO₂/t · H-24K118 ✓</div></div></div></div>
+        <div class="stage"><div class="tally"><div class="tt"><span>Sales voucher</span><span>T-4471</span></div><div class="tb"><div class="row"><span>Party</span><span>Sample Fasteners</span></div><div class="row"><span>Wire rod 5.5 mm</span><span>40 t</span></div><div class="ck" id="tallyTag" style="opacity:0">ST-7781 · 2.38 tCO₂/t · H-24K118</div></div></div></div>
       </article>
       <article class="tile t-d" data-reveal data-reveal-delay="1">
         <span class="tag">Verifier · tablet</span>
