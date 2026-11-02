@@ -7,10 +7,10 @@
 
   /* ---------- 1. molten flow field behind the hero ---------- */
   (function flow() {
-    const c = $("#flow"); if (!c || reduce) return;
+    const c = $("#flow"); if (!c || reduce || window.matchMedia("(max-width: 760px), (pointer: coarse)").matches) return;
     const ctx = c.getContext("2d");
     let w, h, dpr, parts = [], t = 0, running = true;
-    const N = window.innerWidth < 700 ? 70 : 150;
+    const N = 90;
     const css = getComputedStyle(document.documentElement), V = (k) => css.getPropertyValue(k).trim();
     const BG = V("--bg-rgb"), C1 = V("--accent-rgb"), C2 = V("--accent2-rgb"), C3 = V("--pos-rgb");
     const light = (css.colorScheme || V("color-scheme")).includes("light") || document.documentElement.dataset.theme === "ledger" || document.documentElement.dataset.theme === "cobalt";
@@ -64,6 +64,13 @@
 
 
   /* ---------- map: build once, used by the pinned journey ---------- */
+  function loadMap(cb) {
+    if (window.CK_MAP) return cb();
+    const t = document.getElementById("journey"); if (!t) return;
+    const go = () => { const sc = document.createElement("script"); sc.src = "/assets/worldmap.js"; sc.onload = cb; document.body.appendChild(sc); };
+    if (!("IntersectionObserver" in window)) return go();
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { o.disconnect(); go(); } }, { rootMargin: "900px 0px" }).observe(t);
+  }
   function journey(animated) {
     const M = window.CK_MAP, svg = $("#map"); if (!M || !svg) return;
     const NS = "http://www.w3.org/2000/svg", el = (t, a = {}, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
@@ -77,7 +84,11 @@
       const pth = el("path", { d: l.d, class: "land land-" + l.k, "vector-effect": "non-scaling-stroke" }, gLand);
     });
     const base = el("path", { d: M.route, class: "base" });
-    const lit = el("path", { d: M.route, class: "lit" });
+    const lit = el("path", { d: M.route, class: "ref" });
+    const litLand = el("path", { d: M.land, class: "lit lit-land" }), litSea = el("path", { d: M.sea, class: "lit lit-sea" });
+    const LL = litLand.getTotalLength(), LS = litSea.getTotalLength();
+    const gSea = el("g", { class: "sea-lbl" });
+    const seaT = (M.seaLabels || []).map((x) => { const t = el("text", { "text-anchor": "middle" }, gSea); t.textContent = x.n; return { t, xy: x.xy }; });
     const puckGlow = el("circle", { r: 18, fill: "url(#glowIn)", class: "puck-glow" });
     const nodeLayer = el("g", { class: "nodes" });
     const OFF = { mill: [16, 5, "start"], stockist: [16, -10, "start"], workshop: [-16, -12, "end"], verifier: [-16, 22, "end"], port: [-16, 5, "end"], eu: [16, 5, "start"] };
@@ -106,15 +117,17 @@
       svg.classList.toggle("far", v[2] > 520);
       nodes.forEach((n) => n.g.setAttribute("transform", `translate(${n.xy[0]} ${n.xy[1]}) scale(${k.toFixed(4)})`));
       puck.setAttribute("r", 5.5 * k); puckGlow.setAttribute("r", 22 * k);
-      lit.style.strokeWidth = 2.6 * k; base.style.strokeWidth = 1.3 * k; base.style.strokeDasharray = `${2 * k} ${5 * k}`;
+      litLand.style.strokeWidth = litSea.style.strokeWidth = 2.6 * k; base.style.strokeWidth = 1.3 * k; base.style.strokeDasharray = `${2 * k} ${5 * k}`;
+      seaT.forEach((x) => x.t.setAttribute("transform", `translate(${x.xy[0]} ${x.xy[1]}) scale(${k.toFixed(4)})`));
     }
     function draw(frac, idx, v) {
-      const len = Math.min(L, frac * L); lit.style.strokeDashoffset = L - len;
+      const len = Math.min(L, frac * L);
+      litLand.style.strokeDashoffset = LL - Math.min(len, LL); litSea.style.strokeDashoffset = LS - Math.max(0, Math.min(LS, len - LL));
       const p = lit.getPointAtLength(len); puck.setAttribute("cx", p.x); puck.setAttribute("cy", p.y); puckGlow.setAttribute("cx", p.x); puckGlow.setAttribute("cy", p.y);
       nodes.forEach((n, i) => { n.g.classList.toggle("on", i <= idx); n.g.classList.toggle("cur", i === idx); });
       camera(v);
     }
-    lit.style.strokeDasharray = L;
+    litLand.style.strokeDasharray = LL; litSea.style.strokeDasharray = LS;
     const stopsBox = $("#stops");
     let cur = -1;
     const setStop = (i) => { if (i === cur) return; stopsEls.forEach((el, k) => el.classList.toggle("on", k === i)); $("#jProg").innerHTML = `<b>0${i + 1}</b> / 06`; cur = i; };
@@ -163,7 +176,7 @@
     $$(".statement .w").forEach((w) => (w.style.opacity = 1));
     $$(".cost-row .tr > div").forEach((d, i) => (d.style.width = [100, 71.8, 22.2][i] + "%"));
     $("#bigFig").innerHTML = '₹10.4<small>lakh</small>';
-    journey(false);
+    loadMap(() => journey(false));
     return;
   }
 
@@ -212,15 +225,10 @@
     $("#bigCap").textContent = caps[i];
     $("#bigFig").style.color = i === 2 ? "var(--mint)" : "";
   };
-  if (window.matchMedia("(min-width: 901px)").matches) {
-    let cur = -1;
-    ScrollTrigger.create({ trigger: "#reveal", start: "top top", end: "bottom bottom", onUpdate: (s) => { const i = Math.min(2, Math.floor(s.progress * 3.2)); if (i !== cur) { for (let k = cur + 1; k <= i; k++) showStep(k); cur = i; } } });
-  } else {
-    ScrollTrigger.create({ trigger: "#reveal", start: "top 70%", once: true, onEnter: () => [0, 1, 2].forEach((i) => setTimeout(() => showStep(i), i * 700)) });
-  }
+  ScrollTrigger.create({ trigger: "#reveal", start: "top 65%", once: true, onEnter: () => [0, 1, 2].forEach((i) => setTimeout(() => showStep(i), i * 1100)) });
 
   /* ---------- 7. journey on a real map ---------- */
-  journey(true);
+  loadMap(() => journey(true));
   /* ---------- 8. section reveals with stagger ---------- */
   $$(".tile .stage").forEach((s) => gsap.from(s, { y: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: s, start: "top 88%" } }));
   gsap.utils.toArray(".vchk").forEach((b, i) => gsap.from(b, { scale: 0.6, opacity: 0, duration: 0.5, delay: i * 0.25, ease: "back.out(2)", scrollTrigger: { trigger: b, start: "top 90%" } }));

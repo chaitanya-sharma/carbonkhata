@@ -800,3 +800,17 @@ body[data-page="tour"] .theme-switch { bottom: 92px; }
 @media (max-width: 1180px) { .header-cta .btn-ghost { display: none; } }
 html:has(body[data-page="judge"]) { scroll-padding-top: 150px; }
 @media (max-width: 640px) { .gd-lbl { display: none; } #gdStart { padding: 0 10px; } #gdStart .play { margin: 0; } }
+.route-svg .ref { fill: none; stroke: none; }
+.route-svg .lit-land { stroke: var(--mid); filter: none; }
+.route-svg .lit-sea { stroke: var(--accent); }
+.route-svg .sea-lbl text { font: italic 500 12px var(--font); fill: rgba(var(--fg-rgb), .32); letter-spacing: .04em; paint-order: stroke; stroke: var(--map-bg); stroke-width: 3px; }
+.map-legend .lg-rail { height: 3px; width: 16px; border-radius: 2px; background: var(--mid); }
+.map-legend .lg-sea { height: 3px; width: 16px; border-radius: 2px; background: var(--accent); }
+.reveal-pin { height: auto; } .reveal-stick { position: relative; height: auto; padding: 120px 0; }
+.judge-link { margin-top: 22px; font-size: 15px; }
+@media (max-width: 760px), (pointer: coarse) {
+  .site-header.scrolled, .float.glass, .drop-panel, .modebar, .gd, .tour-bar, .map-legend { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .site-header.scrolled { background: rgba(var(--bg-rgb), .97); }
+  .float.glass { background: var(--surface); }
+  .hero::after { background: radial-gradient(70% 50% at 70% 20%, rgba(var(--accent-rgb), .18), transparent 70%), var(--bg); }
+}

@@ -124,6 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
   } else document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("in"));
 
+  const seen = new Set();
+  const pre = (e) => { const a = e.target.closest && e.target.closest("a[href^='/']"); if (!a) return; const u = a.getAttribute("href").split("#")[0]; if (!u || seen.has(u) || u === location.pathname) return; seen.add(u); const l = document.createElement("link"); l.rel = "prefetch"; l.href = u; document.head.appendChild(l); };
+  document.addEventListener("mouseover", pre, { passive: true }); document.addEventListener("touchstart", pre, { passive: true });
+
   const page = document.body.dataset.page;
   document.querySelectorAll(`.main-nav > a[data-page="${page}"]`).forEach((a) => a.setAttribute("aria-current", "page"));
 });

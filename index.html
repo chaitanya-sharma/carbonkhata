@@ -25,9 +25,8 @@
       Carbon Khata
     </a>
     <nav class="main-nav" aria-label="Main">
-      <a href="/judge" data-page="judge">Judge mode</a>
       <a href="/tour" data-page="tour">Product tour</a>
-      <a href="/platform" data-page="platform">Platform</a>
+      <a href="/judge" data-page="judge">Judge mode</a>
       <div class="nav-drop" data-open="false">
         <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
         <div class="drop-panel" role="menu">
@@ -45,14 +44,14 @@
     </nav>
     <div class="header-cta">
       <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
-      <a class="btn btn-primary btn-sm" href="/tour">Watch the tour</a>
+      <a class="btn btn-primary btn-sm" href="/platform">Try the demo</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
-    <a href="/judge">Judge mode</a>
+    <a href="/platform">Try the demo</a>
     <a href="/tour">Product tour</a>
-    <a href="/platform">Platform</a>
+    <a href="/judge">Judge mode</a>
     <div class="group">Solutions</div>
     <a href="/solutions#exporters">Exporters</a>
     <a href="/solutions#stockists">Stockists</a>
@@ -76,9 +75,10 @@
       <h1 id="heroTitle"><span class="split-line"><span>Every tonne</span></span><span class="split-line"><span>should carry its</span></span><span class="split-line"><span><em>carbon receipt.</em></span></span></h1>
       <p class="lead hero-fade">Carbon Khata is a shared ledger that carries a steel mill's verified emissions through each stockist invoice to the MSME exporter, and on into a verifier-signed EU CBAM file.</p>
       <div class="hero-actions hero-fade">
-        <a class="btn btn-accent btn-lg" href="/tour"><span class="play" data-icon="play"></span>Watch the 90-second tour</a>
-        <a class="btn btn-secondary btn-lg" href="/platform">Try the platform</a>
+        <a class="btn btn-accent btn-lg" href="/platform">Try the live demo <span data-icon="arrow"></span></a>
+        <a class="btn btn-secondary btn-lg" href="/tour"><span class="play" data-icon="play"></span>Watch the 90-second tour</a>
       </div>
+      <a class="link hero-fade judge-link" href="/judge">Judges: stress-test every number in one page <span data-icon="arrow"></span></a>
       <div class="hero-meta hero-fade">
         <div><b>₹36.4 L</b>kept on one 120 t bolt shipment</div>
         <div><b>4.80 → 1.06</b>certificates per tonne</div>
@@ -156,7 +156,7 @@
       <div class="map-wrap" id="mapWrap">
         <svg class="route-svg" id="map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map: the steel lot travels from a mill in Odisha to a stockist in Mandi Gobindgarh and a bolt workshop in Ludhiana, then by sea from Mundra to Hamburg"></svg>
         
-        <div class="map-legend"><span><i class="lg-in"></i>India</span><span><i class="lg-eu"></i>EU member states</span><span><i class="lg-pt"></i>Stops on this lot's route</span></div>
+        <div class="map-legend"><span><i class="lg-in"></i>India</span><span><i class="lg-eu"></i>EU member states</span><span><i class="lg-rail"></i>Rail and road</span><span><i class="lg-sea"></i>Sea freight</span></div>
       </div>
       
       </div>
@@ -279,12 +279,7 @@
   </div>
 </section>
 
-<div class="marquee" aria-label="EU rules Carbon Khata follows">
-  <div class="track">
-    <span><b>Reg. 2023/956</b>CBAM in force</span><span><b>IR 2025/2547</b>Weighted precursors</span><span><b>IR 2025/2620</b>Free-allocation adjustment</span><span><b>IR 2025/2621</b>Default values and mark-ups</span><span><b>IR 2025/2546</b>Year-one site visits</span><span><b>Reg. 2026/1384</b>Steel quota, melt and pour</span><span><b>DPDP Act 2023</b>Consent for every field</span>
-    <span><b>Reg. 2023/956</b>CBAM in force</span><span><b>IR 2025/2547</b>Weighted precursors</span><span><b>IR 2025/2620</b>Free-allocation adjustment</span><span><b>IR 2025/2621</b>Default values and mark-ups</span><span><b>IR 2025/2546</b>Year-one site visits</span><span><b>Reg. 2026/1384</b>Steel quota, melt and pour</span><span><b>DPDP Act 2023</b>Consent for every field</span>
-  </div>
-</div>
+
 
 <section class="section">
   <div class="container">
@@ -302,13 +297,13 @@
 <section class="container" style="padding-bottom:128px">
   <div class="cta-band" data-reveal>
     <div>
-      <span class="eyebrow">Product tour</span>
-      <h2>Watch one lot travel from the mill to the <em>EU file</em></h2>
-      <p style="margin-top:18px;font-size:17px;max-width:46ch">Eight short chapters, about 90 seconds. Use the arrow keys to step through, or let it play.</p>
+      <span class="eyebrow">See it work</span>
+      <h2>Open the workspace, or test <em>our numbers</em></h2>
+      <p style="margin-top:18px;font-size:17px;max-width:46ch">Seven working views on one sample shipment, and a console that stress-tests every assumption in the deck.</p>
     </div>
     <div class="actions">
-      <a class="btn btn-accent btn-lg" href="/tour"><span class="play" data-icon="play"></span>Start the tour</a>
-      <a class="btn btn-secondary btn-lg" href="/pilot">Join the pilot</a>
+      <a class="btn btn-accent btn-lg" href="/platform">Try the live demo</a>
+      <a class="btn btn-secondary btn-lg" href="/judge">Stress-test the numbers</a>
     </div>
   </div>
 </section>
@@ -346,7 +341,6 @@
 <script src="/assets/site.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="/assets/worldmap.js"></script>
 <script src="/assets/home.js"></script>
 </body>
 </html>
