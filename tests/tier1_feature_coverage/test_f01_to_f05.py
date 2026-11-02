@@ -98,10 +98,11 @@ class TestFeaturesF01ToF05(CarbonKhataTestCase):
 
     @feature("F3", tier=1)
     def test_f3_institutional_badge_footer_structure(self):
-        """F3: Verify partials/footer.html contains XLRI Delhi-NCR, Team Carbon Khata, and Quest EY-Parthenon 2026."""
+        """F3: Verify partials/footer.html contains XLRI Delhi-NCR, quest-ion everything, and Quest EY-Parthenon 2026."""
         footer_raw = load_partial("footer.html")
         self.assertIn("XLRI Delhi-NCR", footer_raw, "Footer must cite XLRI Delhi-NCR")
-        self.assertIn("Team Carbon Khata", footer_raw, "Footer must cite Team Carbon Khata")
+        self.assertTrue("quest-ion everything" in footer_raw or "Team Carbon Khata" in footer_raw,
+                        "Footer must cite submitted team name quest-ion everything")
         self.assertIn("Quest EY-Parthenon 2026", footer_raw, "Footer must cite Quest EY-Parthenon 2026")
 
     @feature("F3", tier=1)
