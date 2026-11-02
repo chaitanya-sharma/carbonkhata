@@ -3,16 +3,380 @@
 <!-- page: home -->
 <!-- scripts: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js, https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js, /assets/home.js -->
 
+<style>
+/* Competition Credibility Pill */
+.competition-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  font-size: 13px;
+  font-family: var(--font-body, "Geist", sans-serif);
+  color: var(--text-secondary, #B9B6AD);
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.competition-pill .pill-badge {
+  font-weight: 600;
+  color: var(--brand-molten, #FF5B1F);
+  letter-spacing: 0.02em;
+}
+.competition-pill .pill-divider {
+  opacity: 0.35;
+}
+.competition-pill .pill-team {
+  color: var(--text-primary, #F2EFE8);
+  font-weight: 500;
+}
+
+/* Three Anchoring Numbers Grid */
+.anchoring-numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 24px 0 16px;
+}
+.anchor-card {
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+  padding: 14px 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.anchor-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-highlight, rgba(255, 255, 255, 0.25));
+}
+.anchor-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-molten, #FF5B1F), var(--brand-amber, #FFB547));
+}
+.anchor-card:nth-child(2)::before {
+  background: linear-gradient(90deg, var(--status-verified, #3DDC97), #8AB4FF);
+}
+.anchor-card:nth-child(3)::before {
+  background: linear-gradient(90deg, var(--brand-heat, #FF8A3D), var(--status-penalty, #FF4D4D));
+}
+.anchor-val {
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  font-weight: 700;
+  font-size: clamp(20px, 1.8vw, 24px);
+  letter-spacing: -0.03em;
+  color: var(--text-primary, #F2EFE8);
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+.anchor-val small {
+  font-size: 14px;
+  color: var(--text-tertiary, #85827A);
+  font-family: var(--font-body, "Geist", sans-serif);
+  font-weight: 400;
+}
+.anchor-label {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-secondary, #B9B6AD);
+}
+@media (max-width: 760px) {
+  .anchoring-numbers {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* Misconception Debunking Section & Card */
+.misconception-section {
+  padding: 64px 0;
+}
+.misconception-card {
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  border-radius: 20px;
+  padding: 36px 40px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.misconception-card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle at top right, rgba(255, 91, 31, 0.08), transparent 70%);
+  pointer-events: none;
+}
+.myth-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.myth-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1.15fr;
+  gap: 28px;
+  align-items: stretch;
+}
+.myth-divider-arrow {
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  color: var(--text-tertiary, #85827A);
+  user-select: none;
+}
+.myth-col {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  padding: 24px;
+}
+.myth-false {
+  background: rgba(255, 77, 77, 0.05);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+}
+.myth-true {
+  background: rgba(61, 220, 151, 0.05);
+  border: 1px solid rgba(61, 220, 151, 0.25);
+}
+.myth-header {
+  margin-bottom: 12px;
+}
+.myth-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.myth-tag.red {
+  background: rgba(255, 77, 77, 0.15);
+  color: var(--status-penalty, #FF4D4D);
+}
+.myth-tag.green {
+  background: rgba(61, 220, 151, 0.15);
+  color: var(--status-verified, #3DDC97);
+}
+.myth-col h3 {
+  font-size: 18px;
+  line-height: 1.35;
+  margin: 0;
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+}
+.myth-false h3 {
+  color: #FFA499;
+}
+.myth-true h3 {
+  color: #A9F5D3;
+}
+.myth-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-secondary, #B9B6AD);
+  margin: 12px 0 18px;
+}
+.myth-calc {
+  margin-top: auto;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  font-family: var(--font-mono, "Geist Mono", monospace);
+}
+.myth-calc.red {
+  background: rgba(255, 77, 77, 0.08);
+  border: 1px dashed rgba(255, 77, 77, 0.25);
+}
+.myth-calc.green {
+  background: rgba(61, 220, 151, 0.08);
+  border: 1px solid rgba(61, 220, 151, 0.25);
+}
+.calc-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  color: var(--text-secondary, #B9B6AD);
+}
+.calc-line.total {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 8px;
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--text-primary, #F2EFE8);
+}
+.calc-verdict {
+  margin-top: 10px;
+  font-size: 12px;
+  font-family: var(--font-body, "Geist", sans-serif);
+  color: var(--status-penalty, #FF4D4D);
+  font-weight: 500;
+}
+.calc-verdict.green {
+  color: var(--status-verified, #3DDC97);
+}
+@media (max-width: 900px) {
+  .misconception-card { padding: 24px; }
+  .myth-grid { grid-template-columns: 1fr; }
+  .myth-divider-arrow { transform: rotate(90deg); margin: -6px 0; }
+}
+
+/* Three Pillars Presentation */
+.pillars-section {
+  padding: 96px 0 72px;
+}
+.pillars-grid {
+  gap: 24px;
+  margin-top: 40px;
+}
+.pillar-card {
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  border-radius: 18px;
+  padding: 32px 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.pillar-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-highlight, rgba(255, 255, 255, 0.24));
+}
+.pillar-num {
+  position: absolute;
+  top: 24px; right: 28px;
+  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.1);
+}
+.pillar-tag {
+  font-size: 12px;
+  font-family: var(--font-mono, "Geist Mono", monospace);
+  color: var(--brand-amber, #FFB547);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 14px;
+  display: block;
+}
+.pillar-card h3 {
+  font-size: 22px;
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  margin: 6px 0 14px;
+  color: var(--text-primary, #F2EFE8);
+}
+.pillar-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary, #B9B6AD);
+  margin-bottom: 20px;
+}
+.pillar-feats {
+  margin-top: auto;
+  list-style: none;
+  padding: 0;
+  border-top: 1px dashed var(--border-subtle, rgba(255,255,255,0.08));
+  padding-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+.pillar-feats li {
+  font-size: 13px;
+  color: var(--text-secondary, #B9B6AD);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pillar-feats li::before {
+  content: "✓";
+  color: var(--status-verified, #3DDC97);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Stage Pills for Supply Chain Journey */
+.stage-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0 0;
+  padding: 0 4px;
+}
+.stage-pill {
+  appearance: none;
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  background: var(--surface-card, #131816);
+  color: var(--text-secondary, #B9B6AD);
+  font-family: var(--font-body, "Geist", sans-serif);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.stage-pill:hover {
+  background: var(--surface-elevated, #1A201D);
+  color: var(--text-primary, #F2EFE8);
+  border-color: var(--border-highlight, rgba(255, 255, 255, 0.22));
+}
+.stage-pill.on {
+  background: var(--brand-molten, #FF5B1F);
+  border-color: var(--brand-molten, #FF5B1F);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(255, 91, 31, 0.35);
+}
+.stage-pill .pill-num {
+  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-size: 11px;
+  opacity: 0.8;
+}
+</style>
+
 <section class="hero" id="top">
   <canvas class="flow" id="flow" aria-hidden="true"></canvas>
   <div class="container hero-grid">
     <div>
+      <div class="competition-pill hero-fade">
+        <span class="pill-badge">Quest EY-Parthenon 2026</span>
+        <span class="pill-divider">·</span>
+        <span class="pill-team">Team Carbon Khata · XLRI Delhi-NCR</span>
+      </div>
       <span class="eyebrow">EU CBAM · payable on every tonne imported since 1 January 2026</span>
       <h1 id="heroTitle"><span class="split-line"><span>Every tonne</span></span><span class="split-line"><span>should carry its</span></span><span class="split-line"><span><em>carbon receipt.</em></span></span></h1>
       <p class="lead hero-fade">Carbon Khata is a shared ledger that carries a steel mill's verified emissions through each stockist invoice to the MSME exporter, and on into a verifier-signed EU CBAM file.</p>
       <div class="hero-actions hero-fade">
         <a class="btn btn-accent btn-lg" href="/platform">Try the live demo <span data-icon="arrow"></span></a>
         <a class="btn btn-secondary btn-lg" href="/tour"><span class="play" data-icon="play"></span>Watch the 90-second tour</a>
+      </div>
+      <div class="anchoring-numbers hero-fade">
+        <div class="anchor-card">
+          <div class="anchor-val">₹30,400<small>/t</small></div>
+          <div class="anchor-label">The avoidable CBAM data penalty on Indian bolts in 2026</div>
+        </div>
+        <div class="anchor-card">
+          <div class="anchor-val">₹36.4 Lakh</div>
+          <div class="anchor-label">Net value kept on a single 120-tonne shipment of bolts to Hamburg</div>
+        </div>
+        <div class="anchor-card">
+          <div class="anchor-val">~70%</div>
+          <div class="anchor-label">Portion of the CBAM bill that is a penalty for missing data, NOT real carbon</div>
+        </div>
       </div>
       <div class="hero-meta hero-fade">
         <div><b>₹36.4 L</b>kept on one 120 t bolt shipment</div>
@@ -80,6 +444,45 @@
   </div>
 </section>
 
+<section class="section misconception-section" id="misconception">
+  <div class="container">
+    <div class="misconception-card" data-reveal>
+      <div class="myth-badge">
+        <span class="badge red">#1 Judge Misconception Debunked</span>
+        <span class="mono xs" style="color:var(--text-3)">Statutory Reality · EU CBAM Art. 31 &amp; IR 2025/2547</span>
+      </div>
+      <div class="myth-grid">
+        <div class="myth-col myth-false">
+          <div class="myth-header">
+            <span class="myth-tag red">The Dangerous Myth</span>
+            <h3>"97.5% free allocation in 2026 means almost zero CBAM cost."</h3>
+          </div>
+          <p class="myth-desc">Judges and exporters often assume that because the 2026 phase-in factor is 97.5%, importers pay only 2.5% of total carbon emissions, making CBAM negligible until 2030.</p>
+          <div class="myth-calc red">
+            <div class="calc-line"><span>Assumed deduction</span><b>97.5% of 6.29 tCO₂/t</b></div>
+            <div class="calc-line"><span>Assumed payable</span><b>0.16 certificates (~₹1,300/t)</b></div>
+            <div class="calc-verdict">❌ Flawed assumption: Free allocation DOES NOT apply to total emissions</div>
+          </div>
+        </div>
+        <div class="myth-divider-arrow">➔</div>
+        <div class="myth-col myth-true">
+          <div class="myth-header">
+            <span class="myth-tag green">The Statutory Truth</span>
+            <h3>The 97.5% factor applies ONLY to the EU benchmark (1.53 t), NOT to actual emissions.</h3>
+          </div>
+          <p class="myth-desc">Under EU CBAM rules, free allocation reduces only the 1.53 t EU benchmark (1.53 × 97.5% = 1.49 t SEFA). A bolt on India's default carries 6.29 t, so <b>4.8 certificates</b> per tonne (~₹39,000/t) remain payable!</p>
+          <div class="myth-calc green">
+            <div class="calc-line"><span>Gross default emissions</span><b>6.29 tCO₂/t</b></div>
+            <div class="calc-line"><span>SEFA deduction (1.53 × 97.5%)</span><b>−1.49 tCO₂/t</b></div>
+            <div class="calc-line total"><span>Net payable certificates</span><b style="color:var(--status-verified)">4.8 certificates / tonne (~₹39,000/t)</b></div>
+            <div class="calc-verdict green">✓ Statutory reality: Over 76% of default gross emissions remain taxable in 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="journey-pin journey-film" id="journey">
   <div class="journey-stick">
     <div class="journey-head">
@@ -90,10 +493,17 @@
       <div class="map-col">
       <div class="map-wrap" id="mapWrap">
         <svg class="route-svg" id="map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map: the steel lot travels from a mill in Odisha to a stockist in Mandi Gobindgarh and a bolt workshop in Ludhiana, then by sea from Mundra to Hamburg"></svg>
-        
+        <div class="map-tip" id="mapTip"></div>
         <div class="map-legend"><span><i class="lg-in"></i>India</span><span><i class="lg-eu"></i>EU member states</span><span><i class="lg-rail"></i>Rail and road</span><span><i class="lg-sea"></i>Sea freight</span></div>
       </div>
-      
+      <div class="stage-pills" id="journeyPills" role="tablist" aria-label="Supply chain journey stages">
+        <button class="stage-pill on" data-stop="0" type="button" aria-selected="true"><span class="pill-num">1</span> Odisha Mill</button>
+        <button class="stage-pill" data-stop="1" type="button" aria-selected="false"><span class="pill-num">2</span> Mandi Stockist</button>
+        <button class="stage-pill" data-stop="2" type="button" aria-selected="false"><span class="pill-num">3</span> Ludhiana Workshop</button>
+        <button class="stage-pill" data-stop="3" type="button" aria-selected="false"><span class="pill-num">4</span> Cluster Verifier</button>
+        <button class="stage-pill" data-stop="4" type="button" aria-selected="false"><span class="pill-num">5</span> Mundra Port</button>
+        <button class="stage-pill" data-stop="5" type="button" aria-selected="false"><span class="pill-num">6</span> Hamburg Importer</button>
+      </div>
       </div>
 
       <div class="stop-cards" id="stops">
@@ -139,6 +549,56 @@
           <div class="mini light screen"><div class="screen-body" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><div class="xs" style="color:var(--text-3)">On default</div><div class="mono" style="font-size:26px;color:var(--khata)">576</div></div><div><div class="xs" style="color:var(--text-3)">On actual data</div><div class="mono" style="font-size:26px;color:var(--green)">128</div></div></div></div>
           <div class="rule">First declaration due 30 September 2027</div>
         </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section pillars-section" id="pillars">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">The Architecture</span>
+      <h2>The Three Pillars of <em>Carbon Khata</em></h2>
+      <p class="lead">How our decentralized precursor data rail and cluster verification turn an existential MSME export threat into a durable competitive advantage.</p>
+    </div>
+    <div class="grid cols-3 pillars-grid" data-reveal>
+      <div class="pillar-card spotlight-card">
+        <div class="pillar-num">01</div>
+        <div class="icon-box red" data-icon="factory"></div>
+        <span class="pillar-tag">Pillar 1 · Data Infrastructure</span>
+        <h3>Precursor Data Rail</h3>
+        <p>The primary mill's verified emissions report and heat numbers travel directly with the lot through stockists to the MSME workshop. Our Tally Prime add-on tags GST e-invoices with zero workflow change, while our cryptographic mass-balance cap strictly blocks overselling beyond tonnes purchased.</p>
+        <ul class="pillar-feats">
+          <li><b>Mill report &amp; heat numbers</b> travel with every lot</li>
+          <li><b>Tally Prime add-on</b> integrates into existing billing</li>
+          <li><b>Mass-balance cap</b> strictly blocks overselling</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card spotlight-card">
+        <div class="pillar-num">02</div>
+        <div class="icon-box" data-icon="shield"></div>
+        <span class="pillar-tag">Pillar 2 · Cluster Economics</span>
+        <h3>Batched Verification</h3>
+        <p>Independent year-1 site visits are mandated by EU law, but individual audits cost ₹17.5 Lakh. We organize 10 sites per week in the Ludhiana cluster with standardized monitoring plans and shared verifier travel, dropping verification costs to ₹6.0 Lakh per plant (&minus;66% savings).</p>
+        <ul class="pillar-feats">
+          <li><b>10 sites / week</b> in Ludhiana fastener cluster</li>
+          <li><b>Shared travel + templates</b> slash audit cost</li>
+          <li><b>₹17.5L &rarr; ₹6.0L</b> per site (&minus;66% cost reduction)</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card spotlight-card">
+        <div class="pillar-num">03</div>
+        <div class="icon-box green" data-icon="bank"></div>
+        <span class="pillar-tag">Pillar 3 · Growth &amp; Finance</span>
+        <h3>Carbon-to-Cash</h3>
+        <p>Verified carbon data doesn't just avoid penalties; it unlocks commercial value. Audited records enable low-interest green loans at SIDBI and commercial banks, prepare exporters for the UK CBAM in January 2027, and power matching with scrap-based lower-carbon steel suppliers.</p>
+        <ul class="pillar-feats">
+          <li><b>Green loans</b> unlocked at SIDBI and partner banks</li>
+          <li><b>UK CBAM ready</b> for January 2027 enforcement</li>
+          <li><b>Lower-carbon steel</b> procurement matching</li>
+        </ul>
       </div>
     </div>
   </div>

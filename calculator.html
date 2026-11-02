@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
-<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"forest";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
+<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"molten";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="calculator">
@@ -24,10 +24,29 @@
       <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><defs><linearGradient id="lgM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--logo-spine-a)"/><stop offset="1" style="stop-color:var(--logo-spine-b)"/></linearGradient></defs><rect x="2" y="3" width="20" height="23" rx="3.5" style="fill:var(--logo-page);stroke:var(--line-strong)" stroke-width=".6"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="url(#lgM)"/><path d="M10.5 10h8M10.5 14.5h8M10.5 19h5" style="stroke:var(--logo-ink)" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="5" style="fill:var(--bg);stroke:var(--logo-check)" stroke-width="1.6"/><path d="m20.5 6.6 1.3 1.3 2.6-2.7" style="stroke:var(--logo-check)" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Carbon Khata
     </a>
+    <div class="ambient-island" role="status" aria-label="Live CBAM Telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <div class="island-track">
+        <div class="island-inner">
+          <div class="island-item">
+            <span class="island-badge">EU CBAM</span>
+            <span class="island-text">€75.28/tCO₂</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge institution">Quest 2026</span>
+            <span class="island-text">XLRI Finalist</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge pilot">Ludhiana Pilot</span>
+            <span class="island-text">Dec 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="main-nav" aria-label="Main">
       <a href="/tour" data-page="tour">Product tour</a>
-      <div class="nav-drop" data-open="false">
-        <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
+      <div class="nav-drop" data-page="solutions" data-open="false">
+        <button type="button" data-page="solutions" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
         <div class="drop-panel" role="menu">
           <a href="/solutions#exporters" role="menuitem"><span class="ico" data-icon="bolt"></span><span><b>Exporters</b><span>File EU data on actual emissions</span></span></a>
           <a href="/solutions#stockists" role="menuitem"><span class="ico" data-icon="store"></span><span><b>Stockists</b><span>Pass mill reports on with every sale</span></span></a>
@@ -42,26 +61,32 @@
       <a href="/trust" data-page="trust">Trust</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
-      <a class="btn btn-primary btn-sm" href="/platform">Try the demo</a>
+      <a class="btn btn-ghost btn-sm" href="/pilot" data-page="pilot">Join the pilot</a>
+      <a class="btn btn-primary btn-sm" href="/platform" data-page="platform">Try the demo</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
-    <a href="/platform">Try the demo</a>
-    <a href="/tour">Product tour</a>
+    <div class="mobile-telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <span class="badge green">EU CBAM €75.28/tCO₂</span>
+      <span class="badge amber">Quest 2026 · XLRI</span>
+      <span class="badge blue">Pilot Dec 2026</span>
+    </div>
+    <a href="/platform" data-page="platform">Try the demo</a>
+    <a href="/tour" data-page="tour">Product tour</a>
     <div class="group">Solutions</div>
-    <a href="/solutions#exporters">Exporters</a>
-    <a href="/solutions#stockists">Stockists</a>
-    <a href="/solutions#mills">Steel mills</a>
-    <a href="/solutions#verifiers">Verifiers</a>
-    <a href="/solutions#importers">EU importers</a>
-    <a href="/solutions#lenders">Lenders</a>
+    <a href="/solutions#exporters" data-page="solutions">Exporters</a>
+    <a href="/solutions#stockists" data-page="solutions">Stockists</a>
+    <a href="/solutions#mills" data-page="solutions">Steel mills</a>
+    <a href="/solutions#verifiers" data-page="solutions">Verifiers</a>
+    <a href="/solutions#importers" data-page="solutions">EU importers</a>
+    <a href="/solutions#lenders" data-page="solutions">Lenders</a>
     <div class="group">More</div>
-    <a href="/calculator">Calculator</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/trust">Trust &amp; compliance</a>
-    <a class="btn btn-primary" href="/pilot">Join the pilot</a>
+    <a href="/calculator" data-page="calculator">Calculator</a>
+    <a href="/pricing" data-page="pricing">Pricing</a>
+    <a href="/trust" data-page="trust">Trust &amp; compliance</a>
+    <a class="btn btn-primary" href="/pilot" data-page="pilot">Join the pilot</a>
   </nav>
 </header>
 <main id="main">
@@ -112,6 +137,7 @@
         <div class="card" style="padding:22px"><div class="metric green"><div class="v num" id="mAct"></div><div class="l">on verified data</div></div></div>
         <div class="card" style="padding:22px;background:linear-gradient(140deg,rgba(255,91,31,.22),rgba(255,181,71,.08));border-color:rgba(255,91,31,.4)"><div class="metric"><div class="v num" id="mSave" style="color:var(--amber)"></div><div class="l" id="mSaveL"></div></div></div>
       </div>
+      <div id="recoveryNotice" class="recovery-card card" style="display:none;margin-top:16px"></div>
       <div class="card" style="margin-top:16px">
         <h3>Cost per shipment</h3>
         <div class="bars" style="margin-top:18px" id="bars"></div>
@@ -146,7 +172,7 @@
       </div>
       <div>
         <h4>Solutions</h4>
-        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li></ul>
+        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li><li><a href="/solutions#lenders">Lenders</a></li></ul>
       </div>
       <div>
         <h4>Trust</h4>
@@ -154,7 +180,11 @@
       </div>
       <div>
         <h4>Team</h4>
-        <ul><li>Team Carbon Khata</li><li>XLRI Delhi-NCR</li><li>Quest EY-Parthenon 2026</li></ul>
+        <ul class="footer-team">
+          <li><strong>Team Carbon Khata</strong></li>
+          <li>XLRI Delhi-NCR</li>
+          <li><span class="badge amber">Quest EY-Parthenon 2026</span></li>
+        </ul>
       </div>
     </div>
     <div class="footer-base">

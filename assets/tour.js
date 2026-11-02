@@ -263,11 +263,34 @@
   ];
 
   /* ---------- player ---------- */
-  let cur = -1, tl = null, playing = !reduce, waitT = null;
+  let cur = -1, tl = null, playing = !reduce, waitT = null, speed = 1.0;
+  window.chapters = CH;
+  window.CH = CH;
+
   const bar = $("#tChapters");
   bar.innerHTML = CH.map((c, i) => `<button role="tab" data-i="${i}" aria-label="Chapter ${i + 1}: ${c.t}"><span class="bar"><i></i></span><span class="t">${String(i + 1).padStart(2, "0")} ${c.t}</span></button>`).join("");
   const btns = [...bar.children];
   btns.forEach((b) => b.addEventListener("click", () => go(+b.dataset.i)));
+
+  // Speed controls
+  const speedBtns = [...document.querySelectorAll(".speed-btn")];
+  speedBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      speed = parseFloat(btn.dataset.speed) || 1.0;
+      speedBtns.forEach((b) => {
+        const match = b === btn;
+        b.classList.toggle("on", match);
+        b.setAttribute("aria-pressed", String(match));
+      });
+      if (tl) tl.timeScale(speed);
+    });
+  });
+
+  // Chapter quick jump buttons
+  const jumpBtns = [...document.querySelectorAll(".jump-btn")];
+  jumpBtns.forEach((jb) => {
+    jb.addEventListener("click", () => go(+jb.dataset.i));
+  });
 
   function setPlayIcon() { $("#tPlay").innerHTML = icon(playing ? "pause" : "play"); $("#tPlay").setAttribute("aria-label", playing ? "Pause" : "Play"); }
   function go(i) {
@@ -276,6 +299,7 @@
     if (tl) tl.kill();
     cur = i; const c = CH[i];
     btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.classList.toggle("done", j < i); b.setAttribute("aria-selected", String(j === i)); $(".bar i", b).style.width = j < i ? "100%" : "0"; });
+    jumpBtns.forEach((jb, j) => jb.classList.toggle("on", j === i));
     stage.querySelectorAll(".scene").forEach((s) => s.remove());
     gsap.set(cursor, { x: stage.clientWidth * 0.62, y: stage.clientHeight * 0.88, scale: 1, autoAlpha: 0 });
     $("#tChap").textContent = c.kicker; $("#tTitle").textContent = c.title; $("#tText").textContent = c.text;
@@ -283,8 +307,9 @@
     $("#tWhoIco").innerHTML = icon(c.who[0]); $("#tWho").textContent = c.who[1]; $("#tWhoRole").textContent = c.who[2];
     gsap.fromTo([".tour-copy .chap", "#tTitle", "#tText", "#tStat", ".tour-copy .who"], { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", stagger: 0.07 });
     tl = c.build();
+    if (tl && speed !== 1.0) tl.timeScale(speed);
     tl.eventCallback("onUpdate", () => ($(".bar i", btns[i]).style.width = tl.progress() * 100 + "%"));
-    tl.eventCallback("onComplete", () => { if (playing && cur < CH.length - 1) waitT = setTimeout(() => go(cur + 1), 900); else if (cur === CH.length - 1) { playing = false; setPlayIcon(); } });
+    tl.eventCallback("onComplete", () => { if (playing && cur < CH.length - 1) waitT = setTimeout(() => go(cur + 1), 900 / speed); else if (cur === CH.length - 1) { playing = false; setPlayIcon(); } });
     if (reduce) tl.progress(1); else if (playing) tl.play(); else tl.progress(0).pause();
   }
   function toggle() {
@@ -301,6 +326,15 @@
     if (e.key === "ArrowRight") go(cur + 1);
     if (e.key === "ArrowLeft") go(cur - 1);
   });
+  window.setTourSpeed = (s) => {
+    speed = s;
+    if (tl) tl.timeScale(speed);
+    speedBtns.forEach((b) => {
+      const match = parseFloat(b.dataset.speed) === s;
+      b.classList.toggle("on", match);
+      b.setAttribute("aria-pressed", String(match));
+    });
+  };
   const start = Math.max(0, Math.min(CH.length - 1, (+new URLSearchParams(location.search).get("chapter") || 1) - 1));
   setPlayIcon();
   requestAnimationFrame(() => go(start));

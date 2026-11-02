@@ -61,19 +61,30 @@
       <span class="eyebrow">Worked example</span>
       <h2>A 300 t bolt exporter in 2026</h2>
       <p class="lead" style="margin-top:16px">Fees are under 3% of the saving. After the verifier and the stockist are paid, the exporter keeps 91%.</p>
+      <div class="field" style="margin:20px 0 16px"><div class="range-row"><label for="volSlider">Simulate annual export volume</label><output id="volOut" for="volSlider">300 tonnes</output></div><input type="range" id="volSlider" min="100" max="1500" step="50" value="300"></div>
       <p class="muted small">Punjab's 2026 industrial policy repays 75% of MSME audit costs, up to ₹3 lakh per audit, which can lower the verifier line further.</p>
+      <div class="callout" style="margin-top:20px">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="badge green" id="badgeRoi">10.7× all-in return</span>
+          <span class="badge amber" id="badgeCkRoi">38× on Carbon Khata fees</span>
+        </div>
+        <p style="margin:10px 0 0;font-size:13.5px;color:var(--text-2)">
+          Eligible for <strong>Punjab 2026 industrial policy 75% audit reimbursement subsidy (up to ₹3 lakh)</strong>, reducing net verification costs to ₹3.0 L and boosting net retained savings to over 94%.
+        </p>
+      </div>
     </div>
     <div class="card">
       <table class="data">
         <tbody>
-          <tr><td>CBAM cost on India's default (300 t × ₹39,000)</td><td class="r">₹117.1 L</td></tr>
-          <tr><td>CBAM cost on verified data (300 t × ₹8,700)</td><td class="r">₹26.0 L</td></tr>
-          <tr class="total"><td>Saving</td><td class="r" style="color:var(--green)">₹91.1 L</td></tr>
-          <tr><td>Carbon Khata subscription</td><td class="r">₹1.2 L</td></tr>
-          <tr><td>Filing fee, 300 t × ₹400</td><td class="r">₹1.2 L</td></tr>
-          <tr><td>Stockist tracing, 300 t × ₹50</td><td class="r">₹0.15 L</td></tr>
-          <tr><td>Batched verifier fee</td><td class="r">₹6.0 L</td></tr>
-          <tr class="total"><td>Return on all costs</td><td class="r">10.7×</td></tr>
+          <tr><td>CBAM cost on India's default (<span id="volDefLbl">300</span> t × ₹39,000)</td><td class="r" id="volDefVal">₹117.1 L</td></tr>
+          <tr><td>CBAM cost on verified data (<span id="volActLbl">300</span> t × ₹8,700)</td><td class="r" id="volActVal">₹26.0 L</td></tr>
+          <tr class="total"><td>Saving</td><td class="r" id="volSaveVal" style="color:var(--green)">₹91.1 L</td></tr>
+          <tr><td>Carbon Khata subscription</td><td class="r" id="volSubVal">₹1.2 L</td></tr>
+          <tr><td>Filing fee, <span id="volFeeLbl">300</span> t × ₹400</td><td class="r" id="volFeeVal">₹1.2 L</td></tr>
+          <tr><td>Stockist tracing, <span id="volTraceLbl">300</span> t × ₹50</td><td class="r" id="volTraceVal">₹0.15 L</td></tr>
+          <tr><td>Batched verifier fee</td><td class="r" id="volAuditVal">₹6.0 L</td></tr>
+          <tr class="total"><td>Return on all costs</td><td class="r" id="volRoiVal">10.7×</td></tr>
+          <tr><td>Retained savings</td><td class="r" id="volRetVal">91%</td></tr>
         </tbody>
       </table>
     </div>
@@ -90,3 +101,63 @@
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s = document.getElementById("volSlider");
+  const o = document.getElementById("volOut");
+  if (!s || !o) return;
+
+  function update() {
+    const vol = +s.value;
+    o.textContent = `${vol} tonnes`;
+
+    const def = vol * 39038;
+    const act = vol * 8663;
+    const save = def - act;
+    const sub = 120000;
+    const filing = vol * 400;
+    const trace = vol * 50;
+    const verifier = 600000;
+    const totalCost = sub + filing + trace + verifier;
+    const roi = (save / totalCost).toFixed(1) + "×";
+    const retained = save > 0 ? Math.round(((save - totalCost) / save) * 100) + "%" : "0%";
+    const ckFees = sub + filing;
+    const ckRoi = Math.round(save / ckFees) + "×";
+
+    const fLakh = (v, d = 1) => "₹" + (v / 1e5).toFixed(d) + " L";
+
+    const dLbl = document.getElementById("volDefLbl");
+    if (dLbl) dLbl.textContent = vol;
+    const aLbl = document.getElementById("volActLbl");
+    if (aLbl) aLbl.textContent = vol;
+    const fLbl = document.getElementById("volFeeLbl");
+    if (fLbl) fLbl.textContent = vol;
+    const tLbl = document.getElementById("volTraceLbl");
+    if (tLbl) tLbl.textContent = vol;
+
+    const dVal = document.getElementById("volDefVal");
+    if (dVal) dVal.textContent = fLakh(def);
+    const aVal = document.getElementById("volActVal");
+    if (aVal) aVal.textContent = fLakh(act);
+    const sVal = document.getElementById("volSaveVal");
+    if (sVal) sVal.textContent = fLakh(save);
+    const feeVal = document.getElementById("volFeeVal");
+    if (feeVal) feeVal.textContent = fLakh(filing);
+    const trVal = document.getElementById("volTraceVal");
+    if (trVal) trVal.textContent = fLakh(trace, 2);
+    const rVal = document.getElementById("volRoiVal");
+    if (rVal) rVal.textContent = roi;
+    const retVal = document.getElementById("volRetVal");
+    if (retVal) retVal.textContent = retained;
+
+    const bRoi = document.getElementById("badgeRoi");
+    if (bRoi) bRoi.textContent = `${roi} all-in return`;
+    const bCkRoi = document.getElementById("badgeCkRoi");
+    if (bCkRoi) bCkRoi.textContent = `${ckRoi} on Carbon Khata fees`;
+  }
+
+  s.addEventListener("input", update);
+  update();
+});
+</script>

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
-<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"forest";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
+<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"molten";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="platform">
@@ -24,10 +24,29 @@
       <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><defs><linearGradient id="lgM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--logo-spine-a)"/><stop offset="1" style="stop-color:var(--logo-spine-b)"/></linearGradient></defs><rect x="2" y="3" width="20" height="23" rx="3.5" style="fill:var(--logo-page);stroke:var(--line-strong)" stroke-width=".6"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="url(#lgM)"/><path d="M10.5 10h8M10.5 14.5h8M10.5 19h5" style="stroke:var(--logo-ink)" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="5" style="fill:var(--bg);stroke:var(--logo-check)" stroke-width="1.6"/><path d="m20.5 6.6 1.3 1.3 2.6-2.7" style="stroke:var(--logo-check)" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Carbon Khata
     </a>
+    <div class="ambient-island" role="status" aria-label="Live CBAM Telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <div class="island-track">
+        <div class="island-inner">
+          <div class="island-item">
+            <span class="island-badge">EU CBAM</span>
+            <span class="island-text">€75.28/tCO₂</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge institution">Quest 2026</span>
+            <span class="island-text">XLRI Finalist</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge pilot">Ludhiana Pilot</span>
+            <span class="island-text">Dec 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="main-nav" aria-label="Main">
       <a href="/tour" data-page="tour">Product tour</a>
-      <div class="nav-drop" data-open="false">
-        <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
+      <div class="nav-drop" data-page="solutions" data-open="false">
+        <button type="button" data-page="solutions" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
         <div class="drop-panel" role="menu">
           <a href="/solutions#exporters" role="menuitem"><span class="ico" data-icon="bolt"></span><span><b>Exporters</b><span>File EU data on actual emissions</span></span></a>
           <a href="/solutions#stockists" role="menuitem"><span class="ico" data-icon="store"></span><span><b>Stockists</b><span>Pass mill reports on with every sale</span></span></a>
@@ -42,29 +61,389 @@
       <a href="/trust" data-page="trust">Trust</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
-      <a class="btn btn-primary btn-sm" href="/platform">Try the demo</a>
+      <a class="btn btn-ghost btn-sm" href="/pilot" data-page="pilot">Join the pilot</a>
+      <a class="btn btn-primary btn-sm" href="/platform" data-page="platform">Try the demo</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
-    <a href="/platform">Try the demo</a>
-    <a href="/tour">Product tour</a>
+    <div class="mobile-telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <span class="badge green">EU CBAM €75.28/tCO₂</span>
+      <span class="badge amber">Quest 2026 · XLRI</span>
+      <span class="badge blue">Pilot Dec 2026</span>
+    </div>
+    <a href="/platform" data-page="platform">Try the demo</a>
+    <a href="/tour" data-page="tour">Product tour</a>
     <div class="group">Solutions</div>
-    <a href="/solutions#exporters">Exporters</a>
-    <a href="/solutions#stockists">Stockists</a>
-    <a href="/solutions#mills">Steel mills</a>
-    <a href="/solutions#verifiers">Verifiers</a>
-    <a href="/solutions#importers">EU importers</a>
-    <a href="/solutions#lenders">Lenders</a>
+    <a href="/solutions#exporters" data-page="solutions">Exporters</a>
+    <a href="/solutions#stockists" data-page="solutions">Stockists</a>
+    <a href="/solutions#mills" data-page="solutions">Steel mills</a>
+    <a href="/solutions#verifiers" data-page="solutions">Verifiers</a>
+    <a href="/solutions#importers" data-page="solutions">EU importers</a>
+    <a href="/solutions#lenders" data-page="solutions">Lenders</a>
     <div class="group">More</div>
-    <a href="/calculator">Calculator</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/trust">Trust &amp; compliance</a>
-    <a class="btn btn-primary" href="/pilot">Join the pilot</a>
+    <a href="/calculator" data-page="calculator">Calculator</a>
+    <a href="/pricing" data-page="pricing">Pricing</a>
+    <a href="/trust" data-page="trust">Trust &amp; compliance</a>
+    <a class="btn btn-primary" href="/pilot" data-page="pilot">Join the pilot</a>
   </nav>
 </header>
 <main id="main">
+<style>
+/* ==========================================================================
+   Persona Quick-Switch Dock & 7-Role Command Deck (Feature F10)
+   Obsidian Surface Ladder & Molten Steel Chromatics
+   ========================================================================== */
+.command-deck {
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+.command-deck::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brand-molten, #FF5B1F) 25%, var(--brand-amber, #FFB547) 50%, transparent 100%);
+  opacity: 0.85;
+}
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.deck-kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-molten, #FF5B1F);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.deck-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand-molten, #FF5B1F);
+  box-shadow: 0 0 10px var(--brand-molten, #FF5B1F);
+  animation: deckPulse 2s infinite ease-in-out;
+}
+@keyframes deckPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+.deck-title {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #F2EFE8);
+  margin-top: 4px;
+  letter-spacing: -0.015em;
+}
+.deck-sub {
+  font-size: 13.5px;
+  color: var(--text-secondary, #B9B6AD);
+  margin-top: 2px;
+}
+.deck-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  padding: 6px 12px;
+  background: var(--surface-elevated, #1A201D);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 999px;
+  color: var(--text-secondary, #B9B6AD);
+}
+.deck-telemetry-badge .mono {
+  font-family: var(--mono);
+  color: var(--text-primary, #F2EFE8);
+}
+
+/* Quick-Switch Dock Pills */
+.persona-dock.quick-switch {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.dock-pill {
+  background: var(--surface-elevated, #1A201D);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  color: var(--text-primary, #F2EFE8);
+  position: relative;
+  min-height: 84px;
+  min-width: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.dock-pill:hover {
+  background: var(--surface-overlay, #232B27);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+.dock-pill.active {
+  background: rgba(255, 91, 31, 0.12);
+  border-color: var(--brand-molten, #FF5B1F);
+  box-shadow: 0 0 0 1px var(--brand-molten, #FF5B1F), 0 8px 24px -8px rgba(255, 91, 31, 0.45);
+}
+.dock-pill-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary, #B9B6AD);
+  margin-bottom: 2px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+.dock-pill-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.dock-pill.active .dock-pill-icon {
+  color: var(--brand-molten, #FF5B1F);
+}
+.dock-pill-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+  min-width: 0;
+}
+.dock-pill-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary, #F2EFE8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dock-pill.active .dock-pill-title {
+  color: var(--brand-molten, #FF5B1F);
+}
+.dock-pill-sub {
+  font-size: 11px;
+  color: var(--text-tertiary, #85827A);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dock-pill-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-tertiary, #85827A);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: auto;
+  white-space: nowrap;
+}
+.dock-pill.active .dock-pill-badge {
+  background: rgba(255, 91, 31, 0.2);
+  color: var(--brand-molten, #FF5B1F);
+}
+
+/* Judge Guided Scenarios Toolbar */
+.judge-scenarios-toolbar {
+  background: rgba(10, 12, 11, 0.65);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.judge-toolbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.judge-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-amber, #FFB547);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.judge-star {
+  color: var(--brand-amber, #FFB547);
+  font-size: 12px;
+}
+.judge-hint {
+  font-size: 12px;
+  color: var(--text-tertiary, #85827A);
+}
+.judge-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.judge-btn {
+  min-width: 0;
+  width: 100%;
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  color: var(--text-primary, #F2EFE8);
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+.judge-btn:hover {
+  background: var(--surface-elevated, #1A201D);
+  border-color: var(--border-highlight, rgba(255, 255, 255, 0.22));
+  transform: translateY(-1px);
+}
+.judge-step-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary, #85827A);
+  background: var(--surface-overlay, #232B27);
+  padding: 4px 7px;
+  border-radius: 6px;
+  flex: none;
+}
+.judge-btn-body {
+  flex: 1;
+  min-width: 0;
+}
+.judge-btn-title {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary, #F2EFE8);
+  line-height: 1.25;
+}
+.judge-btn-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--text-tertiary, #85827A);
+  margin-top: 2px;
+  white-space: normal;
+  line-height: 1.35;
+  word-break: break-word;
+}
+.judge-btn-pill {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  flex: none;
+  white-space: nowrap;
+}
+.judge-btn-pill.red {
+  background: rgba(255, 77, 77, 0.15);
+  color: #FF6B6B;
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+.judge-btn-pill.blue {
+  background: rgba(138, 180, 255, 0.15);
+  color: #8AB4FF;
+  border: 1px solid rgba(138, 180, 255, 0.3);
+}
+.judge-btn-pill.green {
+  background: rgba(61, 220, 151, 0.15);
+  color: #3DDC97;
+  border: 1px solid rgba(61, 220, 151, 0.3);
+}
+
+/* Elevated Mass-Balance Overselling Alert */
+#oversellAlert {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid rgba(255, 77, 77, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 77, 77, 0.15);
+  animation: alertPop 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes alertPop {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+#oversellAlert .alert-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: -0.01em;
+}
+#oversellAlert p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1080px) {
+  .persona-dock.quick-switch {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .judge-actions-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .judge-btn {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+}
+@media (max-width: 640px) {
+  .command-deck {
+    padding: 16px 14px;
+    margin-bottom: 18px;
+  }
+  .persona-dock.quick-switch {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dock-pill {
+    flex: 0 0 135px;
+    scroll-snap-align: start;
+    min-height: 78px;
+  }
+}
+</style>
+
 <section class="page-hero" style="padding-bottom:40px">
   <div class="container">
     <span class="eyebrow">Platform</span>
@@ -76,6 +455,117 @@
 
 <section class="section tight">
   <div class="container">
+
+    <!-- Feature F10: 7-Role Simulation Command Deck & Persona Quick-Switch Dock -->
+    <div class="command-deck quick-switch-dock-wrap" id="commandDeck">
+      <div class="deck-header">
+        <div class="deck-title-group">
+          <div class="deck-kicker"><span class="deck-pulse-dot"></span> 7-Role Simulation Command Deck</div>
+          <div class="deck-title">Interactive Multi-Stakeholder Ledger</div>
+          <div class="deck-sub">Click any persona below to switch workspaces, or run the 1-click judge scenarios:</div>
+        </div>
+        <div class="deck-telemetry-badge">
+          <span class="mono">EU CBAM Art. 14</span>
+          <span class="badge green">Synchronized Ledger</span>
+        </div>
+      </div>
+
+      <!-- Persona Quick-Switch Dock with 7 Clickable Roles -->
+      <div class="persona-dock quick-switch" id="personaQuickSwitch" role="tablist" aria-label="7 Persona Quick-Switch Dock">
+        <button class="dock-pill active" data-dock-role="exporter" role="tab" aria-selected="true" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="ship"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">Exporter</span>
+            <span class="dock-pill-sub">Ludhiana MSME</span>
+          </span>
+          <span class="dock-pill-badge">3 shipments</span>
+        </button>
+        <button class="dock-pill" data-dock-role="stockist" role="tab" aria-selected="false" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="store"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">Stockist</span>
+            <span class="dock-pill-sub">Mandi Gobindgarh</span>
+          </span>
+          <span class="dock-pill-badge">Mass-balance</span>
+        </button>
+        <button class="dock-pill" data-dock-role="mill" role="tab" aria-selected="false" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="file"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">Steel Mill</span>
+            <span class="dock-pill-sub">BF-BOF Origin</span>
+          </span>
+          <span class="dock-pill-badge">DPDP consent</span>
+        </button>
+        <button class="dock-pill" data-dock-role="verifier" role="tab" aria-selected="false" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="shield"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">Verifier</span>
+            <span class="dock-pill-sub">Accredited Body</span>
+          </span>
+          <span class="dock-pill-badge">-66% batched</span>
+        </button>
+        <button class="dock-pill" data-dock-role="importer" role="tab" aria-selected="false" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="users"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">EU Importer</span>
+            <span class="dock-pill-sub">Hamburg Declarant</span>
+          </span>
+          <span class="dock-pill-badge">50% quota</span>
+        </button>
+        <button class="dock-pill" data-dock-role="lender" role="tab" aria-selected="false" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="bank"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">Lender</span>
+            <span class="dock-pill-sub">Green Desk (SIDBI)</span>
+          </span>
+          <span class="dock-pill-badge">₹40L loan</span>
+        </button>
+        <button class="dock-pill" data-dock-role="cluster" role="tab" aria-selected="false" aria-controls="app" type="button">
+          <span class="dock-pill-icon" data-icon="chart"></span>
+          <span class="dock-pill-text">
+            <span class="dock-pill-title">Cluster Lead</span>
+            <span class="dock-pill-sub">EEPC India</span>
+          </span>
+          <span class="dock-pill-badge">Kill criterion</span>
+        </button>
+      </div>
+
+      <!-- 3 One-Click Judge Guided Scenarios -->
+      <div class="judge-scenarios-toolbar" id="judgeToolbar">
+        <div class="judge-toolbar-header">
+          <div class="judge-tag"><span class="judge-star">★</span> Judge Demo Scenarios (90-Second Walkthrough)</div>
+          <div class="judge-hint">1-click automated proof points for competition evaluation:</div>
+        </div>
+        <div class="judge-actions-grid">
+          <button class="judge-btn" id="demoScenario1" data-scenario="1" type="button" aria-label="Run Scenario 1: Mass-Balance Overselling Block">
+            <span class="judge-step-num">01</span>
+            <span class="judge-btn-body">
+              <span class="judge-btn-title">Overselling Block (Stockist 99t)</span>
+              <span class="judge-btn-desc">Attempts 99t sale on 25t lot ST-7781 → Strict mass-balance block</span>
+            </span>
+            <span class="judge-btn-pill red">Test Guard</span>
+          </button>
+          <button class="judge-btn" id="demoScenario2" data-scenario="2" type="button" aria-label="Run Scenario 2: Punjabi WhatsApp OCR to Shipment EU-2391">
+            <span class="judge-step-num">02</span>
+            <span class="judge-btn-body">
+              <span class="judge-btn-title">WhatsApp OCR → EU-2391</span>
+              <span class="judge-btn-desc">Traces Punjabi receipt to mill heat numbers & JSON export</span>
+            </span>
+            <span class="judge-btn-pill blue">Inspect Drawer</span>
+          </button>
+          <button class="judge-btn" id="demoScenario3" data-scenario="3" type="button" aria-label="Run Scenario 3: SIDBI Green Loan Verification">
+            <span class="judge-step-num">03</span>
+            <span class="judge-btn-body">
+              <span class="judge-btn-title">SIDBI Green Loan Checklist</span>
+              <span class="judge-btn-desc">Verifies 1.06 tCO₂e/t compliance to unlock 50 bps interest rebate</span>
+            </span>
+            <span class="judge-btn-pill green">Verify Loan</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Platform Workbench -->
     <div class="app light" id="app">
       <aside class="app-side">
         <div class="app-org"><div class="av" id="orgAv"></div><div><b id="orgName"></b><span id="orgSub"></span></div></div>
@@ -126,7 +616,7 @@
       </div>
       <div>
         <h4>Solutions</h4>
-        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li></ul>
+        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li><li><a href="/solutions#lenders">Lenders</a></li></ul>
       </div>
       <div>
         <h4>Trust</h4>
@@ -134,7 +624,11 @@
       </div>
       <div>
         <h4>Team</h4>
-        <ul><li>Team Carbon Khata</li><li>XLRI Delhi-NCR</li><li>Quest EY-Parthenon 2026</li></ul>
+        <ul class="footer-team">
+          <li><strong>Team Carbon Khata</strong></li>
+          <li>XLRI Delhi-NCR</li>
+          <li><span class="badge amber">Quest EY-Parthenon 2026</span></li>
+        </ul>
       </div>
     </div>
     <div class="footer-base">

@@ -4,7 +4,7 @@
   const actCost = (see) => Math.max(see - CK.BENCH.actual * CK.CBAM_FACTOR[Y], 0) * K;
   const def = CK.perTonne({ product: "bolts", year: Y });
   const $ = (id) => document.getElementById(id);
-  const toast = (msg) => { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2800); };
+  const toast = (msg) => { const t = $("toast"); if (!t) return; t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2800); };
 
   /* ---------- sample data ---------- */
   const shipments = [
@@ -58,15 +58,33 @@
     cluster: { org: ["EC", "EEPC cluster cell", "Ludhiana pilot"], views: [["pilot", "Pilot dashboard", "chart"], ["roadmap", "Roadmap", "calendar"]] },
   };
   const state = { role: "exporter", view: "overview" };
+  let hasRendered = false;
 
   function setFromHash() {
     const [r, v] = location.hash.replace("#", "").split("/");
-    if (ROLES[r]) { state.role = r; state.view = ROLES[r].views.some(([k]) => k === v) ? v : ROLES[r].views[0][0]; }
+    if (ROLES[r]) {
+      const targetView = ROLES[r].views.some(([k]) => k === v) ? v : ROLES[r].views[0][0];
+      if (hasRendered && state.role === r && state.view === targetView) return; // Prevent duplicate render wipe
+      state.role = r;
+      state.view = targetView;
+    }
+    hasRendered = true;
     render();
   }
-  function go(role, view) { location.hash = view ? `${role}/${view}` : role; }
+  function go(role, view) {
+    const targetHash = view ? `${role}/${view}` : role;
+    if (location.hash !== `#${targetHash}`) {
+      location.hash = targetHash;
+    }
+    if (ROLES[role]) {
+      state.role = role;
+      state.view = view && ROLES[role].views.some(([k]) => k === view) ? view : ROLES[role].views[0][0];
+      render();
+    }
+  }
 
   function render() {
+    hasRendered = true;
     const R = ROLES[state.role];
     $("roleSel").value = state.role;
     $("orgAv").textContent = R.org[0]; $("orgName").textContent = R.org[1]; $("orgSub").textContent = R.org[2];
@@ -75,6 +93,13 @@
     $("viewTitle").textContent = R.views.find(([k]) => k === state.view)[1];
     $("appBody").innerHTML = VIEWS[state.role + "." + state.view]();
     (AFTER[state.role + "." + state.view] || (() => {}))();
+
+    // Synchronize Persona Quick-Switch Dock buttons
+    document.querySelectorAll("[data-dock-role]").forEach((btn) => {
+      const active = btn.dataset.dockRole === state.role;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-selected", active ? "true" : "false");
+    });
   }
 
   const kpi = (l, v, s, cls = "") => `<div class="kpi"><div class="l">${l}</div><div class="v num ${cls}">${v}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
@@ -135,6 +160,11 @@
       <tr><td colspan="4">Own process (heat treatment, from meter and fuel bill)</td><td class="r">+${fmt.t2(s.own)}</td></tr>
       <tr class="total"><td colspan="4">Embedded emissions per tonne of bolts</td><td class="r">${fmt.t2(see)}</td></tr>
       </tbody></table></div>
+      <div class="callout" style="margin-top:12px;font-size:12.5px;line-height:1.45">
+        <div style="font-weight:600;margin-bottom:3px">Provenance &amp; WhatsApp OCR Linkage:</div>
+        <div>• <b>Mill Report Link:</b> <a href="#mill/reports" style="color:var(--brand-molten);text-decoration:underline">RPT-2026-0142 (Sample Integrated Steel)</a> — Melt &amp; Pour Heat #<b>H-24K118</b></div>
+        <div style="margin-top:2px">• <b>WhatsApp Invoice OCR Tags:</b> <span class="badge blue plain xs">Punjab Fuels #INV-3200</span> <span class="badge plain xs">Weighbridge Slip WR-5.5-A (24.62 t)</span></div>
+      </div>
       <p class="xs muted" style="margin-top:8px">Precursors from several sources are weighted by tonnes (IR 2025/2547 Art. 14). Untraced steel takes India's wire-rod default for its share only.</p>
       <h4 style="margin:28px 0 14px">Progress</h4>
       <ul class="timeline">${steps.map(([b, sp], i) => `<li><div class="d ${i < s.step ? "done" : i === s.step ? "now" : ""}">${i < s.step ? icon("check") : ""}</div><div><b>${b}</b><span>${sp}</span></div></li>`).join("")}</ul>
@@ -146,7 +176,9 @@
         benchmark_tco2_per_t: CK.BENCH.actual, cbam_factor: CK.CBAM_FACTOR[Y], certificates: +((see - CK.BENCH.actual * CK.CBAM_FACTOR[Y]) * s.t).toFixed(1), certificate_price_eur: CK.PRICE_2026 };
       const a = document.createElement("a");
       a.href = URL.createObjectURL(new Blob([JSON.stringify(pkg, null, 2)], { type: "application/json" }));
-      a.download = `carbon-khata-${s.id}.json`; a.click(); toast("Emissions data downloaded");
+      a.download = `carbon-khata-${s.id}.json`; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+      toast("Emissions data downloaded");
     };
     openDrawer();
   }
@@ -199,7 +231,10 @@
       e.preventDefault();
       const L = lots.find((l) => l.id === activeLot), t = Math.round(+$("tons").value), left = L.t - L.sales.reduce((a, s) => a + s.t, 0);
       if (!(t > 0)) { $("saleMsg").innerHTML = `<div class="alert error">${icon("alert")}<span>Enter tonnes above zero.</span></div>`; return; }
-      if (t > left) { $("saleMsg").innerHTML = `<div class="alert error">${icon("alert")}<span>Blocked. Only ${left} t of ${L.id} is left, and its mill report can't cover more tonnes than you bought. Bill the rest from another lot.</span></div>`; return; }
+      if (t > left) {
+        $("saleMsg").innerHTML = `<div class="alert error" id="oversellAlert"><div class="alert-title">⚠️ MASS-BALANCE VIOLATION PREVENTED (EU CBAM Art. 14 / IR 2025/2547)</div><p>Blocked. Only ${left} t of ${L.id} is left, and its mill report can't cover more tonnes than you bought. Bill the rest from another lot.</p></div>`;
+        return;
+      }
       L.sales.push({ to: $("buyer").value, t, irn: "…" + Math.random().toString(16).slice(2, 8) });
       render(); toast(`${t} t recorded on ${L.id}${L.report ? ", with the mill's report attached" : ""}`);
     };
@@ -209,7 +244,7 @@
     const tracedT = lots.filter((l) => l.report).reduce((a, l) => a + l.sales.reduce((b, s) => b + s.t, 0), 0);
     const untr = lots.filter((l) => !l.report).reduce((a, l) => a + l.sales.reduce((b, s) => b + s.t, 0), 0);
     return `<div class="kpis">${kpi("Traced tonnes sold", tracedT + " t", "This quarter")}${kpi("Tracing income", fmt.inr(tracedT * 50), "₹50 per traced tonne", "green")}${kpi("Untraced tonnes", untr + " t", "From mills not yet on Carbon Khata", untr ? "red" : "")}${kpi("Listing", "Carbon-ready", "Shown to exporters choosing a supplier")}</div>
-    <div class="two"><div class="panel"><div class="panel-h"><h3>Tracing income by buyer</h3></div><div class="table-wrap"><table class="data"><thead><tr><th>Buyer</th><th class="r">Traced tonnes</th><th class="r">Income</th></tr></thead><tbody>${(() => { const m = {}; lots.filter((l) => l.report).forEach((l) => l.sales.forEach((x) => (m[x.to] = (m[x.to] || 0) + x.t))); return Object.entries(m).map(([k, v]) => `<tr><td>${k}</td><td class="r">${v} t</td><td class="r">${fmt.inr(v * 50)}</td></tr>`).join(""); })()}</tbody></table></div></div>
+    <div class="two"><div class="panel"><div class="panel-h"><h3>Tracing income by buyer</h3></div><div class="table-wrap"><table class="data"><thead><tr><th>Buyer</th><th class="r">Traced tonnes</th><th class="r">Income</th></tr></thead><tbody>${(() => { const m = Object.create(null); lots.filter((l) => l.report).forEach((l) => l.sales.forEach((x) => (m[x.to] = (m[x.to] || 0) + x.t))); return Object.entries(m).map(([k, v]) => `<tr><td>${k}</td><td class="r">${v} t</td><td class="r">${fmt.inr(v * 50)}</td></tr>`).join(""); })()}</tbody></table></div></div>
     <div class="panel"><div class="panel-h"><h3>Next payout</h3><span class="badge green">Monthly</span></div><div class="panel-b"><dl class="kv"><dt>Period</dt><dd>October 2026</dd><dt>Amount</dt><dd>${fmt.inr(tracedT * 50)}</dd><dt>Paid to</dt><dd>Current account ending 4471</dd><dt>Paid on</dt><dd>7 November 2026</dd></dl></div></div></div>
     <div class="panel" style="margin-top:16px"><div class="panel-b"><h3>How tracing pays</h3><p class="muted small" style="margin-top:8px;max-width:70ch">Exporters pay ₹50 for each tonne that arrives with its mill report, about 0.08% of a ₹62,000 coil. Ludhiana buyers already pay ₹1,800 to ₹2,300 a tonne more to buy locally, so a traced lot is a reason to choose you. Your buying prices, margins and other customers are never shown.</p></div></div>`;
   };
@@ -280,6 +315,37 @@
       ${bars([["Today", "2.40", 100, "var(--text-3)"], ["After 30% scrap EAF", "1.79", 74.6, "var(--green)"]])}
       <p class="xs muted" style="margin-top:14px">Estimate: 70% at 2.35, 30% at about 0.3 for scrap EAF steel, plus 0.05 own process. The lender reads the same signed records the EU importer files, so no separate emissions check is needed.</p>
     </div></div></div>
+    <div class="panel" style="margin-top:16px" id="sidbiChecklist">
+      <div class="panel-h">
+        <h3>SIDBI Green Concession Checklist</h3>
+        <span class="badge green">50 bps Concession Unlocked</span>
+      </div>
+      <div class="panel-b">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin-bottom:12px">
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--subtle)">
+            <div class="xs muted">Certified Emissions Threshold</div>
+            <div style="font-weight:600;font-size:15px;color:var(--green);margin-top:4px">1.06 tCO₂e/t Certified</div>
+            <div class="xs muted" style="margin-top:2px">Benchmarked under SIDBI green criteria</div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--subtle)">
+            <div class="xs muted">Precursor Traceability</div>
+            <div style="font-weight:600;font-size:15px;color:var(--green);margin-top:4px">100% Traced &amp; Audited</div>
+            <div class="xs muted" style="margin-top:2px">Melt-and-pour heat numbers in ledger</div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--subtle)">
+            <div class="xs muted">Audit Certification</div>
+            <div style="font-weight:600;font-size:15px;color:var(--green);margin-top:4px">IR 2025/2546 Verified</div>
+            <div class="xs muted" style="margin-top:2px">Signed audit report &amp; monitoring plan</div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--subtle)">
+            <div class="xs muted">Interest Rebate Value</div>
+            <div style="font-weight:600;font-size:15px;color:var(--text);margin-top:4px">-50 bps (₹2.0 L/yr)</div>
+            <div class="xs muted" style="margin-top:2px">Working capital interest discount</div>
+          </div>
+        </div>
+        <p class="xs muted" style="margin:0">SIDBI green concession checklist: Verified emissions of 1.06 tCO₂e/t unlock 50 bps interest rate concession on ₹40 L working capital facility without separate auditing costs.</p>
+      </div>
+    </div>
     <div class="two"><div class="panel"><div class="panel-h"><h3>Disbursement linked to verified data</h3></div><div class="table-wrap"><table class="data"><tbody>
       <tr><td>Tranche 1 · on approval</td><td class="r">₹25 L</td></tr><tr><td>Tranche 2 · when the next signed report shows under 2.0 tCO₂/t</td><td class="r">₹15 L</td></tr></tbody></table></div></div>
     <div class="panel"><div class="panel-h"><h3>Portfolio on verified records</h3></div><div class="table-wrap"><table class="data"><thead><tr><th>Borrower</th><th class="r">Loan</th><th>Status</th></tr></thead><tbody>
@@ -307,6 +373,30 @@
     <tr><td>Decarbonise</td><td>15% lower tCO₂/t for members</td><td class="r">–</td><td><span class="badge plain">Not started</span></td></tr>
   </tbody></table></div></div>`;
 
+  /* ---------- 3 Judge Guided Scenarios ---------- */
+  function runScenario1() {
+    activeLot = "ST-7781";
+    go("stockist", "lots");
+    const tonsInput = $("tons");
+    if (tonsInput) tonsInput.value = "99";
+    const saleForm = $("saleForm");
+    if (saleForm) saleForm.dispatchEvent(new Event("submit", { cancelable: true }));
+    toast("Mass-balance guard: 99t sale strictly blocked");
+  }
+
+  function runScenario2() {
+    go("exporter", "shipments");
+    openShipment("EU-2391");
+    toast("Opened EU-2391: WhatsApp receipt linked to mill heat number");
+  }
+
+  function runScenario3() {
+    go("lender", "applications");
+    const el = $("sidbiChecklist");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    toast("Lender view: verified 1.06 tCO2e/t unlocks green loan");
+  }
+
   /* ---------- drawer ---------- */
   function openDrawer() { $("drawer").dataset.open = "true"; document.body.style.overflow = "hidden"; $("drawer").querySelector(".icon-btn").focus(); }
   function closeDrawer() { $("drawer").dataset.open = "false"; document.body.style.overflow = ""; }
@@ -314,6 +404,14 @@
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
 
   $("roleSel").addEventListener("change", (e) => go(e.target.value));
+  document.querySelectorAll("[data-dock-role]").forEach((b) => b.addEventListener("click", () => go(b.dataset.dockRole)));
+
+  const s1 = $("demoScenario1"); if (s1) s1.addEventListener("click", runScenario1);
+  const s2 = $("demoScenario2"); if (s2) s2.addEventListener("click", runScenario2);
+  const s3 = $("demoScenario3"); if (s3) s3.addEventListener("click", runScenario3);
+
   window.addEventListener("hashchange", setFromHash);
   setFromHash();
+
+  window.CK_DEMO = { scenario1: runScenario1, scenario2: runScenario2, scenario3: runScenario3, go };
 })();

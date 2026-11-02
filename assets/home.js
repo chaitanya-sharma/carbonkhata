@@ -73,6 +73,7 @@
   }
   function journey(animated) {
     const M = window.CK_MAP, svg = $("#map"); if (!M || !svg) return;
+    let tl = null;
     const NS = "http://www.w3.org/2000/svg", el = (t, a = {}, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
     svg.innerHTML = `<defs><linearGradient id="routeGrad" gradientUnits="userSpaceOnUse" x1="1000" y1="480" x2="80" y2="140"><stop offset="0" style="stop-color:var(--accent)"/><stop offset=".55" style="stop-color:var(--accent-2)"/><stop offset="1" style="stop-color:var(--good)"/></linearGradient>
       <radialGradient id="glowIn" cx="50%" cy="50%" r="50%"><stop offset="0" style="stop-color:var(--accent)" stop-opacity=".55"/><stop offset="1" style="stop-color:var(--accent)" stop-opacity="0"/></radialGradient></defs>`;
@@ -100,6 +101,12 @@
       if (n.id === "mill" && svg.clientWidth < 600) { dx = -16; dy = 26; anchor = "end"; }
       const t = el("text", { x: dx, y: dy, "text-anchor": anchor, class: "lbl" }, g); t.textContent = n.label;
       const t2 = el("text", { x: dx, y: dy + 16, "text-anchor": anchor, class: "sub" }, g); t2.textContent = n.sub;
+
+      g.addEventListener("mouseenter", (e) => showTip(e, `<b>${n.label}</b><span>${n.sub || ""}</span>`));
+      g.addEventListener("mousemove", (e) => showTip(e, `<b>${n.label}</b><span>${n.sub || ""}</span>`));
+      g.addEventListener("mouseleave", hideTip);
+      g.addEventListener("click", () => jumpToStop(i));
+
       return { ...n, g };
     });
     const puck = el("circle", { r: 5.5, class: "puck" });
@@ -130,7 +137,31 @@
     litLand.style.strokeDasharray = LL; litSea.style.strokeDasharray = LS;
     const stopsBox = $("#stops");
     let cur = -1;
-    const setStop = (i) => { if (i === cur) return; stopsEls.forEach((el, k) => el.classList.toggle("on", k === i)); $("#jProg").innerHTML = `<b>0${i + 1}</b> / 06`; cur = i; };
+    const setStop = (i) => {
+      if (i === cur) return;
+      stopsEls.forEach((el, k) => el.classList.toggle("on", k === i));
+      const prog = $("#jProg");
+      if (prog) prog.innerHTML = `<b>0${i + 1}</b> / 06`;
+      $$(".stage-pill", $("#journeyPills") || document).forEach((p, k) => {
+        p.classList.toggle("on", k === i);
+        p.setAttribute("aria-selected", String(k === i));
+      });
+      cur = i;
+    };
+    function jumpToStop(i) {
+      if (i < 0 || i >= M.nodes.length) return;
+      try { if (typeof tl !== "undefined" && tl && typeof tl.isActive === "function" && tl.isActive()) tl.pause(); } catch (e) {}
+      const frac = at[i];
+      const targetView = i >= 4 ? V_W : V_IN;
+      draw(frac, i, targetView);
+      setStop(i);
+    }
+    $$(".stage-pill", $("#journeyPills") || document).forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const idx = +btn.dataset.stop;
+        jumpToStop(idx);
+      });
+    });
     if (!animated || !hasGsap || reduce) {
       draw(1, 5, V_W); nodes.forEach((n) => n.g.classList.add("on"));
       stopsBox.classList.add("static"); stopsEls.forEach((el) => el.classList.add("on"));
@@ -138,7 +169,7 @@
     }
     // plays once when the map scrolls into view: world, settle on India, stop by stop, then the sea leg to Hamburg
     const st = { f: 0, c: 0 }, HOLD = 2.8, labels = [0];
-    const tl = gsap.timeline({ paused: true, onUpdate: render });
+    tl = gsap.timeline({ paused: true, onUpdate: render });
     tl.to(st, { c: 1, duration: 1.8, ease: "power2.inOut" }, 0.5);
     let t = 0.5 + HOLD;
     [2.0, 0.9, 0, 1.9].forEach((d, i) => { if (d) tl.to(st, { f: at[i + 1], duration: d, ease: "power1.inOut" }, t); t += d; labels[i + 1] = t; t += HOLD; });

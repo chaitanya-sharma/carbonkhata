@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
-<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"forest";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
+<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"molten";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="solutions">
@@ -24,10 +24,29 @@
       <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><defs><linearGradient id="lgM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--logo-spine-a)"/><stop offset="1" style="stop-color:var(--logo-spine-b)"/></linearGradient></defs><rect x="2" y="3" width="20" height="23" rx="3.5" style="fill:var(--logo-page);stroke:var(--line-strong)" stroke-width=".6"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="url(#lgM)"/><path d="M10.5 10h8M10.5 14.5h8M10.5 19h5" style="stroke:var(--logo-ink)" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="5" style="fill:var(--bg);stroke:var(--logo-check)" stroke-width="1.6"/><path d="m20.5 6.6 1.3 1.3 2.6-2.7" style="stroke:var(--logo-check)" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Carbon Khata
     </a>
+    <div class="ambient-island" role="status" aria-label="Live CBAM Telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <div class="island-track">
+        <div class="island-inner">
+          <div class="island-item">
+            <span class="island-badge">EU CBAM</span>
+            <span class="island-text">€75.28/tCO₂</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge institution">Quest 2026</span>
+            <span class="island-text">XLRI Finalist</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge pilot">Ludhiana Pilot</span>
+            <span class="island-text">Dec 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="main-nav" aria-label="Main">
       <a href="/tour" data-page="tour">Product tour</a>
-      <div class="nav-drop" data-open="false">
-        <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
+      <div class="nav-drop" data-page="solutions" data-open="false">
+        <button type="button" data-page="solutions" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
         <div class="drop-panel" role="menu">
           <a href="/solutions#exporters" role="menuitem"><span class="ico" data-icon="bolt"></span><span><b>Exporters</b><span>File EU data on actual emissions</span></span></a>
           <a href="/solutions#stockists" role="menuitem"><span class="ico" data-icon="store"></span><span><b>Stockists</b><span>Pass mill reports on with every sale</span></span></a>
@@ -42,29 +61,98 @@
       <a href="/trust" data-page="trust">Trust</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
-      <a class="btn btn-primary btn-sm" href="/platform">Try the demo</a>
+      <a class="btn btn-ghost btn-sm" href="/pilot" data-page="pilot">Join the pilot</a>
+      <a class="btn btn-primary btn-sm" href="/platform" data-page="platform">Try the demo</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
-    <a href="/platform">Try the demo</a>
-    <a href="/tour">Product tour</a>
+    <div class="mobile-telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <span class="badge green">EU CBAM €75.28/tCO₂</span>
+      <span class="badge amber">Quest 2026 · XLRI</span>
+      <span class="badge blue">Pilot Dec 2026</span>
+    </div>
+    <a href="/platform" data-page="platform">Try the demo</a>
+    <a href="/tour" data-page="tour">Product tour</a>
     <div class="group">Solutions</div>
-    <a href="/solutions#exporters">Exporters</a>
-    <a href="/solutions#stockists">Stockists</a>
-    <a href="/solutions#mills">Steel mills</a>
-    <a href="/solutions#verifiers">Verifiers</a>
-    <a href="/solutions#importers">EU importers</a>
-    <a href="/solutions#lenders">Lenders</a>
+    <a href="/solutions#exporters" data-page="solutions">Exporters</a>
+    <a href="/solutions#stockists" data-page="solutions">Stockists</a>
+    <a href="/solutions#mills" data-page="solutions">Steel mills</a>
+    <a href="/solutions#verifiers" data-page="solutions">Verifiers</a>
+    <a href="/solutions#importers" data-page="solutions">EU importers</a>
+    <a href="/solutions#lenders" data-page="solutions">Lenders</a>
     <div class="group">More</div>
-    <a href="/calculator">Calculator</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/trust">Trust &amp; compliance</a>
-    <a class="btn btn-primary" href="/pilot">Join the pilot</a>
+    <a href="/calculator" data-page="calculator">Calculator</a>
+    <a href="/pricing" data-page="pricing">Pricing</a>
+    <a href="/trust" data-page="trust">Trust &amp; compliance</a>
+    <a class="btn btn-primary" href="/pilot" data-page="pilot">Join the pilot</a>
   </nav>
 </header>
 <main id="main">
+<style>
+.sol-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.margin-badge-card {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--surface-card, #131816);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.margin-badge-card.green {
+  background: rgba(61, 220, 151, 0.08);
+  border-color: rgba(61, 220, 151, 0.25);
+  color: var(--status-verified, #3DDC97);
+}
+.margin-badge-card .ret-val {
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--status-verified, #3DDC97);
+}
+.margin-badge-card .ret-desc {
+  font-size: 13px;
+  color: var(--text-secondary, #B9B6AD);
+}
+.margin-bar-wrap {
+  margin-top: 14px;
+}
+.margin-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-tertiary, #85827A);
+  margin-bottom: 6px;
+}
+.margin-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+}
+.margin-bar-fill-kept {
+  height: 100%;
+  width: 91%;
+  background: var(--status-verified, #3DDC97);
+}
+.margin-bar-fill-fees {
+  height: 100%;
+  width: 9%;
+  background: var(--brand-amber, #FFB547);
+}
+</style>
+
 <section class="page-hero">
   <div class="container">
     <span class="eyebrow">Solutions</span>
@@ -80,9 +168,12 @@
       <span class="eyebrow">Exporters</span>
       <h2>File on actual emissions and keep the saving</h2>
       <p class="lead" style="margin-top:16px">A small bolt maker in Ludhiana pays CBAM on India's default value because the mill's report never reaches it. Carbon Khata brings the report with each steel lot and turns the exporter's own bills into a monitoring file a verifier can sign.</p>
-      <a class="link" href="/platform#exporter">Open the exporter view <span data-icon="arrow"></span></a>
+      <div class="sol-actions">
+        <a class="btn btn-accent" href="/platform#exporter">Simulate Exporter in Platform <span data-icon="arrow"></span></a>
+        <a class="link" href="/platform#exporter">Open the exporter view <span data-icon="arrow"></span></a>
+      </div>
     </div>
-    <div class="card">
+    <div class="card spotlight-card">
       <h3>A 300 t bolt exporter in 2026</h3>
       <table class="data" style="margin-top:16px">
         <tbody>
@@ -93,7 +184,24 @@
           <tr class="total"><td>Share of the saving the exporter keeps</td><td class="r">91%</td></tr>
         </tbody>
       </table>
-      <p class="source">Bolt default 5.72 tCO₂/t plus 10% (IR 2025/2621 as amended by 2026/1740) against 2.40 verified; €75.28 per certificate, €1 = ₹108.</p>
+      <div class="margin-bar-wrap">
+        <div class="margin-bar-labels">
+          <span>Exporter retains 91% (₹82.55 L)</span>
+          <span>Fees 9% (₹8.55 L)</span>
+        </div>
+        <div class="margin-bar-track">
+          <div class="margin-bar-fill-kept"></div>
+          <div class="margin-bar-fill-fees"></div>
+        </div>
+      </div>
+      <div class="margin-badge-card green">
+        <div>
+          <div style="font-weight:600;font-size:14px;color:var(--text-primary)">91% Retained Margin</div>
+          <div class="ret-desc">10.7x all-in return · 38x return on Carbon Khata fees</div>
+        </div>
+        <div class="ret-val">91%</div>
+      </div>
+      <p class="source" style="margin-top:14px">Bolt default 5.72 tCO₂/t plus 10% (IR 2025/2621 as amended by 2026/1740) against 2.40 verified; €75.28 per certificate, €1 = ₹108.</p>
     </div>
   </div>
 </section>
@@ -105,12 +213,18 @@
       <span class="eyebrow">Stockists</span>
       <h2>Split a lot without losing its report</h2>
       <p class="lead" style="margin-top:16px">Most Ludhiana workshops buy from stockists in Mandi Gobindgarh, not from the mill. When a stockist bills a sale, the Tally add-on attaches the lot and its mill report, and the ledger blocks any sale beyond the tonnes bought.</p>
-      <a class="link" href="/platform#stockist">Open the stockist view <span data-icon="arrow"></span></a>
+      <div class="sol-actions">
+        <a class="btn btn-accent" href="/platform#stockist">Simulate Stockist in Platform <span data-icon="arrow"></span></a>
+        <a class="link" href="/platform#stockist">Open the stockist view <span data-icon="arrow"></span></a>
+      </div>
     </div>
     <div class="grid cols-2" style="gap:16px">
-      <div class="card"><div class="metric green"><div class="v num">₹50</div><div class="l">paid by the exporter for each traced tonne</div></div></div>
-      <div class="card"><div class="metric"><div class="v num">0.08%</div><div class="l">of a ₹62,000 coil, the price of tracing</div></div></div>
-      <div class="card" style="grid-column:1/-1"><h3>What stays private</h3><p class="muted" style="margin-top:8px">Buying prices, margins and customer lists. The ledger holds tonnes, lot and heat numbers, and the mill's emissions report.</p></div>
+      <div class="card spotlight-card"><div class="metric green"><div class="v num">₹50</div><div class="l">paid by the exporter for each traced tonne</div></div></div>
+      <div class="card spotlight-card"><div class="metric"><div class="v num">0.08%</div><div class="l">of a ₹62,000 coil, the price of tracing</div></div></div>
+      <div class="card spotlight-card" style="grid-column:1/-1">
+        <h3>Turn Compliance into a Revenue Stream</h3>
+        <p class="muted" style="margin-top:8px">Stockists join for free, never disclose margins or customer lists, and earn ₹50 per traced tonne. The ledger securely holds tonnes, lot and heat numbers, and the mill's emissions report.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -122,10 +236,16 @@
       <span class="eyebrow">Steel mills</span>
       <h2>Publish once, reach every downstream buyer</h2>
       <p class="lead" style="margin-top:16px">Large Indian mills already prepare verified CBAM reports for their own EU customers. Carbon Khata carries that report to the hundreds of small buyers the mill reaches through stockists, at no cost to the mill.</p>
-      <a class="link" href="/platform#mill">Open the mill view <span data-icon="arrow"></span></a>
+      <div class="sol-actions">
+        <a class="btn btn-accent" href="/platform#mill">Simulate Mill in Platform <span data-icon="arrow"></span></a>
+        <a class="link" href="/platform#mill">Open the mill view <span data-icon="arrow"></span></a>
+      </div>
     </div>
-    <div class="card">
-      <h3>Why a mill's report matters downstream</h3>
+    <div class="card spotlight-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3>Why a mill's report matters downstream</h3>
+        <span class="badge green">Free to publish · ₹0</span>
+      </div>
       <div class="bars" style="margin-top:20px">
         <div class="bar-row"><span>Wire rod on India's default <span class="muted mono xs">4.73</span></span><span class="val">4.73</span><div class="track"><div class="fill" style="width:100%;background:var(--khata)"></div></div></div>
         <div class="bar-row"><span>Wire rod on the mill's report</span><span class="val">2.38</span><div class="track"><div class="fill" style="width:50.3%;background:var(--green)"></div></div></div>
@@ -143,10 +263,16 @@
       <span class="eyebrow">Accredited verifiers</span>
       <h2>Ten sites a week, evidence ready on arrival</h2>
       <p class="lead" style="margin-top:16px">Every site needs a physical visit in the first year. Only five bodies hold EU CBAM verifier accreditation, so capacity is scarce. Carbon Khata books cluster campaigns, prepares standard monitoring plans and evidence packs, and leaves verification and signing to the accredited body.</p>
-      <a class="link" href="/platform#verifier">Open the verifier view <span data-icon="arrow"></span></a>
+      <div class="sol-actions">
+        <a class="btn btn-accent" href="/platform#verifier">Simulate Verifier in Platform <span data-icon="arrow"></span></a>
+        <a class="link" href="/platform#verifier">Open the verifier view <span data-icon="arrow"></span></a>
+      </div>
     </div>
-    <div class="card">
-      <h3>Cost per exporter site</h3>
+    <div class="card spotlight-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3>Cost per exporter site</h3>
+        <span class="badge green">&minus;66% Cost Reduction</span>
+      </div>
       <table class="data" style="margin-top:12px">
         <thead><tr><th>₹ lakh</th><th class="r">Alone</th><th class="r">Batched</th></tr></thead>
         <tbody>
@@ -168,12 +294,15 @@
       <span class="eyebrow">EU importers</span>
       <h2>Fewer certificates, and origin evidence for the quota</h2>
       <p class="lead" style="margin-top:16px">Authorised declarants buy certificates for every tonne they import. Actual-data files from Indian suppliers cut that number, and the mill's heat numbers show where the steel was first melted and poured.</p>
-      <a class="link" href="/platform#importer">Open the importer view <span data-icon="arrow"></span></a>
+      <div class="sol-actions">
+        <a class="btn btn-accent" href="/platform#importer">Simulate Importer in Platform <span data-icon="arrow"></span></a>
+        <a class="link" href="/platform#importer">Open the importer view <span data-icon="arrow"></span></a>
+      </div>
     </div>
     <div class="grid cols-2" style="gap:16px">
-      <div class="card"><div class="metric red"><div class="v num">576</div><div class="l">certificates on 120 t of bolts at India's default</div></div></div>
-      <div class="card"><div class="metric green"><div class="v num">128</div><div class="l">certificates on the same shipment with actual data</div></div></div>
-      <div class="card" style="grid-column:1/-1"><h3>Steel quota</h3><p class="muted" style="margin-top:8px">Since 1 July 2026, steel above a country's quota pays a 50% duty and needs melt-and-pour evidence (Regulation (EU) 2026/1384).</p></div>
+      <div class="card spotlight-card"><div class="metric red"><div class="v num">576</div><div class="l">certificates on 120 t of bolts at India's default</div></div></div>
+      <div class="card spotlight-card"><div class="metric green"><div class="v num">128</div><div class="l">certificates on the same shipment with actual data</div></div></div>
+      <div class="card spotlight-card" style="grid-column:1/-1"><h3>Steel quota</h3><p class="muted" style="margin-top:8px">Since 1 July 2026, steel above a country's quota pays a 50% duty and needs melt-and-pour evidence (Regulation (EU) 2026/1384).</p></div>
     </div>
   </div>
 </section>
@@ -185,9 +314,12 @@
       <span class="eyebrow">Lenders</span>
       <h2>Lend for cleaner steel against signed records</h2>
       <p class="lead" style="margin-top:16px">Once an exporter has a year of verified emissions, a lender can finance its switch to lower-carbon steel without its own emissions check. The same records serve the UK CBAM from January 2027 and India's carbon market.</p>
-      <a class="link" href="/platform#lender">Open the lender view <span data-icon="arrow"></span></a>
+      <div class="sol-actions">
+        <a class="btn btn-accent" href="/platform#lender">Simulate Lender in Platform <span data-icon="arrow"></span></a>
+        <a class="link" href="/platform#lender">Open the lender view <span data-icon="arrow"></span></a>
+      </div>
     </div>
-    <div class="card">
+    <div class="card spotlight-card">
       <h3>Example: ₹40 L green loan</h3>
       <dl class="kv" style="margin-top:16px">
         <dt>Borrower</dt><dd>Bolt exporter, 300 t a year</dd>
@@ -219,7 +351,7 @@
       </div>
       <div>
         <h4>Solutions</h4>
-        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li></ul>
+        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li><li><a href="/solutions#lenders">Lenders</a></li></ul>
       </div>
       <div>
         <h4>Trust</h4>
@@ -227,7 +359,11 @@
       </div>
       <div>
         <h4>Team</h4>
-        <ul><li>Team Carbon Khata</li><li>XLRI Delhi-NCR</li><li>Quest EY-Parthenon 2026</li></ul>
+        <ul class="footer-team">
+          <li><strong>Team Carbon Khata</strong></li>
+          <li>XLRI Delhi-NCR</li>
+          <li><span class="badge amber">Quest EY-Parthenon 2026</span></li>
+        </ul>
       </div>
     </div>
     <div class="footer-base">

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
-<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"forest";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
+<script>(function(){var P={"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"molten";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="trust">
@@ -24,10 +24,29 @@
       <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><defs><linearGradient id="lgM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--logo-spine-a)"/><stop offset="1" style="stop-color:var(--logo-spine-b)"/></linearGradient></defs><rect x="2" y="3" width="20" height="23" rx="3.5" style="fill:var(--logo-page);stroke:var(--line-strong)" stroke-width=".6"/><rect x="2" y="3" width="5.5" height="23" rx="2.5" fill="url(#lgM)"/><path d="M10.5 10h8M10.5 14.5h8M10.5 19h5" style="stroke:var(--logo-ink)" stroke-width="1.8" stroke-linecap="round"/><circle cx="22.5" cy="6.5" r="5" style="fill:var(--bg);stroke:var(--logo-check)" stroke-width="1.6"/><path d="m20.5 6.6 1.3 1.3 2.6-2.7" style="stroke:var(--logo-check)" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Carbon Khata
     </a>
+    <div class="ambient-island" role="status" aria-label="Live CBAM Telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <div class="island-track">
+        <div class="island-inner">
+          <div class="island-item">
+            <span class="island-badge">EU CBAM</span>
+            <span class="island-text">€75.28/tCO₂</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge institution">Quest 2026</span>
+            <span class="island-text">XLRI Finalist</span>
+          </div>
+          <div class="island-item">
+            <span class="island-badge pilot">Ludhiana Pilot</span>
+            <span class="island-text">Dec 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="main-nav" aria-label="Main">
       <a href="/tour" data-page="tour">Product tour</a>
-      <div class="nav-drop" data-open="false">
-        <button type="button" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
+      <div class="nav-drop" data-page="solutions" data-open="false">
+        <button type="button" data-page="solutions" aria-expanded="false" aria-haspopup="true">Solutions <span data-icon="chevron"></span></button>
         <div class="drop-panel" role="menu">
           <a href="/solutions#exporters" role="menuitem"><span class="ico" data-icon="bolt"></span><span><b>Exporters</b><span>File EU data on actual emissions</span></span></a>
           <a href="/solutions#stockists" role="menuitem"><span class="ico" data-icon="store"></span><span><b>Stockists</b><span>Pass mill reports on with every sale</span></span></a>
@@ -42,26 +61,32 @@
       <a href="/trust" data-page="trust">Trust</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="/pilot">Join the pilot</a>
-      <a class="btn btn-primary btn-sm" href="/platform">Try the demo</a>
+      <a class="btn btn-ghost btn-sm" href="/pilot" data-page="pilot">Join the pilot</a>
+      <a class="btn btn-primary btn-sm" href="/platform" data-page="platform">Try the demo</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span data-icon="menu"></span></button>
   </div>
   <nav class="mobile-nav" data-open="false" aria-label="Mobile">
-    <a href="/platform">Try the demo</a>
-    <a href="/tour">Product tour</a>
+    <div class="mobile-telemetry">
+      <span class="pulse-indicator" aria-hidden="true"></span>
+      <span class="badge green">EU CBAM €75.28/tCO₂</span>
+      <span class="badge amber">Quest 2026 · XLRI</span>
+      <span class="badge blue">Pilot Dec 2026</span>
+    </div>
+    <a href="/platform" data-page="platform">Try the demo</a>
+    <a href="/tour" data-page="tour">Product tour</a>
     <div class="group">Solutions</div>
-    <a href="/solutions#exporters">Exporters</a>
-    <a href="/solutions#stockists">Stockists</a>
-    <a href="/solutions#mills">Steel mills</a>
-    <a href="/solutions#verifiers">Verifiers</a>
-    <a href="/solutions#importers">EU importers</a>
-    <a href="/solutions#lenders">Lenders</a>
+    <a href="/solutions#exporters" data-page="solutions">Exporters</a>
+    <a href="/solutions#stockists" data-page="solutions">Stockists</a>
+    <a href="/solutions#mills" data-page="solutions">Steel mills</a>
+    <a href="/solutions#verifiers" data-page="solutions">Verifiers</a>
+    <a href="/solutions#importers" data-page="solutions">EU importers</a>
+    <a href="/solutions#lenders" data-page="solutions">Lenders</a>
     <div class="group">More</div>
-    <a href="/calculator">Calculator</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/trust">Trust &amp; compliance</a>
-    <a class="btn btn-primary" href="/pilot">Join the pilot</a>
+    <a href="/calculator" data-page="calculator">Calculator</a>
+    <a href="/pricing" data-page="pricing">Pricing</a>
+    <a href="/trust" data-page="trust">Trust &amp; compliance</a>
+    <a class="btn btn-primary" href="/pilot" data-page="pilot">Join the pilot</a>
   </nav>
 </header>
 <main id="main">
@@ -90,6 +115,152 @@
           <tr><td class="mono">CGST Notification 10/2023</td><td>GST e-invoices mandatory above ₹5 crore turnover</td><td>Uses the invoice reference number only as a lookup key</td></tr>
         </tbody>
       </table></div>
+    </div>
+
+    <div class="accordion trust-accordion" style="margin-top:32px">
+      <div style="margin-bottom:16px"><h3 style="font-size:18px">Interactive regulatory mapping</h3><p class="muted small">Expand each EU implementing act to view Carbon Khata's operational functions.</p></div>
+      <details class="card">
+        <summary><span class="mono">Reg. (EU) 2023/956</span><span>CBAM core mandate &amp; declaration schedule</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> CBAM applies to iron and steel; certificates payable on 2026 imports, first declaration by 30 Sep 2027.</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Builds the actual-data declaration package with full audit trail that the EU importer submits into the CBAM Registry.</p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><span class="mono">IR 2025/2547 Art. 14</span><span>Multi-installation precursor mass-weighting</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> Precursors from several installations are weighted by quantity; an unverified precursor takes its default.</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Blends mill certificates weighted by tonnage. If 70% of rod is traced to 2.35 tCO₂/t and 30% is untraced, only the 30% takes India's default of 4.73.</p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><span class="mono">IR 2025/2620</span><span>Free-allocation benchmark deduction</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> Free-allocation adjustment = EU benchmark × CBAM factor (97.5% in 2026, 95% in 2027, 90% in 2028).</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Carries free-allocation data with the mill's emissions figure to accurately calculate net certificate obligations per tonne.</p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><span class="mono">IR 2025/2621, 2026/1740</span><span>Country defaults &amp; statutory mark-ups</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> Country default values with an escalating mark-up of +10% in 2026, +20% in 2027, and +30% from 2028.</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Renders live side-by-side cost comparisons demonstrating the punitive cost of defaulting versus submitting verified data.</p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><span class="mono">IR 2025/2546</span><span>Accredited site audit standards</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> Mandatory physical site visit in the first year; virtual visits or waivers permitted later under strict conditions.</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Organizes multi-plant cluster batching campaigns so international accredited verifiers visit 10–12 Ludhiana workshops in a single week, slashing individual audit costs by 66%.</p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><span class="mono">Reg. (EU) 2026/1384</span><span>50% steel quota duty &amp; melt-and-pour proof</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> Steel quota with a 50% out-of-quota duty and mandatory melt-and-pour country of origin evidence from 1 July 2026.</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Links every fastener batch to primary mill heat numbers, proving melt-and-pour origin in India and avoiding the 50% duty.</p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><span class="mono">CGST Notification 10/2023</span><span>GST e-invoicing interoperability</span></summary>
+        <div class="acc-body">
+          <p><strong>What it says:</strong> GST e-invoices mandatory above ₹5 crore turnover threshold.</p>
+          <p style="margin-top:8px"><strong>Carbon Khata function:</strong> Uses 64-character Invoice Reference Number (IRN) as an immutable cryptographic index key without extracting proprietary commercial pricing.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chain" style="border-top:1px solid var(--line)">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Cryptographic Trust</span>
+      <h2>Cryptographic chain of custody</h2>
+      <p class="lead">From the blast furnace ladle in Mandi Gobindgarh to the EU CBAM XML submission in Hamburg: every kilogram of steel is chained through cryptographic lot seals.</p>
+    </div>
+    <div class="card" style="padding:28px 20px;overflow-x:auto">
+      <svg id="custodyChain" viewBox="0 0 1080 200" width="100%" height="auto" style="display:block;min-width:780px" aria-label="Cryptographic Chain of Custody Diagram">
+        <defs>
+          <linearGradient id="chainGlow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.3"/>
+            <stop offset="50%" stop-color="var(--green)" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.3"/>
+          </linearGradient>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--accent)" />
+          </marker>
+        </defs>
+
+        <!-- Connecting Line -->
+        <path d="M 80 100 L 980 100" stroke="url(#chainGlow)" stroke-width="3" stroke-dasharray="6 4" fill="none" />
+
+        <!-- Node 1: Primary Mill Melt & Pour -->
+        <g transform="translate(10, 20)">
+          <rect width="150" height="155" rx="12" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <circle cx="75" cy="42" r="18" fill="var(--subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="75" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent)">1</text>
+          <text x="75" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">Primary Mill</text>
+          <text x="75" y="98" text-anchor="middle" font-size="11.5" font-weight="500" fill="var(--text-2)">Melt &amp; Pour</text>
+          <rect x="15" y="116" width="120" height="22" rx="4" fill="var(--subtle)"/>
+          <text x="75" y="131" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--text-3)">Tata / JSW Ladle</text>
+        </g>
+
+        <!-- Node 2: Heat Number Batching -->
+        <g transform="translate(190, 20)">
+          <rect width="150" height="155" rx="12" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <circle cx="75" cy="42" r="18" fill="var(--subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="75" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent)">2</text>
+          <text x="75" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">Heat Number</text>
+          <text x="75" y="98" text-anchor="middle" font-size="11.5" font-weight="500" fill="var(--text-2)">Batching</text>
+          <rect x="15" y="116" width="120" height="22" rx="4" fill="var(--subtle)"/>
+          <text x="75" y="131" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--text-3)">Reg. 2026/1384</text>
+        </g>
+
+        <!-- Node 3: Stockist Mass-Balance Seal -->
+        <g transform="translate(370, 20)">
+          <rect width="150" height="155" rx="12" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <circle cx="75" cy="42" r="18" fill="var(--subtle)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="75" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="var(--green)">3</text>
+          <text x="75" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">Stockist</text>
+          <text x="75" y="98" text-anchor="middle" font-size="11.5" font-weight="500" fill="var(--text-2)">Mass-Balance Seal</text>
+          <rect x="15" y="116" width="120" height="22" rx="4" fill="var(--subtle)"/>
+          <text x="75" y="131" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--text-3)">Tally Lot Guard</text>
+        </g>
+
+        <!-- Node 4: Fastener Workshop -->
+        <g transform="translate(550, 20)">
+          <rect width="150" height="155" rx="12" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <circle cx="75" cy="42" r="18" fill="var(--subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="75" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent)">4</text>
+          <text x="75" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">Fastener</text>
+          <text x="75" y="98" text-anchor="middle" font-size="11.5" font-weight="500" fill="var(--text-2)">Workshop</text>
+          <rect x="15" y="116" width="120" height="22" rx="4" fill="var(--subtle)"/>
+          <text x="75" y="131" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--text-3)">2.40 tCO₂/t Blend</text>
+        </g>
+
+        <!-- Node 5: Ludhiana Batch Audit -->
+        <g transform="translate(730, 20)">
+          <rect width="150" height="155" rx="12" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <circle cx="75" cy="42" r="18" fill="var(--subtle)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="75" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="var(--amber)">5</text>
+          <text x="75" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">Ludhiana</text>
+          <text x="75" y="98" text-anchor="middle" font-size="11.5" font-weight="500" fill="var(--text-2)">Batch Audit</text>
+          <rect x="15" y="116" width="120" height="22" rx="4" fill="var(--subtle)"/>
+          <text x="75" y="131" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--text-3)">IR 2025/2546 Visit</text>
+        </g>
+
+        <!-- Node 6: Signed EU CBAM XML -->
+        <g transform="translate(910, 20)">
+          <rect width="150" height="155" rx="12" fill="var(--surface)" stroke="var(--green)" stroke-width="1.8"/>
+          <circle cx="75" cy="42" r="18" fill="var(--green-tint)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="75" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="var(--green)">✓</text>
+          <text x="75" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">Signed EU</text>
+          <text x="75" y="98" text-anchor="middle" font-size="11.5" font-weight="500" fill="var(--text-2)">CBAM XML</text>
+          <rect x="15" y="116" width="120" height="22" rx="4" fill="var(--green-tint)"/>
+          <text x="75" y="131" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--green)">DG TAXUD Ready</text>
+        </g>
+      </svg>
     </div>
   </div>
 </section>
@@ -158,7 +329,7 @@
       </div>
       <div>
         <h4>Solutions</h4>
-        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li></ul>
+        <ul><li><a href="/solutions#exporters">Exporters</a></li><li><a href="/solutions#stockists">Stockists</a></li><li><a href="/solutions#mills">Steel mills</a></li><li><a href="/solutions#verifiers">Verifiers</a></li><li><a href="/solutions#importers">EU importers</a></li><li><a href="/solutions#lenders">Lenders</a></li></ul>
       </div>
       <div>
         <h4>Trust</h4>
@@ -166,7 +337,11 @@
       </div>
       <div>
         <h4>Team</h4>
-        <ul><li>Team Carbon Khata</li><li>XLRI Delhi-NCR</li><li>Quest EY-Parthenon 2026</li></ul>
+        <ul class="footer-team">
+          <li><strong>Team Carbon Khata</strong></li>
+          <li>XLRI Delhi-NCR</li>
+          <li><span class="badge amber">Quest EY-Parthenon 2026</span></li>
+        </ul>
       </div>
     </div>
     <div class="footer-base">

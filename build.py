@@ -11,8 +11,8 @@ Run `python3 build.py`, then commit the generated .html files at the repo root.
 import pathlib, re
 
 ROOT = pathlib.Path(__file__).parent
-HEADER = (ROOT / "partials/header.html").read_text()
-FOOTER = (ROOT / "partials/footer.html").read_text()
+HEADER = (ROOT / "partials/header.html").read_text(encoding="utf-8")
+FOOTER = (ROOT / "partials/footer.html").read_text(encoding="utf-8")
 
 HEAD = """<!doctype html>
 <html lang="en">
@@ -29,14 +29,14 @@ HEAD = """<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
-<script>(function(){{var P={{"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"}};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"forest";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);}})();</script>
+<script>(function(){{var P={{"8940":"molten","8941":"ledger","8942":"forest","8943":"cobalt"}};var q=new URLSearchParams(location.search).get("theme");var t=q||P[location.port]||"molten";if(t!=="molten")document.documentElement.setAttribute("data-theme",t);}})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="{page}">
 """
 
 for src in sorted((ROOT / "pages").glob("*.html")):
-    text = src.read_text()
+    text = src.read_text(encoding="utf-8")
     meta = dict(re.findall(r"<!--\s*(\w+):\s*(.*?)\s*-->", text.split("\n\n", 1)[0]))
     body = re.sub(r"^(\s*<!--\s*\w+:.*?-->\s*\n)+", "", text)
     title = meta.get("title", "Carbon Khata")
@@ -44,5 +44,5 @@ for src in sorted((ROOT / "pages").glob("*.html")):
     scripts = "".join(f'<script src="{s.strip()}"></script>\n' for s in meta.get("scripts", "").split(",") if s.strip())
     html = (HEAD.format(title=full_title, description=meta.get("description", ""), page=meta.get("page", src.stem))
             + HEADER + '<main id="main">\n' + body + "</main>\n" + FOOTER + scripts + "</body>\n</html>\n")
-    (ROOT / src.name).write_text(html)
+    (ROOT / src.name).write_text(html, encoding="utf-8")
     print("built", src.name)

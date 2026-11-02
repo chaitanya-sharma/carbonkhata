@@ -4,7 +4,8 @@
   const st = { product: "bolts", year: 2026 };
   const defaults = { product: "bolts", year: 2026, tons: 120, price: 75.28, traced: 100 };
 
-  if (window.matchMedia("(max-width: 900px)").matches) $("calcGrid").style.gridTemplateColumns = "1fr";
+  // Responsive layout: assets/styles.css handles @media (max-width: 900px) #calcGrid;
+  // removed redundant runtime trap: if (window.matchMedia("(max-width: 900px)").matches) $("calcGrid").style.gridTemplateColumns = "1fr";
 
   function seg(id, key) {
     $(id).querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
@@ -37,6 +38,35 @@
     $("mSave").textContent = fmt.lakh(r.saving * t);
     $("mSaveL").textContent = `saved, ${fmt.inr100(r.saving)} per tonne`;
 
+    const recEl = $("recoveryNotice");
+    if (recEl) {
+      if (st.product === "bolts" && traced < 0.70) {
+        const target = 0.70;
+        const needed = Math.ceil(Math.round((target - traced) * 1e4) / 1e4 * t);
+        const r70 = CK.perTonne({ product: st.product, year: st.year, price, traced: target });
+        const gap = (r70.saving - r.saving) * t;
+        recEl.style.display = "";
+        recEl.className = "card recovery-card";
+        recEl.innerHTML = `
+          <div class="recovery-badge"><span data-icon="spark"></span>Positive Mathematical Recovery</div>
+          <div class="recovery-title">Target 70% cluster threshold: trace just <strong>${needed} more tonnes</strong> to unlock <strong>${fmt.lakh(gap)}</strong> in avoided CBAM liability.</div>
+          <div class="recovery-sub">Every 10 tonnes of traced precursor cuts your certificate bill by ~₹3.0 Lakh.</div>
+        `;
+        if (typeof icon === "function") recEl.querySelectorAll("[data-icon]").forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
+      } else if (st.product === "bolts") {
+        recEl.style.display = "";
+        recEl.className = "card recovery-card achieved";
+        recEl.innerHTML = `
+          <div class="recovery-achieved">
+            <span class="badge green">Cluster threshold achieved: 100% of batched audit subsidy unlocked</span>
+            <span class="muted xs">High-integrity batching eligible for Punjab 75% audit reimbursement.</span>
+          </div>
+        `;
+      } else {
+        recEl.style.display = "none";
+      }
+    }
+
     const rows = [["India default value", r.defSEE, r.def, "var(--khata)"]];
     if (st.product === "bolts") rows.push(["Own plant verified, no mill data", r.noMillSEE, r.noMill, "#D97757"]);
     rows.push([st.product === "bolts" && traced < 1 ? `Verified, ${Math.round(traced * 100)}% traced` : "Verified data", r.actSEE, r.act, "var(--green)"]);
@@ -63,7 +93,8 @@
 
   function load() {
     const q = new URLSearchParams(location.search);
-    if (q.get("p") in CK.PRODUCTS) st.product = q.get("p");
+    // Hardened against prototype chain traversal (formerly: if (q.get("p") in CK.PRODUCTS))
+    if (Object.prototype.hasOwnProperty.call(CK.PRODUCTS, q.get("p"))) st.product = q.get("p");
     if (CK.MARKUP[+q.get("y")] !== undefined) st.year = +q.get("y");
     if (+q.get("t") > 0) $("tons").value = +q.get("t");
     if (+q.get("eur") > 0) $("price").value = +q.get("eur");
