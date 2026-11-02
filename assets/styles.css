@@ -417,7 +417,14 @@ body[data-page="platform"] .header-cta > a[data-page="platform"] {
 .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 960px) { .cols-3, .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; } .section { padding: 88px 0; } .container { padding: 0 20px; } }
+@media (max-width: 640px) {
+  .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+  .section { padding: 88px 0; }
+  .container { padding: 0 20px; }
+  .card { padding: 22px 18px; }
+  .seg { display: flex; width: 100%; max-width: 100%; }
+  .seg button { flex: 1; min-width: 0; padding: 0 8px; font-size: 13px; text-align: center; }
+}
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 30px; position: relative; }
 .card h3 + p { margin-top: 10px; }
 .card p:last-child { margin-bottom: 0; }
@@ -890,8 +897,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 24px; }
 #calcForm { position: sticky; top: 92px; }
 @media (max-width: 900px) {
   #calcForm { position: static; }
-  #calcGrid { grid-template-columns: 1fr !important; }
-  #pilotGrid { grid-template-columns: 1fr !important; }
+  #calcGrid { grid-template-columns: minmax(0, 1fr) !important; }
+  #calcGrid > * { min-width: 0; }
+  #pilotGrid { grid-template-columns: minmax(0, 1fr) !important; }
+  #pilotGrid > * { min-width: 0; }
 }
 
 /* ---------- journey film (auto-plays, no scroll pinning) ---------- */
@@ -1065,6 +1074,13 @@ html:has(body[data-page="judge"]) { scroll-padding-top: 150px; }
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+.recovery-achieved .badge {
+  white-space: normal;
+  height: auto;
+  padding: 6px 12px;
+  line-height: 1.35;
+  border-radius: 8px;
 }
 
 .trust-accordion details {
